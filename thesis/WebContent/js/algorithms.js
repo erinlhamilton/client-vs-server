@@ -39,7 +39,7 @@ function bufferGeom(wkt, dataType, inputLength){
 	var parser = new jsts.io.WKTParser();
     buffer = parser.write(buffer);
 	
-	var buffergeom = reader.read(buffer);
+	reader.read(buffer);
 	
 	var parseEnd = new Date();
 	var parseTime = parseEnd - parseStart;
