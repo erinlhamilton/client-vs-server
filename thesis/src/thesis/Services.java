@@ -10,13 +10,15 @@
 package thesis;
 
 import javax.ws.rs.*;
+import thesis.Storage;
 
 @Path("/services")
 public class Services {
 	
 	/**
-	 * Accepts a valid ID for the points table and returns
-	 * points well-known text
+	 * Accepts a valid ID for the points table, sends that to
+	 * the Storage class to fetch the data, and returns
+	 * a well-known text file to the client
 	 *
 	 * @param (id) The id of the points wkt file
 	 * @return JSON containing the wkt file
@@ -25,7 +27,9 @@ public class Services {
 	@GET
 	@Produces("text/plain")
 	public String returnPoint(@PathParam("id") int id){
-		return "Return point wkt: " + id;
+		Storage storagePoints = new Storage();
+		String wktResults = storagePoints.fetchWKT("Points", id);
+		return wktResults;
 	}
 	
 	/**
