@@ -6,20 +6,20 @@
 </head>
 <body>
 <h1>Client-side versus Server-side Test Suite</h1>
-
-
+<input id="startClient" type="button" value="Run Client" onclick="runClient();" />
+<input id="startServer" type="button" value="Run Server" onclick="runServer();" />
+<input id="getResults" type="button" value="Download Results" onclick="getResults();" />
 
 <!-- JavaScript Libraries -->
-<script type="text/javascript" src="lib/ajax.min.js"></script>
+<script type="text/javascript" src="lib/microajax.min.js"></script>
 <script type="text/javascript" src="lib/async.js"></script>
 <script type="text/javascript" src="lib/javascript.util.js"></script>
 <script type="text/javascript" src="lib/jsts.js"></script>
 
 <!-- Custom JavaScript Code -->
-<script type="text/javascript" src="js/output.js"></script>
 <script type="text/javascript" src="js/flow.js"></script>
 <script type="text/javascript" src="js/algorithms.js"></script>
-<script type="text/javascript" src="js/data.js"></script>
+<script type="text/javascript" src="js/results.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

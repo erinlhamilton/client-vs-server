@@ -54,7 +54,9 @@ function bufferGeom(wkt, dataType, inputLength){
 	//var hello = jsts.geom.util.PointExtracter.getPoints(buffer, geomList);
 	var totalTime = buffTime + parseTime;
 	
-	console.log(platform + "," + geoprocess + ", Inpute Size: " + inputSize + ", Total Time: " + totalTime + ", Result Size" + resultSize);
-	console.log(output);
+	console.log(platform + ", " + geoprocess + ", Inpute Size: " + inputSize + ", Total Time: " + totalTime + ", Result Size: " + resultSize);
+
+	console.log(jsts.operation.valid.isValidOp.checkValidMultiPoint(output));
+	
 	
 }
