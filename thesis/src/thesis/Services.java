@@ -79,9 +79,8 @@ public class Services {
 	
 	
 	/**
-	 * (Write a succinct description of this method here.  If necessary,
-	 * additional paragraphs should be preceded by <p>, the html tag for
-	 * a new paragraph.)
+	 * Post web services that takes results from clients and sends them
+	 * to Storage.java to be stored in db
 	 *
 	 * @param (parameter name) (Describe the first parameter here)
 	 * @param (parameter name) (Do the same for each additional parameter)
@@ -106,22 +105,42 @@ public class Services {
 			@FormParam("valid") boolean valid,
 			@FormParam("output(bytes)") int outputBytes,
 			@FormParam("output(nodes)") int outputNodes){
-		return "data=" + dateToday +
-				"&latency=" + latencyTime +
-				"&bandwidth=" + bandwidthTime + 
-				"&platform=" + platform +
-				"&algorithm=" +algorithm+
-				"&input(bytes)=" +inputBytes+
-				"&input(nodes)=" +inputNodes+
-				"&request(ms)=" +requestTime+
-				"&geoprocess(ms)=" +processTime+
-				"&parse(ms)=" +parseTime+
-				"&response(ms)=" + responseTime+
-				"&total(ms)=" +totalTime+
-				"&valid=TRUE" + valid +
-				"&output(bytes)=" +outputBytes+
-				"&output(nodes)=" + outputNodes;
+//		return "data=" + dateToday +
+//				"&latency=" + latencyTime +
+//				"&bandwidth=" + bandwidthTime + 
+//				"&platform=" + platform +
+//				"&algorithm=" +algorithm+
+//				"&input(bytes)=" +inputBytes+
+//				"&input(nodes)=" +inputNodes+
+//				"&request(ms)=" +requestTime+
+//				"&geoprocess(ms)=" +processTime+
+//				"&parse(ms)=" +parseTime+
+//				"&response(ms)=" + responseTime+
+//				"&total(ms)=" +totalTime+
+//				"&valid=TRUE" + valid +
+//				"&output(bytes)=" +outputBytes+
+//				"&output(nodes)=" + outputNodes;
 	
+		String result = 
+				"('" + dateToday + "','"
+		 		+latencyTime + "','"
+				+bandwidthTime + "','"
+				+ platform + "','"
+				+algorithm+ "','"
+				+inputBytes+ "','"
+				+inputNodes+ "','"
+				+requestTime+ "','"
+				+processTime+ "','"
+				+parseTime+ "','"
+				+ responseTime+ "','"
+				+totalTime+ "','"
+				+ valid + "','"
+				+outputBytes+ "','"
+				+ outputNodes +"')";
+		
+		Storage storeResults = new Storage();
+		String success = storeResults.insertResults(result);
+		return success;
 	}
 	
 	/**

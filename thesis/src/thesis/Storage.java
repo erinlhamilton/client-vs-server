@@ -29,7 +29,7 @@ public class Storage {
 	 * @param (id) The id of the wkt file
 	 * @return JSON containing the wkt file
 	 */
-	 // 
+	 
 	 public String fetchWKT(String wktTable, int id)
 	  {
 	    Connection c = null;
@@ -57,6 +57,37 @@ public class Storage {
 	      System.exit(0);
 	    }
 	    return result;
+	}
+	 
+	/**
+	 * Accepts a string of the results and notifies client of success
+	 *
+	 * @param (data) string of results
+	 * @return String of status
+	 */
+	 public String insertResults(String data)
+	  {
+	    Connection c = null;
+	    Statement stmt = null;
+	    try {
+	      Class.forName("org.sqlite.JDBC");
+	      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/spatial.db");
+	      c.setAutoCommit(false);
+	      stmt = c.createStatement();
+	      String sql = "INSERT INTO Results (date, latency, bandwidth, platform, algorithm, inputBytes, inputNodes, requestMS," +
+	    		  		"geoprocessMS, parseMS, responseMS, totalMS, valid, outputBytes, outputNodes)" +
+	    		  		"VALUES " + data + ";";
+	      stmt.executeUpdate(sql);
+
+	      stmt.close();
+	      c.commit();
+	      c.close();
+
+	    } catch ( Exception e ) {
+	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	      System.exit(0);
+	    }
+	    return"Records stored successfully";
 	}
 	 
 }
