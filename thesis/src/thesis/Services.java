@@ -10,6 +10,9 @@
 package thesis;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+import java.io.File;
 import thesis.Storage;
 
 @Path("/services")
@@ -144,18 +147,20 @@ public class Services {
 	}
 	
 	/**
-	 * (Write a succinct description of this method here.  If necessary,
-	 * additional paragraphs should be preceded by <p>, the html tag for
-	 * a new paragraph.)
+	 * Retrieves the results table from the database and
+	 * downloads it to the client
 	 *
-	 * @param (parameter name) (Describe the first parameter here)
-	 * @param (parameter name) (Do the same for each additional parameter)
-	 * @return (description of the return value)
+	 * @return a csv of results
 	 */
-	@GET
-	@Produces("text/plain")
 	@Path("/results")
-	public String returnResults(){
-		return "Returns the results";
+	@GET
+	@Produces("application/vnd.ms-excel")
+	public Response returnResults(){
+		Storage retrieveResults = new Storage();
+		File file = retrieveResults.retrieveResults();
+		ResponseBuilder response = Response.ok((Object) file);
+		response.header("Content-Disposition",
+			"attachment; filename=\"results.csv\"");
+		return response.build();
 	}
 }

@@ -9,17 +9,11 @@
 package thesis;
 
 import java.sql.*;
+import au.com.bytecode.opencsv.*;
+import java.io.*;
 
 public class Storage {
 	
-//	public static void main( String args[] )
-//	{
-//		String table = "Points";
-//		int id = 1;
-//		Storage myself = new Storage();
-//		String wktResults = myself.fetchWKT(table, id);
-//		System.out.print(wktResults);
-//	}
 	
 	/**
 	 * Accepts parameters from web services and returns well-known
@@ -89,5 +83,39 @@ public class Storage {
 	    }
 	    return"Records stored successfully";
 	}
+	 
+	 /**
+		 * Accepts a string of the results and notifies client of success
+		 *
+		 * @param (data) string of results
+		 * @return String of status
+		 */
+		 public File retrieveResults()
+		  {
+			    Connection c = null;
+			    File fw = new File("C:/Users/Erin/Documents/Thesis/results/results.csv");
+			    try {
+			      Class.forName("org.sqlite.JDBC");
+			      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/spatial.db");
+			      c.setAutoCommit(false);
+			      ResultSet rs = null;
+			      String sql = "SELECT * FROM Results";
+					PreparedStatement pstmt = c.prepareStatement(sql);
+					try {
+					  rs = pstmt.executeQuery();
+					  CSVWriter writer = new CSVWriter(new FileWriter(fw), ',');
+					  writer.writeAll(rs, true);
+					  writer.close();
+					} finally {  
+					  rs.close();  
+					  pstmt.close();
+					  c.close(); 
+					}
+		    } catch ( Exception e ) {
+		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		      System.exit(0);
+		    }
+		    return fw;
+		}
 	 
 }
