@@ -87,11 +87,41 @@ public class Services {
 	 * @param (parameter name) (Do the same for each additional parameter)
 	 * @return (description of the return value)
 	 */
-	@GET
-	@Produces("text/plain")
 	@Path("/store")
-	public String storeRestuls(){
-		return "Stores the result in DB";
+	@POST
+	@Consumes("application/x-www-form-urlencoded")
+	@Produces("text/plain")
+	public String storeRestuls(@FormParam("date") String dateToday,
+			@FormParam("latency") int latencyTime,
+			@FormParam("bandwidth") int bandwidthTime,
+			@FormParam("platform") String platform,
+			@FormParam("algorithm") String algorithm,
+			@FormParam("input(bytes)") int inputBytes,
+			@FormParam("input(nodes)") int inputNodes,
+			@FormParam("request(ms)") int requestTime,
+			@FormParam("geoprocess(ms)") int processTime,
+			@FormParam("parse(ms)") int parseTime,
+			@FormParam("response(ms)") int responseTime,
+			@FormParam("total(ms)") int totalTime,
+			@FormParam("valid") boolean valid,
+			@FormParam("output(bytes)") int outputBytes,
+			@FormParam("output(nodes)") int outputNodes){
+		return "data=" + dateToday +
+				"&latency=" + latencyTime +
+				"&bandwidth=" + bandwidthTime + 
+				"&platform=" + platform +
+				"&algorithm=" +algorithm+
+				"&input(bytes)=" +inputBytes+
+				"&input(nodes)=" +inputNodes+
+				"&request(ms)=" +requestTime+
+				"&geoprocess(ms)=" +processTime+
+				"&parse(ms)=" +parseTime+
+				"&response(ms)=" + responseTime+
+				"&total(ms)=" +totalTime+
+				"&valid=TRUE" + valid +
+				"&output(bytes)=" +outputBytes+
+				"&output(nodes)=" + outputNodes;
+	
 	}
 	
 	/**

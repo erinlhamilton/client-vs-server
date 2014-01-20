@@ -23,16 +23,15 @@ function callBuf(dataType, callback) {
 		microAjax("http://localhost:8080/thesis/rest/services/" + dataType + "/" + id, function (data) {
 			var requestEnd = new Date();
 			var requestTime = requestEnd - requestStart;
-			var byteSize = data.length;
-			var nodeSize = (data.split(",").length - 1);
-			var inputSize = ", Input Size(bytes): " + byteSize + ", Input Size(nodes): " + nodeSize;
-			bufferGeom(requestTime, inputSize, data, dataType);
+			var inputBytes = data.length;
+			var inputNodes = getNodeSize(data);//-->results.js
+			bufferGeom(requestTime, inputBytes, inputNodes, data, dataType);//-->algorithms.js
 			done();
 		});
 			
 	}, function(err){
 		console.log(err);
-		callback();//-> return to main.js
+		
 	});
 
 

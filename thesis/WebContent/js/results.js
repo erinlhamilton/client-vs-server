@@ -4,6 +4,47 @@
  * @version 1.0
  */
 
+/**
+ * Determines the size (in nodes) of well-known text
+ *
+ * @param {data} well-known text
+ * @returns the size (in nodes) of the wkt
+ *
+ */
+function getNodeSize(data){
+	
+	return (data.split(",").length - 1) - (data.split("),(").length - 1);
+
+}
+
+/**
+ * Takes output from algorithms.js and formats into string
+ *
+ * @param {results} data to put into database
+ * @returns a string of data to be sent to server
+ */
+
+function formatResults(algorithm, inputBytes, inputNodes, requestTime, processTime, parseTime, totalTime, outputBytes, outputNodes){
+
+	var platform = "client";
+	var responseTime = 0;
+	var valid = true;
+	return "date=" + dateToday +
+		"&latency=" + latencyTime +
+		"&bandwidth=" + bandwidthTime + 
+		"&platform=" +platform+
+		"&algorithm=" +algorithm+
+		"&input(bytes)=" +inputBytes+
+		"&input(nodes)=" +inputNodes+
+		"&request(ms)=" +requestTime+
+		"&geoprocess(ms)=" +processTime+
+		"&parse(ms)=" +parseTime+
+		"&response(ms)=" + responseTime +
+		"&total(ms)=" +totalTime+
+		"&valid=" + valid+
+		"&output(bytes)=" +outputBytes+
+		"&output(nodes)=" + outputNodes;
+}
 
 /**
  * Called by algorithms.js to retrieve wkt file from the server
@@ -13,10 +54,11 @@
  */
 function storeResults(data) {
 	
-	var results = "Date Today: " + dateToday+ latencyTime + " " + bandwidthTime + " " + data;
-	
-	console.log(results);
-	//TODO:send data to the server to go in database
+	microAjax("http://localhost:8080/thesis/rest/services/store", 
+			function (err) {
+				console.log(err); 
+			}, 
+			data);
 }
 
 /**

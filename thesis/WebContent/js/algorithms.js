@@ -17,10 +17,9 @@
  *		Length (in bytes) of the input data.
  *
  */
-function bufferGeom(requestTime, inputSize, wkt, dataType){
+function bufferGeom(requestTime, inputBytes, inputNodes, wkt, dataType){
 
 	var bufferDist = 100;
-	var platform = 'Client';
 	var geoprocess = 'Buffer';
 	
 	var reader = new jsts.io.WKTReader();
@@ -42,22 +41,17 @@ function bufferGeom(requestTime, inputSize, wkt, dataType){
 	var parseEnd = new Date();
 	var parseTime = parseEnd - parseStart;
 	
-	console.log(buffer.isValid());
-	
-	
+	//TODO: test if output is valid geometry
+		
 	//Get the size in both bytes and # nodes of result
-	var resultBytes = buffer.length;
-	var resultNodes = (buffer.split(",").length - 1) - (buffer.split("),(").length - 1);
+	var outputBytes = buffer.length;
+	var outputNodes = getNodeSize(buffer);//-->results.js
 	
 	var totalTime = requestTime + buffTime + parseTime;
 	
-	var results = "Platform: " + platform + ", Geoprocess: " + geoprocess + inputSize + 
-	", Request Time(ms): " + requestTime + ", Geoprocess Time(MS): " + buffTime + 
-	", Parse Time(MS): " + parseTime + ", Total Time(MS): " + totalTime + 
-	", Result Size(bytes): " + resultBytes + ", Result Size(nodes): " + resultNodes;
-	
-	storeResults(results); //--> to results.js
-	//console.log(jsts.operation.valid.isValidOp.checkValidMultiPoint(output));
+	var results = formatResults(geoprocess, inputBytes, inputNodes, requestTime, buffTime, parseTime, totalTime, outputBytes, outputNodes);//-->results.js
+
+	storeResults(results); //--> results.js
 }
 
 

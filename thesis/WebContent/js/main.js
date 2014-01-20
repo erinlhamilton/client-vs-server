@@ -9,12 +9,12 @@
 /*
  * Global Variables
  */
-var imageAddr = "../WebContent/img/2012_7.png" + "?n=" + Math.random();
+//var imageAddr = "../img/2012_7.png"; //TODO: + "?n=" + Math.random();
 var startTime, endTime;
 var downloadSize = 1531904;
 var download = new Image();
-var latencyTime = "";
-var bandwidthTime = "";
+var latencyTime;
+var bandwidthTime;
 var dateToday = "";
 
 
@@ -48,7 +48,7 @@ function testBaseBandwidth(){
 }
 
 /**
- *  print results of bandwidth test to console
+ *  Record results of the bandwidth test
  */
 function showResults() {
     var duration = (endTime - startTime) / 1000; //Math.round()
@@ -66,8 +66,8 @@ function showResults() {
 */
 function initialize(){
 
-	testBaseLatency();
-	testBaseBandwidth();
+	//testBaseLatency();
+	//testBaseBandwidth();
 }
 
 /**
@@ -80,21 +80,40 @@ function initialize(){
 //                };
 
 /**
- * Click function for html button that starts client tests.
- * @param:  
+ * Gets current date and returns readable format
+ * @returns formatted date  
+ *
+*/
+function createDate(){
+    var d = new Date();
+    var curr_date = d.getDate();
+    var curr_month = d.getMonth() + 1; //Months are zero based
+    var curr_year = d.getFullYear();
+    var curr_hour = d.getHours();
+    var ampm = curr_hour >= 12 ? 'PM' : 'AM';
+    var curr_min = d.getMinutes();
+    return curr_year + "-" + curr_month + "-" + curr_date + curr_hour + ":" + curr_min + ampm;
+}
+
+/**
+ * Click function for HTML button that starts client tests. 
  *
 */
 function runClient(){
-	dateToday = new Date();
+	
+	dateToday = createDate();
+	latencyTime = 0;
+	bandwidthTime = 0;
+	
 	async.series([
 		function(callback){
 			callBuf("points", callback);
 		}//,
 //		 function(callback){
-//			callBuf("polylines", callback);
+//			callBuf("Polylines", callback);
 //		},
 //		function(callback){
-//			callBuf("polygon", callback);
+//			callBuf("Polygon", callback);
 //		},
 //		function(callback){
 //			callTriangulation(callback);
