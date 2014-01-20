@@ -9,10 +9,13 @@
 /*
  * Global Variables
  */
-var imageAddr = "../WebContent/img/2012_7.png" + "?n=" + Math.random();//Add this to new server files
+var imageAddr = "../WebContent/img/2012_7.png" + "?n=" + Math.random();
 var startTime, endTime;
 var downloadSize = 1531904;
 var download = new Image();
+var latencyTime = "";
+var bandwidthTime = "";
+var dateToday = "";
 
 
 /**
@@ -21,13 +24,14 @@ var download = new Image();
 function testBaseLatency(){
 	
 	window.startTime = new Date();
+	var totalTime = "";
 	
 	microAjax("/", function () {
 		window.endTime = new Date();
-		var totalTime = window.endTime - window.startTime;
+		totalTime = window.endTime - window.startTime;
 		});
-
-	//To Do: Do something with results
+	
+     latencyTime = "Latency(ms): " + totalTime;
 }
 
 /**
@@ -52,7 +56,7 @@ function showResults() {
     var speedBps = (bitsLoaded / duration).toFixed(2);
     var speedKbps = (speedBps / 1024).toFixed(2);
     var speedMbps = (speedKbps / 1024).toFixed(2);
-    //To Do: Do something with results
+    bandwidthTime = "Bandwidth(Mbps): " + speedMbps;
 }
 
 
@@ -81,22 +85,23 @@ function initialize(){
  *
 */
 function runClient(){
+	dateToday = new Date();
 	async.series([
 		function(callback){
 			callBuf("points", callback);
-		},
-		 function(callback){
-			callBuf("polylines", callback);
-		},
-		function(callback){
-			callBuf("polygon", callback);
-		},
-		function(callback){
-			callTriangulation(callback);
-		},
-		function(callback){
-			callIntersect(callback);
-		}	
+		}//,
+//		 function(callback){
+//			callBuf("polylines", callback);
+//		},
+//		function(callback){
+//			callBuf("polygon", callback);
+//		},
+//		function(callback){
+//			callTriangulation(callback);
+//		},
+//		function(callback){
+//			callIntersect(callback);
+//		}	
 		]);
 }
 
@@ -106,5 +111,5 @@ function runClient(){
  *
 */
 function runServer(){
-	
+	//TODO: function to start server test
 }

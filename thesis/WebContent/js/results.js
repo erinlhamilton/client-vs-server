@@ -8,12 +8,15 @@
 /**
  * Called by algorithms.js to retrieve wkt file from the server
  *
- * @param {data} data to put into database
+ * @param {results} data to put into database
  *
  */
-function storeResults() {
-	//send data to the server to go in database
+function storeResults(data) {
 	
+	var results = "Date Today: " + dateToday+ latencyTime + " " + bandwidthTime + " " + data;
+	
+	console.log(results);
+	//TODO:send data to the server to go in database
 }
 
 /**
@@ -24,6 +27,6 @@ function storeResults() {
  */
 function getResults() {
 	
-	//send request to server to retrieve data from database
+	//TODO:send request to server to retrieve data from database
 	
 }
