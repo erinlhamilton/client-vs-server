@@ -46,7 +46,9 @@ public class Services {
 	@GET
 	@Produces("text/plain")
 	public String returnLine(@PathParam("id") int id){
-		return "Returns the lines: " + id;
+		Storage storagePoints = new Storage();
+		String wktResults = storagePoints.fetchWKT("Lines", id);
+		return wktResults;
 	}
 	
 	/**
@@ -60,7 +62,9 @@ public class Services {
 	@GET
 	@Produces("text/plain")
 	public String returnPolygon(@PathParam("id") int id){
-		return "Returns the polygons: " + id;
+		Storage storagePoints = new Storage();
+		String wktResults = storagePoints.fetchWKT("Polygon", id);
+		return wktResults;
 	}
 		
 	
@@ -77,6 +81,7 @@ public class Services {
 	@Produces("text/plain")
 	@Path("/server")
 	public String serverGeoProcess(){
+		//TODO:
 		return "Starts the server geoprocessing";
 	}
 	
@@ -108,21 +113,6 @@ public class Services {
 			@FormParam("valid") boolean valid,
 			@FormParam("output(bytes)") int outputBytes,
 			@FormParam("output(nodes)") int outputNodes){
-//		return "data=" + dateToday +
-//				"&latency=" + latencyTime +
-//				"&bandwidth=" + bandwidthTime + 
-//				"&platform=" + platform +
-//				"&algorithm=" +algorithm+
-//				"&input(bytes)=" +inputBytes+
-//				"&input(nodes)=" +inputNodes+
-//				"&request(ms)=" +requestTime+
-//				"&geoprocess(ms)=" +processTime+
-//				"&parse(ms)=" +parseTime+
-//				"&response(ms)=" + responseTime+
-//				"&total(ms)=" +totalTime+
-//				"&valid=TRUE" + valid +
-//				"&output(bytes)=" +outputBytes+
-//				"&output(nodes)=" + outputNodes;
 	
 		String result = 
 				"('" + dateToday + "','"

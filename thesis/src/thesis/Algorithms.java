@@ -11,14 +11,39 @@ package thesis;
 
 import com.vividsolutions.jts.geom.*;
 import com.vividsolutions.jts.io.*;
-import thesis.Storage;
 
 public class Algorithms {
 	
-//Run Buffer on data
 	
-//Run Union on polygons
+	/**
+	 * Runs a JTS buffer on wkt data. Returns when done.
+	 *
+	 * @param {data} Well-known text geometry
+	 */
+	public String bufferGeom(String data){
+		//TODO: buffer incoming data, return 
+		//string of results
+		return "";
+	}
 	
-// Run Voronoi Triangulation on points
+	/**
+	 * Runs a JTS union on two WKT polygons
+	 *
+	 * @param {data} Well-known text polygons
+	 */
+	public String unionGeom(String data){
+		//TODO
+		return "";
+	}
+	
+	/**
+	 * Creates Voronoi Triangles from WKT points
+	 *
+	 * @param {data} Well-known text points
+	 */
+	public String voronoiGeom(String data){
+		//TODO
+		return "";
+	}
 
 }
