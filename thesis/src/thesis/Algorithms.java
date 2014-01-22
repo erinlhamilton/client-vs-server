@@ -14,6 +14,10 @@ import com.vividsolutions.jts.io.*;
 
 public class Algorithms {
 	
+	public static void main(String[] args){
+		//TODO: controls data and flow of execution
+	}
+	
 	
 	/**
 	 * Runs a JTS buffer on wkt data. Returns when done.
@@ -21,6 +25,8 @@ public class Algorithms {
 	 * @param {data} Well-known text geometry
 	 */
 	public String bufferGeom(String data){
+		
+		
 		//TODO: buffer incoming data, return 
 		//string of results
 		return "";

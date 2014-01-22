@@ -6,9 +6,40 @@
 </head>
 <body>
 <h1>Client-side versus Server-side Test Suite</h1>
-<input id="networkTest" type="button" value="Test Network" onclick="initialize();" />
+<input id="networkTest" type="button" value="Test Network" onclick="initialize();" /> 
+<br>
+<select id="browser" onchange="whichBrowser()">
+  <option></option>
+  <option>Chrome</option>
+  <option>Firefox</option>  
+  <option>IE</option>
+  <option>Safari</option>
+  <option>Opera</option>
+  <option>Other</option>
+</select>
+<br>
+<select id="hardware" onchange="whatHardware()">
+  <option></option>
+  <option>Laptop</option>
+  <option>Desktop</option>  
+  <option>Tablet</option>
+  <option>Phone</option>
+   <option>Other</option>
+</select>
+<br>
+<select id="OS" onchange="operatingSystem()">
+  <option></option>
+  <option>Windows</option>
+  <option>Apple</option>  
+  <option>Linux</option>
+  <option>Android</option>
+  <option>Other</option>
+</select>
+<br>
 <input id="startClient" type="button" value="Run Client" onclick="runClient();" />
+<br>
 <input id="startServer" type="button" value="Run Server" onclick="runServer();" />
+<br>
 <input id="getResults" type="button" value="Download Results" onclick="getResults();" />
 
 <!-- JavaScript Libraries -->

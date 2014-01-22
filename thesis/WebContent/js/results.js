@@ -47,9 +47,9 @@ function formatResults(algorithm, inputBytes, inputNodes, requestTime, processTi
 }
 
 /**
- * Called by algorithms.js to retrieve wkt file from the server
+ * Stores result string to DB using POST
  *
- * @param {results} data to put into database
+ * @param {data} string of data to put into database
  *
  */
 function storeResults(data) {
@@ -68,6 +68,9 @@ function storeResults(data) {
  *
  */
 function getResults() {
+	
+	microAjax("http://localhost:8080/thesis/rest/services/results", 
+			function () {});
 	
 	//TODO:send request to server to retrieve data from database
 	

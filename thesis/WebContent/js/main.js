@@ -16,6 +16,9 @@ var download = new Image();
 var latencyTime;
 var bandwidthTime;
 var dateToday = "";
+var hardware;
+var os;
+var browser;
 
 
 /**
@@ -93,6 +96,27 @@ function createDate(){
     var ampm = curr_hour >= 12 ? 'PM' : 'AM';
     var curr_min = d.getMinutes();
     return curr_year + "-" + curr_month + "-" + curr_date + curr_hour + ":" + curr_min + ampm;
+}
+
+function whichBrowser(){
+	
+	var value=document.getElementById("browser");
+	browser = value.options[value.selectedIndex].text;
+
+}
+
+function operatingSystem(){
+	
+	var value=document.getElementById("OS");
+	os = value.options[value.selectedIndex].text;
+
+}
+
+function whatHardware(){
+	
+	var value=document.getElementById("hardware");
+	hardware = value.options[value.selectedIndex].text;
+
 }
 
 /**
