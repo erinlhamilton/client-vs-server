@@ -5,51 +5,100 @@
  */
 
 /**
- * Records time of all steps and returns a string of the results
+ * Records time of all steps of geoprocess and returns a string
+ * of the results
  *
+ * @param {geoprocess} Buffer, Union, or Voronoi
  * @param {dataTime} Time to retrieve data on server
  * @param {wkt} well-known text from the server
+ * @param {wktTwo} if union, second wkt polygon, otherwise null
  * @returns a string of the results to be sent to the server
  */
-function bufferResults(dataTime, wkt){
+function getResults(geoprocess, dataTime, wkt, wktTwo){
 
-	var geoprocess = 'Buffer';
+	var inputBytes = 0;
+	var inputNodes = 0;
+	var inputParseTime = 0;
+	var output = "";
+	var geoprocessTime = 0;
 	
-	//Input wkt length in bytes and # nodes
-	var inputBytes = wkt.length;
-	var inputNodes = getNodeSize(wkt);//-->data.js
+	switch(geoprocess)
+	{
+	case "Buffer":
+		//Input wkt length in bytes and # nodes
+		inputBytes = wkt.length;
+		inputNodes = getNodeSize(wkt);//-->data.js
+		
+		//parse the input WKT to geometry
+		var inputParseStart = new Date();
+		var input = parseInput(wkt); //-->data.js
+		inputParseTime = new Date() - inputParseStart;
+		
+		//Buffer the geometry
+	   var geoprocessStart = new Date();
+	   output = bufferGeom(input); //-->algorithm.js
+	   geoprocessTime = new Date() - geoprocessStart;
+		
+	  	break;
+	  	
+	case "Union":
+		//Input wkt length in bytes and # nodes
+		inputBytes = wkt.length + wktTwo.length;
+		inputNodes = (getNodeSize(wkt)) + (getNodeSize(wktTwo));//-->data.js
+		
+		//parse the input WKT to geometry
+		var inputParseStart = new Date();
+		var a = parseInput(wktOne); //-->data.js
+		var b = parseInput(wktTwo); //-->data.js
+		inputParseTime = new Date() - inputParseStart;
+		
+		//Union Geoprocess
+	    var geoprocessStart = new Date();
+	    output = unionGeom(a, b);//-->algorithm.js
+		geoprocessTime = new Date() - geoprocessStart;
+	  break;
+	  
+	case "Voronoi":
+		//Input wkt length in bytes and # nodes
+		inputBytes = wkt.length;
+		inputNodes = getNodeSize(wkt);//-->data.js
+		
+		//parse the input WKT to geometry
+		var inputParseStart = new Date();
+		var input = parseInput(wkt); //-->data.js
+		inputParseTime = new Date() - inputParseStart;
+		
+		//Voronoi Triangulation Geoprocess
+	    var geoprocessStart = new Date();
+	    output = voronoiTriGeom(input);//-->algorithms.js
+		geoprocessTime = new Date() - geoprocessStart;
+	break;
+	default:
+	  "error";
+	}
 	
-	//parse the input WKT to geometry
-	var inputParseStart = new Date();
-	var input = parseInput(wkt); //-->data.js
-	var inputParseTime = new Date() - inputParseStart;
-	
-	//Buffer the geometry
-    var buffStart = new Date();
-    var buffer = bufferGeom(input); //-->algorithm.js
-    var buffTime = new Date() - buffStart;
-    
     //Validate output geometry
-	var buffValid = buffer.isValid(); 
+	var outputValid = output.isValid(); 
 	
 	//Parse the buffer geometry results back to WKT
 	var parseStart = new Date();
-	var bufferResult = parseOutput(buffer);//-->data.js
+	var outputResult = parseOutput(output);//-->data.js
 	var parseTime = new Date() - parseStart;
 		
 	//Get the size in both bytes and # nodes of WKT result
-	var outputBytes = bufferResult.length;
-	var outputNodes = getNodeSize(bufferResult);//-->data.js
+	var outputBytes = outputResult.length;
+	var outputNodes = getNodeSize(outputResult);//-->data.js
 	
-	var totalTime = dataTime + inputParseTime + buffTime + parseTime;
+	var totalTime = dataTime + inputParseTime + geoprocessTime + parseTime;
 	
-	var results = formatResults(geoprocess, inputBytes, inputNodes, dataTime, inputParseTime, buffTime, parseTime, totalTime, buffValid, outputBytes, outputNodes);//-->results.js
+	var results = formatResults(geoprocess, inputBytes, inputNodes, dataTime, inputParseTime, geoprocessTime, parseTime, totalTime, outputValid, outputBytes, outputNodes);//-->results.js
 
 	return results;
 }
 
+
 /**
- * Takes output from algorithms.js and formats into string
+ * Takes output from getResults and formats into string
  *
  * @param {results} data to put into database
  * @returns a string of data to be sent to server
@@ -57,9 +106,8 @@ function bufferResults(dataTime, wkt){
 
 function formatResults(algorithm, inputBytes, inputNodes, dataTime, inputParseTime, processTime, parseTime, totalTime, outputValid, outputBytes, outputNodes){
 
-	var platform = "client";
 	return "date=" + dateToday +
-		"&platform=" +platform+
+		"&platform=Client" +
 		"&algorithm=" +algorithm+
 		"&input(bytes)=" +inputBytes+
 		"&input(nodes)=" +inputNodes+
