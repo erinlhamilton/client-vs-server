@@ -19,19 +19,16 @@ function callBuf(dataType, callback) {
 	
 	async.eachSeries(Object.keys(sizeArray), function(item, done){
 		var id = sizeArray[item];
-		var requestStart = new Date();
 		microAjax("http://localhost:8080/thesis/rest/services/" + dataType + "/" + id, function (data) {
-			var requestEnd = new Date();
-			var requestTime = requestEnd - requestStart;
-			var inputBytes = data.length;
-			var inputNodes = getNodeSize(data);//-->results.js
-			bufferGeom(requestTime, inputBytes, inputNodes, data, dataType);//-->algorithms.js
+			var dataTime = 0;
+			var results = bufferResults(dataTime, data);
+			console.log(results);
+			//storeResults(results);
 			done();
 		});
 			
 	}, function(err){
 		console.log(err);
-		
 	});
 
 

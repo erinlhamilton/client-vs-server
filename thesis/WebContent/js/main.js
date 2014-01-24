@@ -126,8 +126,6 @@ function whatHardware(){
 function runClient(){
 	
 	dateToday = createDate();
-	latencyTime = 0;
-	bandwidthTime = 0;
 	
 	async.series([
 		function(callback){

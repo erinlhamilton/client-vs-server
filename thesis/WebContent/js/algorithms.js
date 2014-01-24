@@ -6,50 +6,55 @@
  */
 
 /**
- * Receives WKT data (points, multilinestrings, and polygons) from the server
- * and runs a geometry buffer on them.
+ * Receives a geometry point, line, or polygon
+ * and returns a buffered geometry polygon
  *
- * @param {wkt}
- *		The WKT point, line, or polygon from server
- * @param {dataType}
- *		Is the WKT a point, line, or polygon?
- * @param {inputLength}
- *		Length (in bytes) of the input data.
+ * @param {input} geometry to be buffered
+ * @returns a geometry of the buffer results
  *
  */
-function bufferGeom(requestTime, inputBytes, inputNodes, wkt, dataType){
+function bufferGeom(input){
 
 	var bufferDist = 100;
-	var geoprocess = 'Buffer';
+    return input.buffer(bufferDist); 
+}
+
+
+/**
+ *  
+ * @param:  
+ *
+ */
+function intersectGeom(polyOne, polyTwo, inputBytes, inputNodes, requestTime, dataType){
+
+	var geoprocess = 'Intersect';
 	
-	var reader = new jsts.io.WKTReader();
-	var input = reader.read(wkt);
+	//parse the input WKT to geometry
+	var inputParseStart = new Date();
+	var a = parseInput(polyOne); //-->data.js
+	var b = parseInput(polyTwo); //-->data.js
+	var inputParseTime = new Date() - inputParseStart;//TODO: add input parse time to result string
 	
-	//Buffer the WKT
-    var buffStart = new Date();
-    var buffer = input.buffer(bufferDist); 
-	var buffEnd = new Date();
-	var buffTime = buffEnd - buffStart;
+	//Union Geoprocess
+    var intersectStart = new Date();
+    var intersect = a.union(b);
+	var unionTime = new Date() - intersectStart;
 	
-	//Parse the buffer results back to WKT
+	//TODO: add valid variable to result string
+	var unionValid = intersect.isValid();
+    
+	//parse the output geometry to WKT
 	var parseStart = new Date();
-	var parser = new jsts.io.WKTParser();
-    buffer = parser.write(buffer);
+	var unionResult = parseOutput(intersect);//-->data.js
+	var parseTime = new Date() - parseStart;
 	
-	reader.read(buffer);
-	
-	var parseEnd = new Date();
-	var parseTime = parseEnd - parseStart;
-	
-	//TODO: test if output is valid geometry
-		
 	//Get the size in both bytes and # nodes of result
-	var outputBytes = buffer.length;
-	var outputNodes = getNodeSize(buffer);//-->results.js
+	var outputBytes = unionResult.length;
+	var outputNodes = getNodeSize(unionResult);//-->data.js
 	
-	var totalTime = requestTime + buffTime + parseTime;
+	var totalTime = requestTime + inputParseTime + unionTime + parseTime;
 	
-	var results = formatResults(geoprocess, inputBytes, inputNodes, requestTime, buffTime, parseTime, totalTime, outputBytes, outputNodes);//-->results.js
+	var results = formatResults(geoprocess, inputBytes, inputNodes, requestTime, unionTime, parseTime, totalTime, outputBytes, outputNodes);//-->results.js
 
 	storeResults(results); //--> results.js
 }
@@ -60,68 +65,30 @@ function bufferGeom(requestTime, inputBytes, inputNodes, wkt, dataType){
  * @param:  
  *
  */
-function intersectGeom(polyOne, polyTwo, inputLength, byteSize, requestTime){
-	var dateToday = new Date();
-	var platform = 'Client';
-	var geoprocess = 'Intersect';
-	var dataType = 'polygon';
-	var inputSize = inputLength;
-	
-	var reader = new jsts.io.WKTReader();
+function voronoiTriGeom(requestTime, inputBytes, inputNodes, wkt, dataType){
 
-	var a = reader.read(polyOne);
-	var b = reader.read(polyTwo);
-	
-    var intersectStart = new Date();
-    var intersect = a.union(b);
-	var intersectEnd = new Date();
-	var intersectTime = intersectEnd - intersectStart;
-    
-	var parseStart = new Date();
-	var parser = new jsts.io.WKTParser();
-    intersect = parser.write(intersect);
-	var parseEnd = new Date();
-	var parseTime = parseEnd - parseStart;
-	var resultSize = intersect.length;
-	
-	var totalTime = parseTime + intersectTime+ requestTime;
-	
-	getResults(dateToday, platform, dataType, inputSize, byteSize, geoprocess, intersectTime, parseTime, totalTime, resultSize, requestTime);
-
-}
-
-/**
- *  
- * @param:  
- *
- */
-function voronoiTriGeom(wicket, inputLength, byteSize, requestTime){
-
-	var dateToday = new Date();
-	var dataType = 'points';
-	var platform = 'Client';
 	var geoprocess = 'Voronoi';
-	var inputSize = inputLength;
 	
-	var geomFact = new jsts.geom.GeometryFactory();
-	var reader = new jsts.io.WKTReader();
+	//parse the input WKT to geometry
+	var inputParseStart = new Date();
+	var input = parseInput(wkt); //-->data.js
+	var inputParseTime = new Date() - inputParseStart;//TODO: add input parse time to result string
 	
-	var input = reader.read(wicket);
+	//Voronoi Triangulation Geoprocess
     var voronoiStart = new Date();
+    var geomFact = new jsts.geom.GeometryFactory();
 	var builder = new jsts.triangulate.VoronoiDiagramBuilder();
     builder.setSites(input);
     var voronoi = builder.getDiagram(geomFact);
-	var voronoiEnd = new Date();
-	var voronoiTime = voronoiEnd - voronoiStart;
+	var voronoiTime = new Date() - voronoiStart;
 	
 	var parseStart = new Date();
-	var parser = new jsts.io.WKTParser();
-    input = parser.write(input);
-    voronoi = parser.write(voronoi);
-	 
-	var parseEnd = new Date();
-	var parseTime = parseEnd - parseStart;
-	var resultSize = voronoi.length;
+    var voronoiResult = parserOutput(voronoi);
+	var parseTime = new Date() - parseStart;
+	
+	//Get the size in both bytes and # nodes of result
+	var outputBytes = unionResult.length;
+	var outputNodes = getNodeSize(voronoiResult);//-->data.js
 
 	var totalTime = voronoiTime + parseTime + requestTime;
 	
