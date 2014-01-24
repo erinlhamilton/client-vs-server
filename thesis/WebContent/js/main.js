@@ -13,12 +13,7 @@
 var startTime, endTime;
 var downloadSize = 1531904;
 var download = new Image();
-var latencyTime;
-var bandwidthTime;
-var dateToday = "";
-var hardware;
-var os;
-var browser;
+var mdJSON = {};
 
 
 /**
@@ -27,14 +22,13 @@ var browser;
 function testBaseLatency(){
 	
 	window.startTime = new Date();
-	var totalTime = "";
-	
+	var totalTime = 0;
 	microAjax("/", function () {
 		window.endTime = new Date();
 		totalTime = window.endTime - window.startTime;
+		return totalTime;
 		});
 	
-     latencyTime = "Latency(ms): " + totalTime;
 }
 
 /**
@@ -44,7 +38,8 @@ function testBaseBandwidth(){
 
 	download.onload = function () {
 		endTime = (new Date()).getTime();
-		showResults();
+		var bandwidth = showResults();
+		return bandwidth;
 	};
 	startTime = (new Date()).getTime();
 	download.src = imageAddr;
@@ -59,7 +54,7 @@ function showResults() {
     var speedBps = (bitsLoaded / duration).toFixed(2);
     var speedKbps = (speedBps / 1024).toFixed(2);
     var speedMbps = (speedKbps / 1024).toFixed(2);
-    bandwidthTime = "Bandwidth(Mbps): " + speedMbps;
+    return speedMbps;
 }
 
 
@@ -68,19 +63,37 @@ function showResults() {
  *
 */
 function initialize(){
-
-	//testBaseLatency();
-	//testBaseBandwidth();
+	
+	mdJSON.ID = testID();
+	mdJSON.Date = createDate();
+	mdJSON.Browser = whichBrowser();
+	mdJSON.OS = operatingSystem();
+	mdJSON.Hardware = whatHardware();
+	mdJSON.FirstLatency = "";//testBaseLatency();
+	mdJSON.FirstBandwidth = "";//testBaseBandwidth();
+	
+	console.log(JSON.stringify(mdJSON));
+	
 }
 
-/**
- * On page load, run bandwidth and latency tests.
- *
-*/
-//window.onload = function()
-//                {
-//                   initialize();
-//                };
+function secondTest(){
+	
+	mdJSON.SecondLatency = "";//testBaseLatency();
+	mdJSON.SecondBandwidth = "";//testBaseBandwidth();
+	
+	console.log(JSON.stringify(mdJSON));
+	
+}
+
+function thirdTest(){
+	
+	mdJSON.ThirdLatency = "";//testBaseLatency();
+	mdJSON.ThirdBandwidth = "";//testBaseBandwidth();
+	console.log(JSON.stringify(mdJSON));
+	//TODO: send JSON to webservice to store in DB
+	
+}
+
 
 /**
  * Gets current date and returns readable format
@@ -95,27 +108,57 @@ function createDate(){
     var curr_hour = d.getHours();
     var ampm = curr_hour >= 12 ? 'PM' : 'AM';
     var curr_min = d.getMinutes();
-    return curr_year + "-" + curr_month + "-" + curr_date + curr_hour + ":" + curr_min + ampm;
+    return curr_year + "-" + curr_month + "-" + curr_date + " " + curr_hour + ":" + curr_min + ampm;
 }
+
+/**
+ * Returns the value in the text input form
+ * @returns ID of the test 
+ *
+*/
+
+function testID(){
+	
+	return document.getElementById("testID").value;
+
+}
+
+/**
+ * Returns result of browser dropdown
+ * @returns returns the browser selected
+ *
+*/
 
 function whichBrowser(){
 	
 	var value=document.getElementById("browser");
-	browser = value.options[value.selectedIndex].text;
+	return value.options[value.selectedIndex].text;
 
 }
+
+/**
+ * Returns result of operating system dropdown
+ * @returns returns the OS selected
+ *
+*/
 
 function operatingSystem(){
 	
 	var value=document.getElementById("OS");
-	os = value.options[value.selectedIndex].text;
+	return value.options[value.selectedIndex].text;
 
 }
+
+/**
+ * Returns result of hardware dropdown
+ * @returns returns the hardware selected
+ *
+*/
 
 function whatHardware(){
 	
 	var value=document.getElementById("hardware");
-	hardware = value.options[value.selectedIndex].text;
+	return value.options[value.selectedIndex].text;
 
 }
 
@@ -124,8 +167,6 @@ function whatHardware(){
  *
 */
 function runClient(){
-	
-	dateToday = createDate();
 	
 	async.series([
 		function(callback){

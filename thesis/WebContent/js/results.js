@@ -91,8 +91,7 @@ function getResults(geoprocess, dataTime, wkt, wktTwo){
 	
 	var totalTime = dataTime + inputParseTime + geoprocessTime + parseTime;
 	
-	var results = formatResults(geoprocess, inputBytes, inputNodes, dataTime, inputParseTime, geoprocessTime, parseTime, totalTime, outputValid, outputBytes, outputNodes);//-->results.js
-
+	var results = formatResults(geoprocess, inputBytes, inputNodes, dataTime, inputParseTime, geoprocessTime, parseTime, totalTime, outputValid, outputBytes, outputNodes);
 	return results;
 }
 
@@ -106,7 +105,8 @@ function getResults(geoprocess, dataTime, wkt, wktTwo){
 
 function formatResults(algorithm, inputBytes, inputNodes, dataTime, inputParseTime, processTime, parseTime, totalTime, outputValid, outputBytes, outputNodes){
 
-	return "date=" + dateToday +
+
+	return "id=" + mdJSON.ID +
 		"&platform=Client" +
 		"&algorithm=" +algorithm+
 		"&input(bytes)=" +inputBytes+
@@ -116,7 +116,7 @@ function formatResults(algorithm, inputBytes, inputNodes, dataTime, inputParseTi
 		"&geoprocess(ms)=" +processTime+
 		"&parse(ms)=" +parseTime+
 		"&total(ms)=" +totalTime+
-		"&valid=" + outputValid+
+		"&valid=" +outputValid+
 		"&output(bytes)=" +outputBytes+
 		"&output(nodes)=" +outputNodes;
 }

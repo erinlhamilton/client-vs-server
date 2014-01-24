@@ -63,6 +63,23 @@ function storeResults(data) {
 }
 
 /**
+ * Stores result string to DB using POST
+ *
+ * @param {data} string of data to put into database
+ *
+ */
+function storeMetadata() {
+	
+	var metadata = JSON.stringify(mdJSON);
+	
+	microAjax("http://localhost:8080/thesis/rest/services/store", 
+			function (err) {
+				console.log(err); 
+			}, 
+			metadata);
+}
+
+/**
  * Called by algorithms.js to retrieve wkt file from the server
  * 
  * @returns the results of test in txt

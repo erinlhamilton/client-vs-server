@@ -6,7 +6,8 @@
 </head>
 <body>
 <h1>Client-side versus Server-side Test Suite</h1>
-<input id="networkTest" type="button" value="Test Network" onclick="initialize();" /> 
+<br>
+<form>Test ID: <input type="text" id = "testID" name="ID"></form>
 <br>
 <select id="browser" onchange="whichBrowser()">
   <option></option>
@@ -35,10 +36,17 @@
   <option>Android</option>
   <option>Other</option>
 </select>
+
+<br>
+<input id="testOne" type="button" value="Initial Test" onclick="initialize();" /> 
 <br>
 <input id="startClient" type="button" value="Run Client" onclick="runClient();" />
 <br>
+<input id="testTwo" type="button" value="Second Test" onclick="secondTest();" /> 
+<br>
 <input id="startServer" type="button" value="Run Server" onclick="runServer();" />
+<br>
+<input id="testThree" type="button" value="Third Test" onclick="thirdTest();" /> 
 <br>
 <input id="getResults" type="button" value="Download Results" onclick="getResults();" />
 
