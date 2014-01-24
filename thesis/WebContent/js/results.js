@@ -92,6 +92,7 @@ function getResults(geoprocess, dataTime, wkt, wktTwo){
 	var totalTime = dataTime + inputParseTime + geoprocessTime + parseTime;
 	
 	var results = formatResults(geoprocess, inputBytes, inputNodes, dataTime, inputParseTime, geoprocessTime, parseTime, totalTime, outputValid, outputBytes, outputNodes);
+	
 	return results;
 }
 
@@ -120,4 +121,27 @@ function formatResults(algorithm, inputBytes, inputNodes, dataTime, inputParseTi
 		"&output(bytes)=" +outputBytes+
 		"&output(nodes)=" +outputNodes;
 }
+
+
+/**
+ * Returns a string of the test metadata
+ *
+ * @returns a string of data to be sent to server
+ */
+
+function formatMetadata(){
+
+	return "id=" + mdJSON.ID +
+		"&date=" + mdJSON.Date +
+		"&browser=" + mdJSON.Browser +
+		"&os=" + mdJSON.OS +
+		"&hardware=" + mdJSON.Hardware +
+		"&firstLatency=" + mdJSON.FirstLatency +
+		"&firstBandwidth=" + mdJSON.FirstBandwidth +
+		"&secondLatency="+ mdJSON.SecondLatency +
+		"&secondBandwidth=" + mdJSON.SecondBandwidth +
+		"&thirdLatency=" + mdJSON.ThirdLatency +
+		"&thirdBandwidth=" + mdJSON.ThirdBandwidth;
+}
+
 

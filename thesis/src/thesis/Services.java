@@ -98,7 +98,7 @@ public class Services {
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
 	@Produces("text/plain")
-	public String storeRestuls(@FormParam("date") String dateToday,
+	public String storeResults(@FormParam("date") String dateToday,
 			@FormParam("latency") int latencyTime,
 			@FormParam("bandwidth") int bandwidthTime,
 			@FormParam("platform") String platform,
@@ -134,6 +134,47 @@ public class Services {
 		Storage storeResults = new Storage();
 		String success = storeResults.insertResults(result);
 		return success;
+	}
+	
+	/**
+	 * Post web services that takes results from clients and sends them
+	 * to Storage.java to be stored in db
+	 *
+	 * @param (parameter name) (Describe the first parameter here)
+	 * @param (parameter name) (Do the same for each additional parameter)
+	 * @return (description of the return value)
+	 */
+	@Path("/storeMetadata")
+	@POST
+	@Consumes("application/x-www-form-urlencoded")
+	@Produces("text/plain")
+	public String storeMetadata(@FormParam("id") int ID,
+			@FormParam("date") String dateToday,
+			@FormParam("browser") String browser,
+			@FormParam("os") String operatingSystem,
+			@FormParam("hardware") String hardware,
+			@FormParam("firstLatency") int firstLatency,
+			@FormParam("firstBandwidth") int firstBandwidth,
+			@FormParam("secondLatency") int secondLatency,
+			@FormParam("secondBandwidth") int secondBandwidth,
+			@FormParam("thirdLatency") int thirdLatency,
+			@FormParam("thirdBandwidth") int thirdBandwidth){
+	
+		String result = 
+				"('" + ID + "','"
+		 		+dateToday + "','"
+				+browser + "','"
+				+ operatingSystem + "','"
+				+hardware+ "','"
+				+firstLatency+ "','"
+				+firstBandwidth+ "','"
+				+secondLatency+ "','"
+				+secondBandwidth+ "','"
+				+thirdLatency+ "')";
+		
+		//Storage storeResults = new Storage();
+		//String success = storeResults.insertMetadata(result);
+		return result;
 	}
 	
 	/**

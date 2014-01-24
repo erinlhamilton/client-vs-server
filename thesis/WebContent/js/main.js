@@ -89,7 +89,7 @@ function thirdTest(){
 	
 	mdJSON.ThirdLatency = "";//testBaseLatency();
 	mdJSON.ThirdBandwidth = "";//testBaseBandwidth();
-	console.log(JSON.stringify(mdJSON));
+	storeMetadata();
 	//TODO: send JSON to webservice to store in DB
 	
 }

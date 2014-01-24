@@ -70,9 +70,9 @@ function storeResults(data) {
  */
 function storeMetadata() {
 	
-	var metadata = JSON.stringify(mdJSON);
+	var metadata = formatMetadata();
 	
-	microAjax("http://localhost:8080/thesis/rest/services/store", 
+	microAjax("http://localhost:8080/thesis/rest/services/storeMetadata", 
 			function (err) {
 				console.log(err); 
 			}, 

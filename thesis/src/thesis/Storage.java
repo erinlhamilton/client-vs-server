@@ -84,6 +84,37 @@ public class Storage {
 	    return"Records stored successfully";
 	}
 	 
+		/**
+		 * Accepts a string of the metadata results and notifies client of success
+		 *
+		 * @param (data) string of results
+		 * @return String of status
+		 */
+		 public String insertMetadata(String data)
+		  {
+		    Connection c = null;
+		    Statement stmt = null;
+		    try {
+		      Class.forName("org.sqlite.JDBC");
+		      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/spatial.db");
+		      c.setAutoCommit(false);
+		      stmt = c.createStatement();
+		      String sql = "INSERT INTO Metadata (ID , dateToday, browser, operatingSystem, hardware, firstLatency, " +
+		    		  		"firstBandwidth, secondLatency, secondBandwidth, thirdLatency)" +
+		    		  		"VALUES " + data + ";";
+		      stmt.executeUpdate(sql);
+
+		      stmt.close();
+		      c.commit();
+		      c.close();
+
+		    } catch ( Exception e ) {
+		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		      System.exit(0);
+		    }
+		    return"Records stored successfully";
+		}
+	 
 	 /**
 		 * Accepts a string of the results and notifies client of success
 		 *
