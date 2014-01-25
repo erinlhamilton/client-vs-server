@@ -73,7 +73,7 @@ public class Services {
 	public String returnPolygon(@PathParam("id") int id){
 		Storage storagePoints = new Storage();
 		long startTime = System.nanoTime();
-		String wktResults = storagePoints.fetchWKT("Polygon", id);
+		String wktResults = storagePoints.fetchWKT("Polygons", id);
 		long totalTime = (System.nanoTime()-startTime)/1000000;
 		String resultJSON = "{ \"wkt\": \"" + wktResults + "\", \"time\": \"" + totalTime + "\"}";
 		return resultJSON;

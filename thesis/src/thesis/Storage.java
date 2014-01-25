@@ -33,12 +33,12 @@ public class Storage {
 	      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/spatial.db");
 	      c.setAutoCommit(false);
 	      ResultSet rs = null;
-	      String sql = "SELECT PointWKT FROM "+ wktTable +" WHERE ID = ?";
+	      String sql = "SELECT WKT FROM "+ wktTable +" WHERE ID = ?";
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			pstmt.setInt(1, id);
 			try {
 			  rs = pstmt.executeQuery();
-			  String  wkt = rs.getString("PointWKT");
+			  String  wkt = rs.getString("WKT");
 			  result = wkt;
 			} finally {  
 			  rs.close();  
@@ -69,8 +69,8 @@ public class Storage {
 	      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/spatial.db");
 	      c.setAutoCommit(false);
 	      stmt = c.createStatement();
-	      String sql = "INSERT INTO Results (testID, geoprocess, dataType, input(Bytes), input(Nodes), data(ms), inParse(ms), " +
-	    		  		"geoprocess(ms), outParse(ms), total(ms), outputValid, output(Bytes), output(Nodes))" +
+	      String sql = "INSERT INTO Results (ID, Platform, Geoprocess, DataType, InputBytes, InputNodes, ServerDataMS," +
+	      		"InputParseMS, GeoprocessMS, OutputParseMS, TotalTimeMS, OutputValid, OutputBytes, OutputNodes)" +
 	    		  		"VALUES " + data + ";";
 	      stmt.executeUpdate(sql);
 
@@ -100,8 +100,8 @@ public class Storage {
 		      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/spatial.db");
 		      c.setAutoCommit(false);
 		      stmt = c.createStatement();
-		      String sql = "INSERT INTO Metadata (ID , dateToday, browser, operatingSystem, hardware, firstLatency, " +
-		    		  		"firstBandwidth, secondLatency, secondBandwidth, thirdLatency)" +
+		      String sql = "INSERT INTO Metadata (ID , Date, Browser, OperatingSystem, Hardware, FirstLatency, FirstBandwidth, " +
+		    		  		"SecondLatency, SecondBandwidth, ThirdLatency, ThirdBandwidth)" +
 		    		  		"VALUES " + data + ";";
 		      stmt.executeUpdate(sql);
 
