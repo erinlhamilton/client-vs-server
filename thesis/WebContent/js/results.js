@@ -14,7 +14,7 @@
  * @param {wktTwo} if union, second wkt polygon, otherwise null
  * @returns a string of the results to be sent to the server
  */
-function getResults(geoprocess, dataTime, wkt, wktTwo){
+function getResults(geoprocess, dataType, dataTime, wkt, wktTwo){
 
 	var inputBytes = 0;
 	var inputNodes = 0;
@@ -92,7 +92,7 @@ function getResults(geoprocess, dataTime, wkt, wktTwo){
 	//convert string time outputs to integers to add together for a total time
 	var totalTime = parseInt(dataTime) + parseInt(inputParseTime) + parseInt(geoprocessTime) + parseInt(parseTime);
 
-	var results = formatResults(geoprocess, inputBytes, inputNodes, dataTime, inputParseTime, geoprocessTime, parseTime, totalTime, outputValid, outputBytes, outputNodes);
+	var results = formatResults(geoprocess, dataType, inputBytes, inputNodes, dataTime, inputParseTime, geoprocessTime, parseTime, totalTime, outputValid, outputBytes, outputNodes);
 	
 	return results;
 }
@@ -105,12 +105,12 @@ function getResults(geoprocess, dataTime, wkt, wktTwo){
  * @returns a string of data to be sent to server
  */
 
-function formatResults(algorithm, inputBytes, inputNodes, dataTime, inputParseTime, processTime, parseTime, totalTime, outputValid, outputBytes, outputNodes){
-
+function formatResults(algorithm, dataType, inputBytes, inputNodes, dataTime, inputParseTime, processTime, parseTime, totalTime, outputValid, outputBytes, outputNodes){
 
 	return "id=" + mdJSON.ID +
 		"&platform=Client" +
 		"&algorithm=" +algorithm+
+		"&dataType=" + dataType +
 		"&input(bytes)=" +inputBytes+
 		"&input(nodes)=" +inputNodes+
 		"&serverData(ms)=" +dataTime+

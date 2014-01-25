@@ -198,9 +198,12 @@ function runClient(){
 
 /**
  * Click function for html button that starts server tests.
- * @param:  
  *
 */
 function runServer(){
-	//TODO: function to start server test
+	
+	microAjax("http://localhost:8080/thesis/rest/services/server/" + mdJSON.ID, 
+			function (err) {
+				console.log(err); 
+			});
 }

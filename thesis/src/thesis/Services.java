@@ -53,8 +53,11 @@ public class Services {
 	@Produces("text/plain")
 	public String returnLine(@PathParam("id") int id){
 		Storage storagePoints = new Storage();
+		long startTime = System.nanoTime();
 		String wktResults = storagePoints.fetchWKT("Lines", id);
-		return wktResults;
+		long totalTime = (System.nanoTime()-startTime)/1000000;
+		String resultJSON = "{ \"wkt\": \"" + wktResults + "\", \"time\": \"" + totalTime + "\"}";
+		return resultJSON;
 	}
 	
 	/**
@@ -69,19 +72,38 @@ public class Services {
 	@Produces("text/plain")
 	public String returnPolygon(@PathParam("id") int id){
 		Storage storagePoints = new Storage();
+		long startTime = System.nanoTime();
 		String wktResults = storagePoints.fetchWKT("Polygon", id);
-		return wktResults;
+		long totalTime = (System.nanoTime()-startTime)/1000000;
+		String resultJSON = "{ \"wkt\": \"" + wktResults + "\", \"time\": \"" + totalTime + "\"}";
+		return resultJSON;
+	}
+	
+	/**
+	 * Accepts a valid ID for the table containing the union
+	 * polygons
+	 *
+	 * @param (id) The ID of the polygon wkt file
+	 * @return JSON containing the wkt file
+	 */
+	@Path("/union/{id}")
+	@GET
+	@Produces("text/plain")
+	public String returnUnionWKT(@PathParam("id") int id){
+		Storage storagePoints = new Storage();
+		long startTime = System.nanoTime();
+		String wktResults = storagePoints.fetchWKT("Union", id);
+		long totalTime = (System.nanoTime()-startTime)/1000000;
+		String resultJSON = "{ \"wkt\": \"" + wktResults + "\", \"time\": \"" + totalTime + "\"}";
+		return resultJSON;
 	}
 		
 	
 	/**
-	 * (Write a succinct description of this method here.  If necessary,
-	 * additional paragraphs should be preceded by <p>, the html tag for
-	 * a new paragraph.)
+	 * When called, runs all the processes on the server side.
 	 *
-	 * @param (parameter name) (Describe the first parameter here)
-	 * @param (parameter name) (Do the same for each additional parameter)
-	 * @return (description of the return value)
+	 * @param {testID} the ID of the current test
+	 * @return String to let say test complete
 	 */
 	@GET
 	@Path("/server/{id}")
@@ -105,34 +127,32 @@ public class Services {
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
 	@Produces("text/plain")
-	public String storeResults(@FormParam("date") String dateToday,
-			@FormParam("latency") int latencyTime,
-			@FormParam("bandwidth") int bandwidthTime,
+	public String storeResults(@FormParam("id") int testID,
 			@FormParam("platform") String platform,
 			@FormParam("algorithm") String algorithm,
+			@FormParam("dataType") String dataType,
 			@FormParam("input(bytes)") int inputBytes,
 			@FormParam("input(nodes)") int inputNodes,
-			@FormParam("request(ms)") int requestTime,
+			@FormParam("serverData(ms)") int dataTime,
+			@FormParam("inputParse(ms)") int inputParseTime,
 			@FormParam("geoprocess(ms)") int processTime,
 			@FormParam("parse(ms)") int parseTime,
-			@FormParam("response(ms)") int responseTime,
 			@FormParam("total(ms)") int totalTime,
 			@FormParam("valid") boolean valid,
 			@FormParam("output(bytes)") int outputBytes,
 			@FormParam("output(nodes)") int outputNodes){
 	
 		String result = 
-				"('" + dateToday + "','"
-		 		+latencyTime + "','"
-				+bandwidthTime + "','"
+				"('" + testID + "','"
 				+ platform + "','"
 				+algorithm+ "','"
+				+dataType+ "','"
 				+inputBytes+ "','"
 				+inputNodes+ "','"
-				+requestTime+ "','"
+				+dataTime+ "','"
+				+inputParseTime+ "','"
 				+processTime+ "','"
 				+parseTime+ "','"
-				+ responseTime+ "','"
 				+totalTime+ "','"
 				+ valid + "','"
 				+outputBytes+ "','"

@@ -24,7 +24,7 @@ function callBuf(dataType, callback) {
 			var dataJSON = JSON.parse(data);
 			var dataTime = dataJSON.time;//Time, on server, to retrieve data from db
 			var wkt = dataJSON.wkt;
-			results = getResults(geoprocess, dataTime, wkt, null);
+			results = getResults(geoprocess, dataType, dataTime, wkt, null);
 			console.log(results);
 			//storeResults(results);
 			done();
@@ -47,8 +47,10 @@ function callTriangulation(callback){
 		var geoprocess = "Voronoi";
 		var id = sizeArray[item];
 		microAjax("http://localhost:8080/thesis/rest/services/points/" + id, function (data) {
-			var dataTime = 0;
-			var results = getResults(geoprocess, dataTime, data, null);
+			var dataJSON = JSON.parse(data);
+			var dataTime = dataJSON.time;//Time, on server, to retrieve data from db
+			var wkt = dataJSON.wkt;
+			var results = getResults(geoprocess, "points",  dataTime, wkt, null);
 			console.log(results);
 			//storeResults(results);
 			done();
@@ -71,9 +73,14 @@ function callUnion(callback){
 		var geoprocess = "Union";
 		var id = sizeArray[item];
 		microAjax("http://localhost:8080/thesis/rest/services/union/" + id, function (dataOne) {
+			var jsonOne = JSON.parse(data);
+			var dataTime = ParseInt(jsonOne.time);//Time, on server, to retrieve data from db
+			var dataOne = dataJSON.wkt;
 			microAjax("http://localhost:8080/thesis/rest/services/union/" + id+"b", function (data) {
-				var dataTime = 0;
-				var results = getResults(geoprocess, dataTime, dataOne, dataTwo);
+				var jsonTwo = JSON.parse(data);
+				dataTime += ParseInt(jsonTwo.time);//Time, on server, to retrieve data from db
+				var dataTwo = jsonTwo.wkt;
+				var results = getResults(geoprocess, "polygon", dataTime, dataOne, dataTwo);
 				console.log(results);
 				//storeResults(results);
 			});

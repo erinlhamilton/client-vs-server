@@ -131,8 +131,12 @@ public class Storage {
 			      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/spatial.db");
 			      c.setAutoCommit(false);
 			      ResultSet rs = null;
-			      //TODO: Perform a join on results and metadata table
-			      String sql = "SELECT * FROM Results";
+			      
+			      String sql ="SELECT *"+
+			      "FROM Results" +
+			      "INNER JOIN Metadata" +
+			      "On Results.ID = Metadata.ID";
+
 					PreparedStatement pstmt = c.prepareStatement(sql);
 					try {
 					  rs = pstmt.executeQuery();
