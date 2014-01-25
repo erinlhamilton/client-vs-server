@@ -19,12 +19,47 @@ public class Flow {
 	
 	/**
 	 * Main function of server-side code. Called from web service
-	 * from the client. Begins the processing.
+	 * from the client. Begins the server processing.
 	 *
 	 */
-	public static void main(String[] args){
-		String results = callTriangulation(1, 0);
-		System.out.print(results);
+	public String runServer(int testID){
+		int wktIDs[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		int unionIDs[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		String results = "";
+		Storage storeResults = new Storage();
+		
+		//Buffer points
+		for (int i = 0; i < wktIDs.length; i++){
+			results = callBuff(testID, "points", wktIDs[i]);
+			System.out.println(results);
+			//storeResults.insertResults(results);
+		}
+		
+		//Buffer lines
+		for (int i = 0; i < wktIDs.length; i++){
+			results = callBuff(testID, "lines", wktIDs[i]);
+			storeResults.insertResults(results);
+		}
+		
+		//Buffer polygons
+		for (int i = 0; i < wktIDs.length; i++){
+			results = callBuff(testID, "polygons", wktIDs[i]);
+			storeResults.insertResults(results);
+		}
+		
+		//Triangulate points
+		for (int i = 0; i < wktIDs.length; i++){
+			results = callTriangulation(testID, wktIDs[i]);
+			storeResults.insertResults(results);
+		}
+		
+		//Union two polygons
+		for (int i = 0; i < unionIDs.length; i++){
+			results = callUnion(testID, unionIDs[i]);
+			storeResults.insertResults(results);
+		}
+		
+		return "Test Complete.";
 	}
 	
 	
@@ -36,7 +71,7 @@ public class Flow {
 	 * @param {wktID} ID of wkt in database
 	 * @return a string of the results to insert into database
 	 */
-	public static String callBuff(int testID, String dataType, int wktID){
+	public String callBuff(int testID, String dataType, int wktID){
 		String geoprocess = "Buffer";
 
 		//Retrieve data from db
@@ -86,7 +121,7 @@ public class Flow {
 	 * @param {wktID} ID of wkt in database
 	 * @return a string of the results to insert into database
 	 */
-	public static String callTriangulation(int testID, int wktID){
+	public String callTriangulation(int testID, int wktID){
 		String geoprocess = "Triangulation";
 		String dataType = "points";
 
@@ -139,7 +174,7 @@ public class Flow {
 	 * @param {wktID} ID of wkt in database
 	 * @return a string of the results to insert into database
 	 */
-	public static String callUnion(int testID, int wktID){
+	public String callUnion(int testID, int wktID){
 		String geoprocess = "Union";
 		String dataType = "polygons";
 

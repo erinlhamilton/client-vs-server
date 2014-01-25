@@ -121,6 +121,8 @@ function formatResults(algorithm, inputBytes, inputNodes, dataTime, inputParseTi
 		"&valid=" +outputValid+
 		"&output(bytes)=" +outputBytes+
 		"&output(nodes)=" +outputNodes;
+	
+
 }
 
 

@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import java.io.File;
 
 import thesis.Storage;
+import thesis.Flow;
 
 @Path("/services")
 public class Services {
@@ -83,11 +84,12 @@ public class Services {
 	 * @return (description of the return value)
 	 */
 	@GET
+	@Path("/server/{id}")
 	@Produces("text/plain")
-	@Path("/server")
-	public String serverGeoProcess(){
-		//TODO:
-		return "Starts the server geoprocessing";
+	public String serverGeoProcess(@PathParam("id") int testID){
+		Flow startServer = new Flow();
+		String done = startServer.runServer(testID);
+		return done;
 	}
 	
 	

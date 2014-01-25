@@ -69,8 +69,8 @@ public class Storage {
 	      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/spatial.db");
 	      c.setAutoCommit(false);
 	      stmt = c.createStatement();
-	      String sql = "INSERT INTO Results (date, latency, bandwidth, platform, algorithm, inputBytes, inputNodes, requestMS," +
-	    		  		"geoprocessMS, parseMS, responseMS, totalMS, valid, outputBytes, outputNodes)" +
+	      String sql = "INSERT INTO Results (testID, geoprocess, dataType, input(Bytes), input(Nodes), data(ms), inParse(ms), " +
+	    		  		"geoprocess(ms), outParse(ms), total(ms), outputValid, output(Bytes), output(Nodes))" +
 	    		  		"VALUES " + data + ";";
 	      stmt.executeUpdate(sql);
 
