@@ -89,8 +89,9 @@ function getResults(geoprocess, dataTime, wkt, wktTwo){
 	var outputBytes = outputResult.length;
 	var outputNodes = getNodeSize(outputResult);//-->data.js
 	
-	var totalTime = dataTime + inputParseTime + geoprocessTime + parseTime;
-	
+	//convert string time outputs to integers to add together for a total time
+	var totalTime = parseInt(dataTime) + parseInt(inputParseTime) + parseInt(geoprocessTime) + parseInt(parseTime);
+
 	var results = formatResults(geoprocess, inputBytes, inputNodes, dataTime, inputParseTime, geoprocessTime, parseTime, totalTime, outputValid, outputBytes, outputNodes);
 	
 	return results;
@@ -124,7 +125,7 @@ function formatResults(algorithm, inputBytes, inputNodes, dataTime, inputParseTi
 
 
 /**
- * Returns a string of the test metadata
+ * Returns a string of the test metadata based on the mdJSON JSON object
  *
  * @returns a string of data to be sent to server
  */

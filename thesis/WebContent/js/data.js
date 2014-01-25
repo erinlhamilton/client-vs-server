@@ -15,7 +15,7 @@
  */
 function getNodeSize(data){
 	
-	return (data.split(",").length) - (data.split("),(").length);
+	return (data.split(",").length) - (data.split("),(").length) + 2;
 
 }
 
@@ -48,7 +48,7 @@ function parseOutput(result){
 }
 
 /**
- * Stores result string to DB using POST
+ * Stores string of results from geoprocessing to DB using POST
  *
  * @param {data} string of data to put into database
  *
@@ -63,7 +63,7 @@ function storeResults(data) {
 }
 
 /**
- * Stores result string to DB using POST
+ * Stores string of metadata from mdJSON to DB using POST
  *
  * @param {data} string of data to put into database
  *
@@ -80,9 +80,9 @@ function storeMetadata() {
 }
 
 /**
- * Called by algorithms.js to retrieve wkt file from the server
+ * Downloads table of the results from the db on the server in csv
  * 
- * @returns the results of test in txt
+ * @returns csv of the results from the db
  *
  */
 function getResults() {

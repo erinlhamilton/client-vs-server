@@ -26,6 +26,7 @@ public class Storage {
 	 
 	 public String fetchWKT(String wktTable, int id)
 	  {
+		long startTime = System.nanoTime();
 	    Connection c = null;
 	    String result ="";
 	    try {
@@ -50,8 +51,11 @@ public class Storage {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-	    return result;
-	}
+	    long endTime = System.nanoTime();
+	    long totalTime = (endTime-startTime)/1000000;
+	    String resultString = "{ \"wkt\": \"" + result + "\", \"time\": \"" + totalTime + "\"}";
+	    return resultString;
+	};
 	 
 	/**
 	 * Accepts a string of the results and notifies client of success

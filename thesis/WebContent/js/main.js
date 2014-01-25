@@ -17,7 +17,7 @@ var mdJSON = {};
 
 
 /**
- *  Test the base latency before testing begins
+ *  Determine the current network latency
  */
 function testBaseLatency(){
 	
@@ -32,7 +32,8 @@ function testBaseLatency(){
 }
 
 /**
- *  Test the base bandwidth by loading an img from the server.
+ *  Determine the current network bandwidth based on downloading
+ *  an image from the server of a known size
  */
 function testBaseBandwidth(){
 
@@ -59,7 +60,8 @@ function showResults() {
 
 
 /**
- * Test base latency and bandwidth
+ * Record metadata of test and store in a JSON
+ * object
  *
 */
 function initialize(){
@@ -71,33 +73,38 @@ function initialize(){
 	mdJSON.Hardware = whatHardware();
 	mdJSON.FirstLatency = "";//testBaseLatency();
 	mdJSON.FirstBandwidth = "";//testBaseBandwidth();
-	
-	console.log(JSON.stringify(mdJSON));
-	
+
 }
 
+/**
+ * Run second set of latency and bandwidth tests,
+ * store in json object
+ *
+*/
 function secondTest(){
 	
 	mdJSON.SecondLatency = "";//testBaseLatency();
 	mdJSON.SecondBandwidth = "";//testBaseBandwidth();
 	
-	console.log(JSON.stringify(mdJSON));
-	
 }
 
+/**
+ * Run a third set of latency and bandwidth tests,
+ * store in json object
+ *
+*/
 function thirdTest(){
 	
 	mdJSON.ThirdLatency = "";//testBaseLatency();
 	mdJSON.ThirdBandwidth = "";//testBaseBandwidth();
 	storeMetadata();
-	//TODO: send JSON to webservice to store in DB
 	
 }
 
 
 /**
- * Gets current date and returns readable format
- * @returns formatted date  
+ * Gets current date and returns readable string format
+ * @returns formatted date of year-month-day hour:minute
  *
 */
 function createDate(){
@@ -112,7 +119,8 @@ function createDate(){
 }
 
 /**
- * Returns the value in the text input form
+ * Returns the value in the text input form for the ID
+ * of the test
  * @returns ID of the test 
  *
 */
@@ -163,7 +171,8 @@ function whatHardware(){
 }
 
 /**
- * Click function for HTML button that starts client tests. 
+ * Click function for HTML button that starts client tests
+ * usign async.js to run tests in series
  *
 */
 function runClient(){

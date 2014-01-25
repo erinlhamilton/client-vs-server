@@ -1,5 +1,5 @@
 /**
- * @fileoverview The gate keeper between algorithms.js and flow.js
+ * @fileoverview The gate keeper between algorithms.js, data.js, and results.js
  * @author <a href="mailto:erin@erinhamilton.me">Erin Hamilton</a>
  * @version 1.0
  */
@@ -10,7 +10,7 @@ var sizeArray = ["0", "1"];
 //var sizeArray = ["50", "100", "200", "300", "400", "500", "600", "700", "800" , "900", "1000"];
 
 /**
- * Calls the buffer function in algorithms.js on all data.
+ * Controls the flow the buffer testing.
  * @param (dataType) Point, Line, or Polygon
  * @param (callback) When function finishes, return to main.js
  *
@@ -21,8 +21,10 @@ function callBuf(dataType, callback) {
 		var geoprocess = "Buffer";
 		var id = sizeArray[item];
 		microAjax("http://localhost:8080/thesis/rest/services/" + dataType + "/" + id, function (data) {
-			var dataTime = 0;
-			var results = getResults(geoprocess, dataTime, data, null);
+			var dataJSON = JSON.parse(data);
+			var dataTime = dataJSON.time;//Time, on server, to retrieve data from db
+			var wkt = dataJSON.wkt;
+			results = getResults(geoprocess, dataTime, wkt, null);
 			console.log(results);
 			//storeResults(results);
 			done();
@@ -35,7 +37,7 @@ function callBuf(dataType, callback) {
 }
 
 /**
- * Calls the buffer function in algorithms.js on all data.
+ * Controls the flow of the voronoi triangulation tests on points
  * @param (callback) When function finishes, return to main.js
  *
 */
@@ -59,7 +61,7 @@ function callTriangulation(callback){
 }
 
 /**
- * Calls the union function on polygons.
+ * Controls the flow of the union testing
  * @param (callback) When function finishes, return to main.js
  *
 */

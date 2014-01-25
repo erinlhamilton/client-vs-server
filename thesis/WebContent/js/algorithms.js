@@ -1,6 +1,7 @@
 /**
- * @fileoverview Runs a serious of geometry tests using the Buffer, Union,
- * and Voronoi Triangulation algorithms using jsts.js
+ * @fileoverview Performs the buffer, union, and triangulation 
+ * geoprocessing of various geometries and returns a geometry
+ * result
  * @author <a href="mailto:erin@erinhamilton.me">Erin Hamilton</a>
  * @version 1.0
  */
@@ -15,26 +16,33 @@
  */
 function bufferGeom(input){
 
+	//buffer distance in arc seconds
 	var bufferDist = 100;
     return input.buffer(bufferDist); 
 }
 
 
 /**
+ *  Receives two polygon geometries and
+ *  returns one union polygon geometry
  *  
- * @param:  
- *
+ * @param: {polyOne} first polygon geometry
+ * @param: {polyTwo} second polygon geometry
+ * @returns one polygon geometry
+ * 
  */
-function unionGeom(wktOne, wktTwo){
+function unionGeom(polyOne, polyTwo){
 
-    return wktOne.union(wktTwo);
+    return polyOne.union(polyTwo);
 
 }
 
-
 /**
+ *  Take points geometry and returns a geometry
+ *  collection of polygon geometries
  *  
- * @param:  
+ * @param: {input} point geometries
+ * @returns geometry collection of polygons
  *
  */
 function voronoiTriGeom(input){
