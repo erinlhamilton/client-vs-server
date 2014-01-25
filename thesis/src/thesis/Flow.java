@@ -23,16 +23,26 @@ public class Flow {
 	 *
 	 */
 	public static void main(String[] args){
-		//TODO: controls data and flow of execution
+		String results = callTriangulation(1, 0);
+		System.out.print(results);
 	}
 	
-	public static void callBuff(String dataType, int id){
+	
+	/**
+	 * Controls the flow of buffer processing, records and returns results 
+	 *
+	 * @param {testID} ID of current test
+	 * @param {dataType} point, line, or polygon Geometry
+	 * @param {wktID} ID of wkt in database
+	 * @return a string of the results to insert into database
+	 */
+	public static String callBuff(int testID, String dataType, int wktID){
 		String geoprocess = "Buffer";
 
 		//Retrieve data from db
 		Storage storageData = new Storage();
 		long startData = System.nanoTime();
-		String data = storageData.fetchWKT(dataType, id);
+		String data = storageData.fetchWKT(dataType, wktID);
 		long dataTime = (System.nanoTime()-startData)/1000000;
 		
 		//Length of input wkt (bytes and # nodes)
@@ -65,15 +75,113 @@ public class Flow {
 		
 		long totalTime = dataTime+ inParseTime + geoprocessTime + outParseTime;
 		
-		String result = dataFormat.resultString(geoprocess, inputBytes, inputNodes, dataTime, inParseTime, geoprocessTime, outParseTime, totalTime, outputValid, outputBytes, outputNodes);
-		System.out.print(result);
+		return dataFormat.resultString(testID, geoprocess, dataType, inputBytes, inputNodes, dataTime, inParseTime, geoprocessTime, outParseTime, totalTime, outputValid, outputBytes, outputNodes);
 	}
 	
-	public static void callTriangulation(){
+	/**
+	 * Controls the flow of traingulation processing, records and 
+	 * returns results 
+	 *
+	 * @param {testID} ID of current test
+	 * @param {wktID} ID of wkt in database
+	 * @return a string of the results to insert into database
+	 */
+	public static String callTriangulation(int testID, int wktID){
+		String geoprocess = "Triangulation";
+		String dataType = "points";
+
+		//Retrieve data from db
+		Storage storageData = new Storage();
+		long startData = System.nanoTime();
+		String data = storageData.fetchWKT(dataType, wktID);
+		long dataTime = (System.nanoTime()-startData)/1000000;
+		
+		//Length of input wkt (bytes and # nodes)
+		Format dataFormat = new Format();
+		int inputBytes = data.length();
+		int inputNodes = dataFormat.countNodes(data);//--> Format.java
+		
+		//Parse wkt to geometry
+		long startInParse = System.nanoTime();
+		Geometry geom = dataFormat.parseWKT(data);//--> Format.java
+		long inParseTime = (System.nanoTime()-startInParse)/1000000;
+		
+		//Run Buffer on geometry
+		Algorithms triangulate = new Algorithms();
+		long startGeoprocess = System.nanoTime();
+		Geometry voronoi = triangulate.voronoiGeom(geom);//-->Algorithms.java
+		long geoprocessTime = (System.nanoTime()-startGeoprocess)/1000000;
+		
+		//Is output a valid geometry?
+		Boolean outputValid = voronoi.isValid();
+		
+		//Parse geometry back to wkt
+		long startOutParse = System.nanoTime();
+		String output = dataFormat.parseGeom(voronoi);//--> Format.java
+		long outParseTime = (System.nanoTime()-startOutParse)/1000000;
+		
+		//Length of output wkt (bytes and #nodes)
+		int outputBytes = output.length();
+		int outputNodes = dataFormat.countNodes(output);//-->Format.java
+		
+		long totalTime = dataTime+ inParseTime + geoprocessTime + outParseTime;
+		
+		return dataFormat.resultString(testID, geoprocess, dataType, inputBytes, inputNodes, dataTime, inParseTime, geoprocessTime, outParseTime, totalTime, outputValid, outputBytes, outputNodes);
+
 			
 		}
 	
-	public static void callUnion(){
+	/**
+	 * Controls the flow of union processing, records and 
+	 * returns results 
+	 *
+	 * @param {testID} ID of current test
+	 * @param {wktID} ID of wkt in database
+	 * @return a string of the results to insert into database
+	 */
+	public static String callUnion(int testID, int wktID){
+		String geoprocess = "Union";
+		String dataType = "polygons";
+
+		//Retrieve data from db
+		Storage storageData = new Storage();
+		long startData = System.nanoTime();
+		String dataOne = storageData.fetchWKT(dataType, wktID);
+		String dataTwo = storageData.fetchWKT(dataType, wktID);
+		long dataTime = (System.nanoTime()-startData)/1000000;
+		
+		//Length of input wkt (bytes and # nodes)
+		Format dataFormat = new Format();
+		int inputBytes = dataOne.length() + dataTwo.length();
+		int inputNodes = (dataFormat.countNodes(dataOne)) + (dataFormat.countNodes(dataTwo));//--> Format.java
+		
+		//Parse wkt to geometry
+		long startInParse = System.nanoTime();
+		Geometry geomOne = dataFormat.parseWKT(dataOne);//--> Format.java
+		Geometry geomTwo = dataFormat.parseWKT(dataTwo);//--> Format.java
+		long inParseTime = (System.nanoTime()-startInParse)/1000000;
+		
+		//Run union on geometry
+		Algorithms union = new Algorithms();
+		long startGeoprocess = System.nanoTime();
+		Geometry unionResult = union.unionGeom(geomOne, geomTwo);//-->Algorithms.java
+		long geoprocessTime = (System.nanoTime()-startGeoprocess)/1000000;
+		
+		//Is output a valid geometry?
+		Boolean outputValid = unionResult.isValid();
+		
+		//Parse geometry back to wkt
+		long startOutParse = System.nanoTime();
+		String output = dataFormat.parseGeom(unionResult);//--> Format.java
+		long outParseTime = (System.nanoTime()-startOutParse)/1000000;
+		
+		//Length of output wkt (bytes and #nodes)
+		int outputBytes = output.length();
+		int outputNodes = dataFormat.countNodes(output);//-->Format.java
+		
+		long totalTime = dataTime+ inParseTime + geoprocessTime + outParseTime;
+		
+		return dataFormat.resultString(testID, geoprocess, dataType, inputBytes, inputNodes, dataTime, inParseTime, geoprocessTime, outParseTime, totalTime, outputValid, outputBytes, outputNodes);
 		
 	}
 
