@@ -12,7 +12,9 @@ package thesis;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
+
 import java.io.File;
+
 import thesis.Storage;
 
 @Path("/services")
@@ -31,8 +33,11 @@ public class Services {
 	@Produces("text/plain")
 	public String returnPoint(@PathParam("id") int id){
 		Storage storagePoints = new Storage();
+		long startTime = System.nanoTime();
 		String wktResults = storagePoints.fetchWKT("Points", id);
-		return wktResults;
+		long totalTime = (System.nanoTime()-startTime)/1000000;
+		String resultJSON = "{ \"wkt\": \"" + wktResults + "\", \"time\": \"" + totalTime + "\"}";
+		return resultJSON;
 	}
 	
 	/**

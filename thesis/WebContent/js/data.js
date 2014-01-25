@@ -79,17 +79,3 @@ function storeMetadata() {
 			metadata);
 }
 
-/**
- * Downloads table of the results from the db on the server in csv
- * 
- * @returns csv of the results from the db
- *
- */
-function getResults() {
-	
-	microAjax("http://localhost:8080/thesis/rest/services/results", 
-			function () {});
-	
-	//TODO:send request to server to retrieve data from database
-	
-}

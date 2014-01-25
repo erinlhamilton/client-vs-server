@@ -9,8 +9,8 @@
 package thesis;
 
 import java.sql.*;
-import au.com.bytecode.opencsv.*;
 import java.io.*;
+import au.com.bytecode.opencsv.*;
 
 public class Storage {
 	
@@ -26,7 +26,6 @@ public class Storage {
 	 
 	 public String fetchWKT(String wktTable, int id)
 	  {
-		long startTime = System.nanoTime();
 	    Connection c = null;
 	    String result ="";
 	    try {
@@ -51,10 +50,8 @@ public class Storage {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-	    long endTime = System.nanoTime();
-	    long totalTime = (endTime-startTime)/1000000;
-	    String resultString = "{ \"wkt\": \"" + result + "\", \"time\": \"" + totalTime + "\"}";
-	    return resultString;
+	    
+	    return result;
 	};
 	 
 	/**
@@ -134,6 +131,7 @@ public class Storage {
 			      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/spatial.db");
 			      c.setAutoCommit(false);
 			      ResultSet rs = null;
+			      //TODO: Perform a join on results and metadata table
 			      String sql = "SELECT * FROM Results";
 					PreparedStatement pstmt = c.prepareStatement(sql);
 					try {
