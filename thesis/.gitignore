@@ -2,3 +2,5 @@
 
 *.properties
 *.db
+*.sql
+*.sqlite
