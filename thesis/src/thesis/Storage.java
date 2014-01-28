@@ -30,7 +30,7 @@ public class Storage {
 	    String result ="";
 	    try {
 	      Class.forName("org.sqlite.JDBC");
-	      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/spatial.db");
+	      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/wktData.db");
 	      c.setAutoCommit(false);
 	      ResultSet rs = null;
 	      String sql = "SELECT WKT FROM "+ wktTable +" WHERE ID = ?";
@@ -66,7 +66,7 @@ public class Storage {
 	    Statement stmt = null;
 	    try {
 	      Class.forName("org.sqlite.JDBC");
-	      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/spatial.db");
+	      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/wktData.db");
 	      c.setAutoCommit(false);
 	      stmt = c.createStatement();
 	      String sql = "INSERT INTO Results (ID, Platform, Geoprocess, DataType, InputBytes, InputNodes, ServerDataMS," +
@@ -97,7 +97,7 @@ public class Storage {
 		    Statement stmt = null;
 		    try {
 		      Class.forName("org.sqlite.JDBC");
-		      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/spatial.db");
+		      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/wktData.db");
 		      c.setAutoCommit(false);
 		      stmt = c.createStatement();
 		      String sql = "INSERT INTO Metadata (ID , Date, Browser, OperatingSystem, Hardware, FirstLatency, FirstBandwidth, " +
@@ -128,7 +128,7 @@ public class Storage {
 			    File fw = new File("C:/Users/Erin/Documents/Thesis/results/results.csv");
 			    try {
 			      Class.forName("org.sqlite.JDBC");
-			      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/spatial.db");
+			      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/wktData.db");
 			      c.setAutoCommit(false);
 			      ResultSet rs = null;
 			      

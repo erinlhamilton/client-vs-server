@@ -182,10 +182,10 @@ function runClient(){
 			callBuf("points", callback);
 		}//,
 //		 function(callback){
-//			callBuf("Polylines", callback);
+//			callBuf("Lines", callback);
 //		},
 //		function(callback){
-//			callBuf("Polygon", callback);
+//			callBuf("Polygons", callback);
 //		},
 //		function(callback){
 //			callTriangulation(callback);

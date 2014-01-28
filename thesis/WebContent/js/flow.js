@@ -5,9 +5,15 @@
  */
 
 /**Global Varriables*/
-var sizeArray = ["0", "1"];
+var sizeArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600,
+				700, 800, 900, 1000];
 
-//var sizeArray = ["50", "100", "200", "300", "400", "500", "600", "700", "800" , "900", "1000"];
+//	var sizeArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600,
+//				700, 800, 900, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000,
+//				20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000, 150000, 
+//				200000, 250000, 300000, 350000, 400000, 450000, 500000];
+
+//var unionArray = ["50", "100", "200", "300", "400", "500", "600", "700", "800" , "900", "1000"];
 
 /**
  * Controls the flow the buffer testing.
@@ -69,9 +75,9 @@ function callTriangulation(callback){
 */
 function callUnion(callback){
 	
-	async.eachSeries(Object.keys(sizeArray), function(item, done){
+	async.eachSeries(Object.keys(unionArray), function(item, done){
 		var geoprocess = "Union";
-		var id = sizeArray[item];
+		var id = unionArray[item];
 		microAjax("http://localhost:8080/thesis/rest/services/union/" + id, function (dataOne) {
 			var jsonOne = JSON.parse(data);
 			var dataTime = ParseInt(jsonOne.time);//Time, on server, to retrieve data from db

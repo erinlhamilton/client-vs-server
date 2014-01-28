@@ -92,7 +92,7 @@ public class Services {
 	public String returnUnionWKT(@PathParam("id") int id){
 		Storage storagePoints = new Storage();
 		long startTime = System.nanoTime();
-		String wktResults = storagePoints.fetchWKT("Union", id);
+		String wktResults = storagePoints.fetchWKT("UnionPoly", id);
 		long totalTime = (System.nanoTime()-startTime)/1000000;
 		String resultJSON = "{ \"wkt\": \"" + wktResults + "\", \"time\": \"" + totalTime + "\"}";
 		return resultJSON;
