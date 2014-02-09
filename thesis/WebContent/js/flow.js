@@ -75,21 +75,17 @@ function callTriangulation(callback){
 */
 function callUnion(callback){
 	
-	async.eachSeries(Object.keys(unionArray), function(item, done){
+	async.eachSeries(Object.keys(sizeArray), function(item, done){
 		var geoprocess = "Union";
-		var id = unionArray[item];
-		microAjax("http://localhost:8080/thesis/rest/services/union/" + id, function (dataOne) {
-			var jsonOne = JSON.parse(data);
-			var dataTime = ParseInt(jsonOne.time);//Time, on server, to retrieve data from db
-			var dataOne = dataJSON.wkt;
-			microAjax("http://localhost:8080/thesis/rest/services/union/" + id+"b", function (data) {
-				var jsonTwo = JSON.parse(data);
-				dataTime += ParseInt(jsonTwo.time);//Time, on server, to retrieve data from db
-				var dataTwo = jsonTwo.wkt;
-				var results = getResults(geoprocess, "polygon", dataTime, dataOne, dataTwo);
-				console.log(results);
-				//storeResults(results);
-			});
+		var id = sizeArray[item];
+		microAjax("http://localhost:8080/thesis/rest/services/union/" + id, function (data) {
+			var dataJSON = JSON.parse(data);
+			var dataTime = dataJSON.time;//Time, on server, to retrieve data from db
+			var dataOne = dataJSON.wktA;
+			var dataTwo = dataJSON.wktB;
+			var results = getResults(geoprocess, "polygon", dataTime, dataOne, dataTwo);
+			console.log(results);
+			//storeResults(results);
 			done();
 		});
 			

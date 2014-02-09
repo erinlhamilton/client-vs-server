@@ -38,6 +38,7 @@ public class Services {
 		String wktResults = storagePoints.fetchWKT("Points", id);
 		long totalTime = (System.nanoTime()-startTime)/1000000;
 		String resultJSON = "{ \"wkt\": \"" + wktResults + "\", \"time\": \"" + totalTime + "\"}";
+		System.out.print(resultJSON);
 		return resultJSON;
 	}
 	
@@ -81,7 +82,7 @@ public class Services {
 	
 	/**
 	 * Accepts a valid ID for the table containing the union
-	 * polygons
+	 * polygons for polygons in table A
 	 *
 	 * @param (id) The ID of the polygon wkt file
 	 * @return JSON containing the wkt file
@@ -92,11 +93,13 @@ public class Services {
 	public String returnUnionWKT(@PathParam("id") int id){
 		Storage storagePoints = new Storage();
 		long startTime = System.nanoTime();
-		String wktResults = storagePoints.fetchWKT("UnionPoly", id);
+		String wktAResults = storagePoints.fetchWKT("Polygon_A", id);
+		String wktBResults = storagePoints.fetchWKT("Polygon_B", id);
 		long totalTime = (System.nanoTime()-startTime)/1000000;
-		String resultJSON = "{ \"wkt\": \"" + wktResults + "\", \"time\": \"" + totalTime + "\"}";
+		String resultJSON = "{ \"wktA\": \"" + wktAResults + "\", \"wktB\": \"" + wktBResults + "\", \"time\": \"" + totalTime + "\"}";
 		return resultJSON;
 	}
+
 		
 	
 	/**

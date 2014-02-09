@@ -32,6 +32,8 @@ function bufferGeom(input){
  * 
  */
 function unionGeom(polyOne, polyTwo){
+	
+	//CascadedPolygonUnion instead?
 
     return polyOne.union(polyTwo);
 
