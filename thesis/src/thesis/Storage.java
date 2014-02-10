@@ -36,7 +36,6 @@ public class Storage {
 	      c.setAutoCommit(false);    
 	      
 	      ResultSet rs = null;
-	      //String sql = "SELECT * FROM WKTDATA.sqlite_master WHERE type='table';";
 	      String sql = "SELECT "+wktTable+ "WKT FROM "+ wktTable +" WHERE "+wktTable+"ID = ?";
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			pstmt.setInt(1, id);

@@ -180,19 +180,19 @@ function runClient(){
 	async.series([
 		function(callback){
 			callBuf("points", callback);
-		}//,
-//		 function(callback){
-//			callBuf("Lines", callback);
-//		},
-//		function(callback){
-//			callBuf("Polygons", callback);
-//		},
-//		function(callback){
-//			callTriangulation(callback);
-//		},
-//		function(callback){
-//			callIntersect(callback);
-//		}	
+		},
+		 function(callback){
+			callBuf("lines", callback);
+		},
+		function(callback){
+			callBuf("polygons", callback);
+		},
+		function(callback){
+			callTriangulation(callback);
+		},
+		function(callback){
+			callUnion(callback);
+		}	
 		]);
 }
 

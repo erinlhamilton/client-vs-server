@@ -21,7 +21,6 @@ function getResults(geoprocess, dataType, dataTime, wkt, wktTwo){
 	var inputParseTime = 0;
 	var output = "";
 	var geoprocessTime = 0;
-	var d = new Date();
 	
 	switch(geoprocess)
 	{
@@ -31,14 +30,14 @@ function getResults(geoprocess, dataType, dataTime, wkt, wktTwo){
 		inputNodes = getNodeSize(wkt);//-->data.js
 		
 		//parse the input WKT to geometry
-		var inputParseStart = d.getTime();
+		var inputParseStart = new Date();
 		var input = parseInput(wkt); //-->data.js
-		inputParseTime = d.getTime() - inputParseStart;
+		inputParseTime = new Date() - inputParseStart;
 		
 		//Buffer the geometry
-	   var geoprocessStart = d.getTime();
+	   var geoprocessStart = new Date();
 	   output = bufferGeom(input); //-->algorithm.js
-	   geoprocessTime = d.getTime() - geoprocessStart;
+	   geoprocessTime = new Date() - geoprocessStart;
 		
 	  	break;
 	  	
@@ -48,15 +47,15 @@ function getResults(geoprocess, dataType, dataTime, wkt, wktTwo){
 		inputNodes = (getNodeSize(wkt)) + (getNodeSize(wktTwo));//-->data.js
 		
 		//parse the input WKT to geometry
-		var inputParseStart = d.getTime();
-		var a = parseInput(wktOne); //-->data.js
+		var inputParseStart = new Date();
+		var a = parseInput(wkt); //-->data.js
 		var b = parseInput(wktTwo); //-->data.js
-		inputParseTime = d.getTime() - inputParseStart;
+		inputParseTime = new Date() - inputParseStart;
 		
 		//Union Geoprocess
-	    var geoprocessStart = d.getTime();
+	    var geoprocessStart = new Date();
 	    output = unionGeom(a, b);//-->algorithm.js
-		geoprocessTime = d.getTime() - geoprocessStart;
+		geoprocessTime = new Date() - geoprocessStart;
 	  break;
 	  
 	case "Voronoi":
@@ -65,14 +64,14 @@ function getResults(geoprocess, dataType, dataTime, wkt, wktTwo){
 		inputNodes = getNodeSize(wkt);//-->data.js
 		
 		//parse the input WKT to geometry
-		var inputParseStart = d.getTime();
+		var inputParseStart = new Date();
 		var input = parseInput(wkt); //-->data.js
-		inputParseTime = d.getTime() - inputParseStart;
+		inputParseTime = new Date() - inputParseStart;
 		
 		//Voronoi Triangulation Geoprocess
-	    var geoprocessStart = d.getTime();
+	    var geoprocessStart = new Date();
 	    output = voronoiTriGeom(input);//-->algorithms.js
-		geoprocessTime = d.getTime() - geoprocessStart;
+		geoprocessTime = new Date() - geoprocessStart;
 	break;
 	default:
 	  "error";
@@ -82,9 +81,9 @@ function getResults(geoprocess, dataType, dataTime, wkt, wktTwo){
 	var outputValid = output.isValid(); 
 	
 	//Parse the buffer geometry results back to WKT
-	var parseStart = d.getTime();
+	var parseStart = new Date();
 	var outputResult = parseOutput(output);//-->data.js
-	var parseTime = d.getTime() - parseStart;
+	var parseTime = new Date() - parseStart;
 		
 	//Get the size in both bytes and # nodes of WKT result
 	var outputBytes = outputResult.length;

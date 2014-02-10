@@ -192,8 +192,8 @@ public class Flow {
 		//Retrieve data from db
 		Storage storageData = new Storage();
 		long startData = System.nanoTime();
-		String dataOne = storageData.fetchWKT("UnionPoly", wktID);
-		String dataTwo = storageData.fetchWKT("UnionPoly", wktID);
+		String dataOne = storageData.fetchWKT("PolygonsA", wktID);
+		String dataTwo = storageData.fetchWKT("PolygonsB", wktID);
 		long dataTime = (System.nanoTime()-startData)/1000000;
 		
 		//Length of input wkt (bytes and # nodes)

@@ -38,7 +38,6 @@ public class Services {
 		String wktResults = storagePoints.fetchWKT("Points", id);
 		long totalTime = (System.nanoTime()-startTime)/1000000;
 		String resultJSON = "{ \"wkt\": \"" + wktResults + "\", \"time\": \"" + totalTime + "\"}";
-		System.out.print(resultJSON);
 		return resultJSON;
 	}
 	
@@ -91,18 +90,16 @@ public class Services {
 	@GET
 	@Produces("text/plain")
 	public String returnUnionWKT(@PathParam("id") int id){
-		//String tableAName = "PolygonsA";
+		String tableAName = "PolygonsA";
 		String tableBName = "PolygonsB";
-		String wktAResults = "";
 		Storage storagePoints = new Storage(); 
 		long startTime = System.nanoTime();
-		//String wktAResults = storagePoints.fetchWKT(tableAName, id);  
+		String wktAResults = storagePoints.fetchWKT(tableAName, id);  
 		String wktBResults = storagePoints.fetchWKT(tableBName, id);
-		System.out.print(wktBResults);
 		long totalTime = (System.nanoTime()-startTime)/1000000;
 		String resultJSON = "{ \"wktA\": \"" + wktAResults + "\", \"wktB\": \"" + wktBResults + "\", \"time\": \"" + totalTime + "\"}";
 		return resultJSON;
-	}
+	} 
 
 		
 	/**

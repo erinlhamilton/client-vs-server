@@ -12,8 +12,6 @@ var sizeArray = [10, 20, 30, 40, 50];
 //				20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000, 150000, 
 //				200000, 250000, 300000, 350000, 400000, 450000, 500000];
 
-//var unionArray = ["50", "100", "200", "300", "400", "500", "600", "700", "800" , "900", "1000"];
-
 /**
  * Controls the flow the buffer testing.
  * @param (dataType) Point, Line, or Polygon
@@ -26,7 +24,6 @@ function callBuf(dataType, callback) {
 		var geoprocess = "Buffer";
 		var id = sizeArray[item];
 		microAjax("http://localhost:8080/thesis/rest/services/" + dataType + "/" + id, function (data) {
-			console.log(data);
 			var dataJSON = JSON.parse(data);
 			var dataTime = dataJSON.time;//Time, on server, to retrieve data from db
 			var wkt = dataJSON.wkt;
@@ -38,6 +35,7 @@ function callBuf(dataType, callback) {
 			
 	}, function(err){
 		console.log(err);
+		callback();//-> return to main.js
 	});
 
 }
@@ -64,6 +62,7 @@ function callTriangulation(callback){
 			
 	}, function(err){
 		console.log(err);
+		callback();//-> return to main.js
 	});
 	
 }
@@ -91,6 +90,7 @@ function callUnion(callback){
 			
 	}, function(err){
 		console.log(err);
+		callback();//-> return to main.js
 	});
 	
 }
