@@ -91,17 +91,20 @@ public class Services {
 	@GET
 	@Produces("text/plain")
 	public String returnUnionWKT(@PathParam("id") int id){
-		Storage storagePoints = new Storage();
+		//String tableAName = "PolygonsA";
+		String tableBName = "PolygonsB";
+		String wktAResults = "";
+		Storage storagePoints = new Storage(); 
 		long startTime = System.nanoTime();
-		String wktAResults = storagePoints.fetchWKT("Polygon_A", id);
-		String wktBResults = storagePoints.fetchWKT("Polygon_B", id);
+		//String wktAResults = storagePoints.fetchWKT(tableAName, id);  
+		String wktBResults = storagePoints.fetchWKT(tableBName, id);
+		System.out.print(wktBResults);
 		long totalTime = (System.nanoTime()-startTime)/1000000;
 		String resultJSON = "{ \"wktA\": \"" + wktAResults + "\", \"wktB\": \"" + wktBResults + "\", \"time\": \"" + totalTime + "\"}";
 		return resultJSON;
 	}
 
 		
-	
 	/**
 	 * When called, runs all the processes on the server side.
 	 *

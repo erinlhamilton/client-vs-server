@@ -13,8 +13,10 @@ import java.io.*;
 import au.com.bytecode.opencsv.*;
 
 public class Storage {
-	
-	
+	 // JDBC driver name and database URL
+	   static final String JDBC_DRIVER = "org.sqlite.JDBC";  
+	   static final String DB_URL = "jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/wktData.db";
+	   
 	/**
 	 * Accepts parameters from web services and returns well-known
 	 * text file from given database table.
@@ -29,17 +31,18 @@ public class Storage {
 	    Connection c = null;
 	    String result ="";
 	    try {
-	      Class.forName("org.sqlite.JDBC");
-	      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/wktData.db");
-	      c.setAutoCommit(false);
+	      Class.forName(JDBC_DRIVER);
+	      c = DriverManager.getConnection(DB_URL);
+	      c.setAutoCommit(false);    
+	      
 	      ResultSet rs = null;
-	      String sql = "SELECT WKT FROM "+ wktTable +" WHERE ID = ?";
+	      //String sql = "SELECT * FROM WKTDATA.sqlite_master WHERE type='table';";
+	      String sql = "SELECT "+wktTable+ "WKT FROM "+ wktTable +" WHERE "+wktTable+"ID = ?";
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			pstmt.setInt(1, id);
 			try {
 			  rs = pstmt.executeQuery();
-			  String  wkt = rs.getString("WKT");
-			  result = wkt;
+			  result = rs.getString(wktTable+"WKT");
 			} finally {  
 			  rs.close();  
 			  pstmt.close();
@@ -65,11 +68,11 @@ public class Storage {
 	    Connection c = null;
 	    Statement stmt = null;
 	    try {
-	      Class.forName("org.sqlite.JDBC");
-	      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/wktData.db");
+	      Class.forName(JDBC_DRIVER);
+	      c = DriverManager.getConnection(DB_URL);
 	      c.setAutoCommit(false);
 	      stmt = c.createStatement();
-	      String sql = "INSERT INTO Results (ID, Platform, Geoprocess, DataType, InputBytes, InputNodes, ServerDataMS," +
+	      String sql = "INSERT INTO Results (RID, Platform, Geoprocess, DataType, InputBytes, InputNodes, ServerDataMS," +
 	      		"InputParseMS, GeoprocessMS, OutputParseMS, TotalTimeMS, OutputValid, OutputBytes, OutputNodes)" +
 	    		  		"VALUES " + data + ";";
 	      stmt.executeUpdate(sql);
@@ -96,11 +99,11 @@ public class Storage {
 		    Connection c = null;
 		    Statement stmt = null;
 		    try {
-		      Class.forName("org.sqlite.JDBC");
-		      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/wktData.db");
+		      Class.forName(JDBC_DRIVER);
+		      c = DriverManager.getConnection(DB_URL);
 		      c.setAutoCommit(false);
 		      stmt = c.createStatement();
-		      String sql = "INSERT INTO Metadata (ID , Date, Browser, OperatingSystem, Hardware, FirstLatency, FirstBandwidth, " +
+		      String sql = "INSERT INTO Metadata (MID , Date, Browser, OperatingSystem, Hardware, FirstLatency, FirstBandwidth, " +
 		    		  		"SecondLatency, SecondBandwidth, ThirdLatency, ThirdBandwidth)" +
 		    		  		"VALUES " + data + ";";
 		      stmt.executeUpdate(sql);
@@ -127,15 +130,15 @@ public class Storage {
 			    Connection c = null;
 			    File fw = new File("C:/Users/Erin/Documents/Thesis/results/results.csv");
 			    try {
-			      Class.forName("org.sqlite.JDBC");
-			      c = DriverManager.getConnection("jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/wktData.db");
+			      Class.forName(JDBC_DRIVER);
+			      c = DriverManager.getConnection(DB_URL);
 			      c.setAutoCommit(false);
 			      ResultSet rs = null;
 			      
 			      String sql ="SELECT *"+
 			      "FROM Results" +
 			      "INNER JOIN Metadata" +
-			      "On Results.ID = Metadata.ID";
+			      "On Results.RID = Metadata.MID";
 
 					PreparedStatement pstmt = c.prepareStatement(sql);
 					try {
