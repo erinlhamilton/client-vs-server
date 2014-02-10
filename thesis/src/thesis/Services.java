@@ -141,7 +141,6 @@ public class Services {
 			@FormParam("geoprocess(ms)") int processTime,
 			@FormParam("parse(ms)") int parseTime,
 			@FormParam("total(ms)") int totalTime,
-			@FormParam("valid") boolean valid,
 			@FormParam("output(bytes)") int outputBytes,
 			@FormParam("output(nodes)") int outputNodes){
 	
@@ -157,7 +156,6 @@ public class Services {
 				+processTime+ "','"
 				+parseTime+ "','"
 				+totalTime+ "','"
-				+ valid + "','"
 				+outputBytes+ "','"
 				+ outputNodes +"')";
 		

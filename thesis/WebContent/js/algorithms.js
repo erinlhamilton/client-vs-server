@@ -17,7 +17,7 @@
 function bufferGeom(input){
 
 	//buffer distance in arc seconds
-	var bufferDist = 100;
+	var bufferDist = .00001;
     return input.buffer(bufferDist); 
 }
 

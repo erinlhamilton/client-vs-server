@@ -77,9 +77,6 @@ function getResults(geoprocess, dataType, dataTime, wkt, wktTwo){
 	  "error";
 	}
 	
-    //Validate output geometry
-	var outputValid = output.isValid(); 
-	
 	//Parse the buffer geometry results back to WKT
 	var parseStart = new Date();
 	var outputResult = parseOutput(output);//-->data.js
@@ -92,7 +89,7 @@ function getResults(geoprocess, dataType, dataTime, wkt, wktTwo){
 	//convert string time outputs to integers to add together for a total time
 	var totalTime = parseInt(dataTime) + parseInt(inputParseTime) + parseInt(geoprocessTime) + parseInt(parseTime);
 
-	var results = formatResults(geoprocess, dataType, inputBytes, inputNodes, dataTime, inputParseTime, geoprocessTime, parseTime, totalTime, outputValid, outputBytes, outputNodes);
+	var results = formatResults(geoprocess, dataType, inputBytes, inputNodes, dataTime, inputParseTime, geoprocessTime, parseTime, totalTime, outputBytes, outputNodes);
 	
 	return results;
 }
@@ -105,7 +102,7 @@ function getResults(geoprocess, dataType, dataTime, wkt, wktTwo){
  * @returns a string of data to be sent to server
  */
 
-function formatResults(algorithm, dataType, inputBytes, inputNodes, dataTime, inputParseTime, processTime, parseTime, totalTime, outputValid, outputBytes, outputNodes){
+function formatResults(algorithm, dataType, inputBytes, inputNodes, dataTime, inputParseTime, processTime, parseTime, totalTime, outputBytes, outputNodes){
 
 	return "id=" + mdJSON.ID +
 		"&platform=Client" +
@@ -118,7 +115,6 @@ function formatResults(algorithm, dataType, inputBytes, inputNodes, dataTime, in
 		"&geoprocess(ms)=" +processTime+
 		"&parse(ms)=" +parseTime+
 		"&total(ms)=" +totalTime+
-		"&valid=" +outputValid+
 		"&output(bytes)=" +outputBytes+
 		"&output(nodes)=" +outputNodes;
 	
@@ -142,9 +138,7 @@ function formatMetadata(){
 		"&firstLatency=" + mdJSON.FirstLatency +
 		"&firstBandwidth=" + mdJSON.FirstBandwidth +
 		"&secondLatency="+ mdJSON.SecondLatency +
-		"&secondBandwidth=" + mdJSON.SecondBandwidth +
-		"&thirdLatency=" + mdJSON.ThirdLatency +
-		"&thirdBandwidth=" + mdJSON.ThirdBandwidth;
+		"&secondBandwidth=" + mdJSON.SecondBandwidth;
 }
 
 

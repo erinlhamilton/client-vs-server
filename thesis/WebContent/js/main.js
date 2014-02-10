@@ -14,6 +14,7 @@ var startTime, endTime;
 var downloadSize = 1531904;
 var download = new Image();
 var mdJSON = {};
+var serverlocation = "http://localhost:8080";
 
 
 /**
@@ -85,18 +86,6 @@ function secondTest(){
 	
 	mdJSON.SecondLatency = "";//testBaseLatency();
 	mdJSON.SecondBandwidth = "";//testBaseBandwidth();
-	
-}
-
-/**
- * Run a third set of latency and bandwidth tests,
- * store in json object
- *
-*/
-function thirdTest(){
-	
-	mdJSON.ThirdLatency = "";//testBaseLatency();
-	mdJSON.ThirdBandwidth = "";//testBaseBandwidth();
 	storeMetadata();
 	
 }
@@ -126,8 +115,9 @@ function createDate(){
 */
 
 function testID(){
-	
-	return document.getElementById("testID").value;
+	var d = new Date();
+	//return document.getElementById("testID").value;
+	return  d.getTime();
 
 }
 
@@ -202,7 +192,7 @@ function runClient(){
 */
 function runServer(){
 	
-	microAjax("http://localhost:8080/thesis/rest/services/server/" + mdJSON.ID, 
+	microAjax(serverlocation + "/thesis/rest/services/server/" + mdJSON.ID, 
 			function (err) {
 				console.log(err); 
 			});

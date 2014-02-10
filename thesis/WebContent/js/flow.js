@@ -5,7 +5,7 @@
  */
 
 /**Global Varriables*/
-var sizeArray = [10, 20, 30, 40, 50];
+var sizeArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600];
 
 //	var sizeArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600,
 //				700, 800, 900, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000,
@@ -23,7 +23,7 @@ function callBuf(dataType, callback) {
 	async.eachSeries(Object.keys(sizeArray), function(item, done){
 		var geoprocess = "Buffer";
 		var id = sizeArray[item];
-		microAjax("http://localhost:8080/thesis/rest/services/" + dataType + "/" + id, function (data) {
+		microAjax(serverlocation + "/thesis/rest/services/" + dataType + "/" + id, function (data) {
 			var dataJSON = JSON.parse(data);
 			var dataTime = dataJSON.time;//Time, on server, to retrieve data from db
 			var wkt = dataJSON.wkt;
@@ -50,7 +50,7 @@ function callTriangulation(callback){
 	async.eachSeries(Object.keys(sizeArray), function(item, done){
 		var geoprocess = "Voronoi";
 		var id = sizeArray[item];
-		microAjax("http://localhost:8080/thesis/rest/services/points/" + id, function (data) {
+		microAjax(serverlocation + "/thesis/rest/services/points/" + id, function (data) {
 			var dataJSON = JSON.parse(data);
 			var dataTime = dataJSON.time;//Time, on server, to retrieve data from db
 			var wkt = dataJSON.wkt;
@@ -77,7 +77,7 @@ function callUnion(callback){
 	async.eachSeries(Object.keys(sizeArray), function(item, done){
 		var geoprocess = "Union";
 		var id = sizeArray[item];
-		microAjax("http://localhost:8080/thesis/rest/services/union/" + id, function (data) {
+		microAjax(serverlocation + "/thesis/rest/services/union/" + id, function (data) {
 			var dataJSON = JSON.parse(data);
 			var dataTime = dataJSON.time;//Time, on server, to retrieve data from db
 			var dataOne = dataJSON.wktA;
@@ -90,7 +90,7 @@ function callUnion(callback){
 			
 	}, function(err){
 		console.log(err);
-		callback();//-> return to main.js
+		alert("Test Complete!");
 	});
 	
 }

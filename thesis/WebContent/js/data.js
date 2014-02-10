@@ -55,7 +55,7 @@ function parseOutput(result){
  */
 function storeResults(data) {
 	
-	microAjax("http://localhost:8080/thesis/rest/services/store", 
+	microAjax(serverlocation + "/thesis/rest/services/store", 
 			function (err) {
 				console.log(err); 
 			}, 
@@ -72,7 +72,7 @@ function storeMetadata() {
 	
 	var metadata = formatMetadata();
 	
-	microAjax("http://localhost:8080/thesis/rest/services/storeMetadata", 
+	microAjax(serverlocation + "/thesis/rest/services/storeMetadata", 
 			function (err) {
 				console.log(err); 
 			}, 

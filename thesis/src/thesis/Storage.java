@@ -72,7 +72,7 @@ public class Storage {
 	      c.setAutoCommit(false);
 	      stmt = c.createStatement();
 	      String sql = "INSERT INTO Results (RID, Platform, Geoprocess, DataType, InputBytes, InputNodes, ServerDataMS," +
-	      		"InputParseMS, GeoprocessMS, OutputParseMS, TotalTimeMS, OutputValid, OutputBytes, OutputNodes)" +
+	      		"InputParseMS, GeoprocessMS, OutputParseMS, TotalTimeMS, OutputBytes, OutputNodes)" +
 	    		  		"VALUES " + data + ";";
 	      stmt.executeUpdate(sql);
 
@@ -103,7 +103,7 @@ public class Storage {
 		      c.setAutoCommit(false);
 		      stmt = c.createStatement();
 		      String sql = "INSERT INTO Metadata (MID , Date, Browser, OperatingSystem, Hardware, FirstLatency, FirstBandwidth, " +
-		    		  		"SecondLatency, SecondBandwidth, ThirdLatency, ThirdBandwidth)" +
+		    		  		"SecondLatency, SecondBandwidth)" +
 		    		  		"VALUES " + data + ";";
 		      stmt.executeUpdate(sql);
 
@@ -124,7 +124,7 @@ public class Storage {
 		 * @param (data) string of results
 		 * @return String of status
 		 */
-		 public File retrieveResults()
+		 public File retrieveResults() 
 		  {
 			    Connection c = null;
 			    File fw = new File("C:/Users/Erin/Documents/Thesis/results/results.csv");
