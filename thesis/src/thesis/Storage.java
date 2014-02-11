@@ -71,7 +71,7 @@ public class Storage {
 	      c = DriverManager.getConnection(DB_URL);
 	      c.setAutoCommit(false);
 	      stmt = c.createStatement();
-	      String sql = "INSERT INTO Results (RID, Platform, Geoprocess, DataType, InputBytes, InputNodes, ServerDataMS," +
+	      String sql = "INSERT INTO Results (RID, TNum, Platform, Geoprocess, DataType, InputBytes, InputNodes, ServerDataMS," +
 	      		"InputParseMS, GeoprocessMS, OutputParseMS, TotalTimeMS, OutputBytes, OutputNodes)" +
 	    		  		"VALUES " + data + ";";
 	      stmt.executeUpdate(sql);

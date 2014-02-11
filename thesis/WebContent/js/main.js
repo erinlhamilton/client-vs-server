@@ -14,6 +14,7 @@ var startTime, endTime;
 var downloadSize = 1531904;
 var download = new Image();
 var mdJSON = {};
+var resultArray = new Array();
 var serverlocation = "http://localhost:8080";
 
 
@@ -115,9 +116,9 @@ function createDate(){
 */
 
 function testID(){
-	var d = new Date();
-	//return document.getElementById("testID").value;
-	return  d.getTime();
+	//var d = new Date();
+	return document.getElementById("testID").value;
+	//return  d.getTime();
 
 }
 

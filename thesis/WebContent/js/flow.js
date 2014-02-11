@@ -27,8 +27,8 @@ function callBuf(dataType, callback) {
 			var dataJSON = JSON.parse(data);
 			var dataTime = dataJSON.time;//Time, on server, to retrieve data from db
 			var wkt = dataJSON.wkt;
-			results = getResults(geoprocess, dataType, dataTime, wkt, null);
-			console.log(results);
+			results = getResults(geoprocess, id, dataType, dataTime, wkt, null);
+			resultArray.push(results);
 			//storeResults(results);
 			done();
 		});
@@ -54,8 +54,8 @@ function callTriangulation(callback){
 			var dataJSON = JSON.parse(data);
 			var dataTime = dataJSON.time;//Time, on server, to retrieve data from db
 			var wkt = dataJSON.wkt;
-			var results = getResults(geoprocess, "points",  dataTime, wkt, null);
-			console.log(results);
+			var results = getResults(geoprocess, id, "points",  dataTime, wkt, null);
+			resultArray.push(results);
 			//storeResults(results);
 			done();
 		});
@@ -82,15 +82,16 @@ function callUnion(callback){
 			var dataTime = dataJSON.time;//Time, on server, to retrieve data from db
 			var dataOne = dataJSON.wktA;
 			var dataTwo = dataJSON.wktB;
-			var results = getResults(geoprocess, "polygon", dataTime, dataOne, dataTwo);
-			console.log(results);
+			var results = getResults(geoprocess, id, "polygon", dataTime, dataOne, dataTwo);
+			resultArray.push(results);
 			//storeResults(results);
 			done();
 		});
 			
 	}, function(err){
 		console.log(err);
-		alert("Test Complete!");
+		storeResults(callback);
+		console.log("Test Complete!");
 	});
 	
 }

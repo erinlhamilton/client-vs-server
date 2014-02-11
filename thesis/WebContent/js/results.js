@@ -14,10 +14,10 @@
  * @param {wktTwo} if union, second wkt polygon, otherwise null
  * @returns a string of the results to be sent to the server
  */
-function getResults(geoprocess, dataType, dataTime, wkt, wktTwo){
+function getResults(geoprocess, inputNodes, dataType, dataTime, wkt, wktTwo){
 
 	var inputBytes = 0;
-	var inputNodes = 0;
+	//var inputNodes = 0;
 	var inputParseTime = 0;
 	var output = "";
 	var geoprocessTime = 0;
@@ -27,7 +27,7 @@ function getResults(geoprocess, dataType, dataTime, wkt, wktTwo){
 	case "Buffer":
 		//Input wkt length in bytes and # nodes
 		inputBytes = wkt.length;
-		inputNodes = getNodeSize(wkt);//-->data.js
+		//inputNodes = getNodeSize(wkt);//-->data.js
 		
 		//parse the input WKT to geometry
 		var inputParseStart = new Date();
@@ -44,7 +44,7 @@ function getResults(geoprocess, dataType, dataTime, wkt, wktTwo){
 	case "Union":
 		//Input wkt length in bytes and # nodes
 		inputBytes = wkt.length + wktTwo.length;
-		inputNodes = (getNodeSize(wkt)) + (getNodeSize(wktTwo));//-->data.js
+		//inputNodes = (getNodeSize(wkt)) + (getNodeSize(wktTwo));//-->data.js
 		
 		//parse the input WKT to geometry
 		var inputParseStart = new Date();
@@ -61,7 +61,7 @@ function getResults(geoprocess, dataType, dataTime, wkt, wktTwo){
 	case "Voronoi":
 		//Input wkt length in bytes and # nodes
 		inputBytes = wkt.length;
-		inputNodes = getNodeSize(wkt);//-->data.js
+		//inputNodes = getNodeSize(wkt);//-->data.js
 		
 		//parse the input WKT to geometry
 		var inputParseStart = new Date();
@@ -105,6 +105,7 @@ function getResults(geoprocess, dataType, dataTime, wkt, wktTwo){
 function formatResults(algorithm, dataType, inputBytes, inputNodes, dataTime, inputParseTime, processTime, parseTime, totalTime, outputBytes, outputNodes){
 
 	return "id=" + mdJSON.ID +
+		"&tno=" + resultArray.length +
 		"&platform=Client" +
 		"&algorithm=" +algorithm+
 		"&dataType=" + dataType +

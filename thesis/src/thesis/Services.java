@@ -130,7 +130,8 @@ public class Services {
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
 	@Produces("text/plain")
-	public String storeResults(@FormParam("id") int testID,
+	public void storeResults(@FormParam("id") int rID,
+			@FormParam("tno") int testNo,
 			@FormParam("platform") String platform,
 			@FormParam("algorithm") String algorithm,
 			@FormParam("dataType") String dataType,
@@ -145,7 +146,8 @@ public class Services {
 			@FormParam("output(nodes)") int outputNodes){
 	
 		String result = 
-				"('" + testID + "','"
+				"('" + rID + "','"
+				+ testNo + "','"
 				+ platform + "','"
 				+algorithm+ "','"
 				+dataType+ "','"
@@ -161,7 +163,8 @@ public class Services {
 		
 		Storage storeResults = new Storage();
 		String success = storeResults.insertResults(result);
-		return success;
+		System.out.print(success);
+		//return success;
 	}
 	
 	/**
@@ -184,9 +187,7 @@ public class Services {
 			@FormParam("firstLatency") int firstLatency,
 			@FormParam("firstBandwidth") int firstBandwidth,
 			@FormParam("secondLatency") int secondLatency,
-			@FormParam("secondBandwidth") int secondBandwidth,
-			@FormParam("thirdLatency") int thirdLatency,
-			@FormParam("thirdBandwidth") int thirdBandwidth){
+			@FormParam("secondBandwidth") int secondBandwidth){
 	
 		String result = 
 				"('" + ID + "','"
@@ -197,12 +198,11 @@ public class Services {
 				+firstLatency+ "','"
 				+firstBandwidth+ "','"
 				+secondLatency+ "','"
-				+secondBandwidth+ "','"
-				+thirdLatency+ "')";
+				+secondBandwidth+ "')";
 		
-		//Storage storeResults = new Storage();
-		//String success = storeResults.insertMetadata(result);
-		return result;
+		Storage storeResults = new Storage();
+		String success = storeResults.insertMetadata(result);
+		return success;
 	}
 	
 	/**

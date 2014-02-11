@@ -53,14 +53,22 @@ function parseOutput(result){
  * @param {data} string of data to put into database
  *
  */
-function storeResults(data) {
+function storeResults(callback) {
 	
-	microAjax(serverlocation + "/thesis/rest/services/store", 
+	async.eachSeries(Object.keys(resultArray), function(item, done){
+		var data = resultArray[item];
+		microAjax(serverlocation + "/thesis/rest/services/store", 
 			function (err) {
 				console.log(err); 
+				done();	
 			}, 
-			data);
+		data);
+	}, function(err){
+		console.log(err);
+		callback();//-> return to main.js
+	});
 }
+
 
 /**
  * Stores string of metadata from mdJSON to DB using POST
