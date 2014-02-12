@@ -18,7 +18,7 @@ var sizeArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
  * @param (callback) When function finishes, return to main.js
  *
 */
-function callBuf(dataType, callback) {
+function callBuf(dataType) {
 	
 	async.eachSeries(Object.keys(sizeArray), function(item, done){
 		var geoprocess = "Buffer";
@@ -39,7 +39,7 @@ function callBuf(dataType, callback) {
 	}, function(err){
 		console.log(err);
 		console.log("Buffer "+ dataType + " Complete!");
-		callback();//-> return to main.js
+		//callback();//-> return to main.js
 	});
 
 }

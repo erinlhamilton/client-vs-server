@@ -168,23 +168,25 @@ function whatHardware(){
 */
 function runClient(){
 	
-	async.series([
-		function(callback){
-			callBuf("points", callback);
-		},
-		 function(callback){
-			callBuf("lines", callback);
-		},
-		function(callback){
-			callBuf("polygons", callback);
-		},
-		function(callback){
-			callTriangulation(callback);
-		},
-		function(callback){
-			callUnion(callback);
-		}	
-		]);
+	callBuf("points");
+	
+//	async.series([
+//		function(callback){
+//			callBuf("points", callback);
+//		},
+//		 function(callback){
+//			callBuf("lines", callback);
+//		},
+//		function(callback){
+//			callBuf("polygons", callback);
+//		},
+//		function(callback){
+//			callTriangulation(callback);
+//		},
+//		function(callback){
+//			callUnion(callback);
+//		}	
+//		]);
 }
 
 /**

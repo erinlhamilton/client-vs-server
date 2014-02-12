@@ -105,7 +105,6 @@ function getResults(geoprocess, inputNodes, dataType, dataTime, wkt, wktTwo){
 function formatResults(algorithm, dataType, inputBytes, inputNodes, dataTime, inputParseTime, processTime, parseTime, totalTime, outputBytes, outputNodes){
 
 	return "id=" + mdJSON.ID +
-		"&tno=" + resultArray.length +
 		"&platform=Client" +
 		"&algorithm=" +algorithm+
 		"&dataType=" + dataType +

@@ -131,7 +131,6 @@ public class Services {
 	@Consumes("application/x-www-form-urlencoded")
 	@Produces("text/plain")
 	public void storeResults(@FormParam("id") int rID,
-			@FormParam("tno") int testNo,
 			@FormParam("platform") String platform,
 			@FormParam("algorithm") String algorithm,
 			@FormParam("dataType") String dataType,
@@ -147,7 +146,6 @@ public class Services {
 	
 		String result = 
 				"('" + rID + "','"
-				+ testNo + "','"
 				+ platform + "','"
 				+algorithm+ "','"
 				+dataType+ "','"

@@ -94,7 +94,7 @@ public class Flow {
 		//Length of input wkt (bytes and # nodes)
 		Format dataFormat = new Format();
 		int inputBytes = data.length();
-		int inputNodes = dataFormat.countNodes(data);//--> Format.java
+		int inputNodes = wktID;
 		
 		//Parse wkt to geometry
 		long startInParse = System.nanoTime();
@@ -107,9 +107,6 @@ public class Flow {
 		Geometry buff = buffer.bufferGeom(geom);//-->Algorithms.java
 		long geoprocessTime = (System.nanoTime()-startGeoprocess)/1000000;
 		
-		//Is output a valid geometry?
-		Boolean outputValid = buff.isValid();
-		
 		//Parse geometry back to wkt
 		long startOutParse = System.nanoTime();
 		String output = dataFormat.parseGeom(buff);//--> Format.java
@@ -121,7 +118,7 @@ public class Flow {
 		
 		long totalTime = dataTime+ inParseTime + geoprocessTime + outParseTime;
 		
-		return dataFormat.resultString(testID, geoprocess, dataType, inputBytes, inputNodes, dataTime, inParseTime, geoprocessTime, outParseTime, totalTime, outputValid, outputBytes, outputNodes);
+		return dataFormat.resultString(testID, geoprocess, dataType, inputBytes, inputNodes, dataTime, inParseTime, geoprocessTime, outParseTime, totalTime, outputBytes, outputNodes);
 	}
 	
 	/**
@@ -145,7 +142,7 @@ public class Flow {
 		//Length of input wkt (bytes and # nodes)
 		Format dataFormat = new Format();
 		int inputBytes = data.length();
-		int inputNodes = dataFormat.countNodes(data);//--> Format.java
+		int inputNodes = wktID;
 		
 		//Parse wkt to geometry
 		long startInParse = System.nanoTime();
@@ -158,9 +155,6 @@ public class Flow {
 		Geometry voronoi = triangulate.voronoiGeom(geom);//-->Algorithms.java
 		long geoprocessTime = (System.nanoTime()-startGeoprocess)/1000000;
 		
-		//Is output a valid geometry?
-		Boolean outputValid = voronoi.isValid();
-		
 		//Parse geometry back to wkt
 		long startOutParse = System.nanoTime();
 		String output = dataFormat.parseGeom(voronoi);//--> Format.java
@@ -172,7 +166,7 @@ public class Flow {
 		
 		long totalTime = dataTime+ inParseTime + geoprocessTime + outParseTime;
 		
-		return dataFormat.resultString(testID, geoprocess, dataType, inputBytes, inputNodes, dataTime, inParseTime, geoprocessTime, outParseTime, totalTime, outputValid, outputBytes, outputNodes);
+		return dataFormat.resultString(testID, geoprocess, dataType, inputBytes, inputNodes, dataTime, inParseTime, geoprocessTime, outParseTime, totalTime, outputBytes, outputNodes);
 
 			
 		}
@@ -199,7 +193,7 @@ public class Flow {
 		//Length of input wkt (bytes and # nodes)
 		Format dataFormat = new Format();
 		int inputBytes = dataOne.length() + dataTwo.length();
-		int inputNodes = (dataFormat.countNodes(dataOne)) + (dataFormat.countNodes(dataTwo));//--> Format.java
+		int inputNodes = wktID;
 		
 		//Parse wkt to geometry
 		long startInParse = System.nanoTime();
@@ -213,9 +207,6 @@ public class Flow {
 		Geometry unionResult = union.unionGeom(geomOne, geomTwo);//-->Algorithms.java
 		long geoprocessTime = (System.nanoTime()-startGeoprocess)/1000000;
 		
-		//Is output a valid geometry?
-		Boolean outputValid = unionResult.isValid();
-		
 		//Parse geometry back to wkt
 		long startOutParse = System.nanoTime();
 		String output = dataFormat.parseGeom(unionResult);//--> Format.java
@@ -227,7 +218,7 @@ public class Flow {
 		
 		long totalTime = dataTime+ inParseTime + geoprocessTime + outParseTime;
 		
-		return dataFormat.resultString(testID, geoprocess, dataType, inputBytes, inputNodes, dataTime, inParseTime, geoprocessTime, outParseTime, totalTime, outputValid, outputBytes, outputNodes);
+		return dataFormat.resultString(testID, geoprocess, dataType, inputBytes, inputNodes, dataTime, inParseTime, geoprocessTime, outParseTime, totalTime, outputBytes, outputNodes);
 		
 	}
 
