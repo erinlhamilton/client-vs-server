@@ -53,20 +53,16 @@ function parseOutput(result){
  * @param {data} string of data to put into database
  *
  */
-function storeResults(callback) {
+function storeResults(data, returnToProcess) {
+		//For database key use, add another ticker to the array
+		resultArray.push(1);
 	
-	async.eachSeries(Object.keys(resultArray), function(item, done){
-		var data = resultArray[item];
 		microAjax(serverlocation + "/thesis/rest/services/store", 
 			function (err) {
 				console.log(err); 
-				done();	
+				returnToProcess(); //--> flow.js
 			}, 
 		data);
-	}, function(err){
-		console.log(err);
-		callback();//-> return to main.js
-	});
 }
 
 

@@ -5,7 +5,7 @@
  */
 
 /**Global Varriables*/
-var sizeArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600];
+var sizeArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
 //	var sizeArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600,
 //				700, 800, 900, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000,
@@ -27,14 +27,18 @@ function callBuf(dataType, callback) {
 			var dataJSON = JSON.parse(data);
 			var dataTime = dataJSON.time;//Time, on server, to retrieve data from db
 			var wkt = dataJSON.wkt;
-			results = getResults(geoprocess, id, dataType, dataTime, wkt, null);
-			resultArray.push(results);
-			//storeResults(results);
+			results = getResults(geoprocess, id, dataType, dataTime, wkt, null);//--> results.js
+			async.series([
+	      		function(returnToProcess){
+	      			storeResults(results, returnToProcess);//--> data.js
+	      		}	
+	      	]);
 			done();
 		});
 			
 	}, function(err){
 		console.log(err);
+		console.log("Buffer "+ dataType + " Complete!");
 		callback();//-> return to main.js
 	});
 
@@ -55,13 +59,17 @@ function callTriangulation(callback){
 			var dataTime = dataJSON.time;//Time, on server, to retrieve data from db
 			var wkt = dataJSON.wkt;
 			var results = getResults(geoprocess, id, "points",  dataTime, wkt, null);
-			resultArray.push(results);
-			//storeResults(results);
-			done();
+			async.series([
+	      		function(returnToProcess){
+	      			storeResults(results, returnToProcess);//--> data.js
+	      		}	
+	      	]);
+			done();//callback
 		});
 			
 	}, function(err){
 		console.log(err);
+		console.log("Voronoi Complete!");
 		callback();//-> return to main.js
 	});
 	
@@ -83,15 +91,17 @@ function callUnion(callback){
 			var dataOne = dataJSON.wktA;
 			var dataTwo = dataJSON.wktB;
 			var results = getResults(geoprocess, id, "polygon", dataTime, dataOne, dataTwo);
-			resultArray.push(results);
-			//storeResults(results);
+			async.series([
+			     function(returnToProcess){
+	      			storeResults(results, returnToProcess);//--> data.js
+	      		}	
+	      	]);
 			done();
 		});
 			
 	}, function(err){
 		console.log(err);
-		storeResults(callback);
-		console.log("Test Complete!");
+		alert("Test Complete!");
 	});
 	
 }

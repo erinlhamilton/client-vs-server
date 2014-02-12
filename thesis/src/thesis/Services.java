@@ -162,9 +162,9 @@ public class Services {
 				+ outputNodes +"')";
 		
 		Storage storeResults = new Storage();
-		String success = storeResults.insertResults(result);
-		System.out.print(success);
-		//return success;
+		storeResults.insertResults(result);
+		//System.out.print(success);
+
 	}
 	
 	/**
@@ -179,7 +179,7 @@ public class Services {
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
 	@Produces("text/plain")
-	public String storeMetadata(@FormParam("id") int ID,
+	public void storeMetadata(@FormParam("id") int ID,
 			@FormParam("date") String dateToday,
 			@FormParam("browser") String browser,
 			@FormParam("os") String operatingSystem,
@@ -201,8 +201,7 @@ public class Services {
 				+secondBandwidth+ "')";
 		
 		Storage storeResults = new Storage();
-		String success = storeResults.insertMetadata(result);
-		return success;
+		storeResults.insertMetadata(result);
 	}
 	
 	/**
@@ -217,7 +216,7 @@ public class Services {
 	public Response returnResults(){
 		Storage retrieveResults = new Storage();
 		File file = retrieveResults.retrieveResults();
-		ResponseBuilder response = Response.ok((Object) file);
+		ResponseBuilder response = Response.ok(file);
 		response.header("Content-Disposition",
 			"attachment; filename=\"results.csv\"");
 		return response.build();

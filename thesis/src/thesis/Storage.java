@@ -17,6 +17,10 @@ public class Storage {
 	   static final String JDBC_DRIVER = "org.sqlite.JDBC";  
 	   static final String DB_URL = "jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/wktData.db";
 	   
+//	   public static void main (String[] args){
+//		   retrieveResults();
+//	   }
+	   
 	/**
 	 * Accepts parameters from web services and returns well-known
 	 * text file from given database table.
@@ -62,7 +66,7 @@ public class Storage {
 	 * @param (data) string of results
 	 * @return String of status
 	 */
-	 public String insertResults(String data)
+	 public void insertResults(String data)
 	  {
 	    Connection c = null;
 	    Statement stmt = null;
@@ -84,7 +88,7 @@ public class Storage {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-	    return"Records stored successfully";
+	  // return"Records stored successfully";
 	}
 	 
 		/**
@@ -93,7 +97,7 @@ public class Storage {
 		 * @param (data) string of results
 		 * @return String of status
 		 */
-		 public String insertMetadata(String data)
+		 public void insertMetadata(String data)
 		  {
 		    Connection c = null;
 		    Statement stmt = null;
@@ -103,7 +107,7 @@ public class Storage {
 		      c.setAutoCommit(false);
 		      stmt = c.createStatement();
 		      String sql = "INSERT INTO Metadata (MID , Date, Browser, OperatingSystem, Hardware, FirstLatency, FirstBandwidth, " +
-		    		  		"SecondLatency, SecondBandwidth)" +
+		    		  		"SecondLatency, SecondBandwidth) " +
 		    		  		"VALUES " + data + ";";
 		      stmt.executeUpdate(sql);
 
@@ -115,7 +119,7 @@ public class Storage {
 		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		      System.exit(0);
 		    }
-		    return"Records stored successfully";
+		    //return "Records stored successfully";
 		}
 	 
 	 /**
@@ -135,9 +139,11 @@ public class Storage {
 			      ResultSet rs = null;
 			      
 			      String sql ="SELECT *"+
-			      "FROM Results" +
-			      "INNER JOIN Metadata" +
-			      "On Results.RID = Metadata.MID";
+			      " FROM Results" +
+			      " INNER JOIN Metadata" +
+			      " On Results.RID = Metadata.MID";
+			      
+			     // String sql ="SELECT * FROM Results";
 
 					PreparedStatement pstmt = c.prepareStatement(sql);
 					try {
