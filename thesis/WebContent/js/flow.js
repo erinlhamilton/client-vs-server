@@ -7,7 +7,7 @@
 /**Global Varriables*/
 var sizeArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
-//	var sizeArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600,
+	//var sizeArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600,
 //				700, 800, 900, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000,
 //				20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000, 150000, 
 //				200000, 250000, 300000, 350000, 400000, 450000, 500000];
@@ -38,7 +38,7 @@ function callBuf(dataType) {
 			
 	}, function(err){
 		console.log(err);
-		console.log("Buffer "+ dataType + " Complete!");
+		alert("Buffer "+ dataType + " Complete!");
 		//callback();//-> return to main.js
 	});
 
@@ -49,7 +49,7 @@ function callBuf(dataType) {
  * @param (callback) When function finishes, return to main.js
  *
 */
-function callTriangulation(callback){
+function callTriangulation(){
 	
 	async.eachSeries(Object.keys(sizeArray), function(item, done){
 		var geoprocess = "Voronoi";
@@ -69,8 +69,7 @@ function callTriangulation(callback){
 			
 	}, function(err){
 		console.log(err);
-		console.log("Voronoi Complete!");
-		callback();//-> return to main.js
+		alert("Voronoi Complete!");
 	});
 	
 }
@@ -80,7 +79,7 @@ function callTriangulation(callback){
  * @param (callback) When function finishes, return to main.js
  *
 */
-function callUnion(callback){
+function callUnion(){
 	
 	async.eachSeries(Object.keys(sizeArray), function(item, done){
 		var geoprocess = "Union";
@@ -101,7 +100,7 @@ function callUnion(callback){
 			
 	}, function(err){
 		console.log(err);
-		alert("Test Complete!");
+		alert("Union Complete!");
 	});
 	
 }

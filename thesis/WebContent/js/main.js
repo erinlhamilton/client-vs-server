@@ -17,6 +17,16 @@ var mdJSON = {};
 var resultArray = new Array();
 var serverlocation = "http://localhost:8080";
 
+window.performance = window.performance || {};
+performance.now = (function() {
+  return performance.now       ||
+         performance.mozNow    ||
+         performance.msNow     ||
+         performance.oNow      ||
+         performance.webkitNow ||
+         function() { return new Date().getTime(); };
+})();
+
 
 /**
  *  Determine the current network latency
@@ -166,7 +176,7 @@ function whatHardware(){
  * usign async.js to run tests in series
  *
 */
-function runClient(){
+function testOne(){
 	
 	callBuf("points");
 	

@@ -75,7 +75,7 @@ public class Storage {
 	      c = DriverManager.getConnection(DB_URL);
 	      c.setAutoCommit(false);
 	      stmt = c.createStatement();
-	      String sql = "INSERT INTO Results (RID, Platform, Geoprocess, DataType, InputBytes, InputNodes, ServerDataMS," +
+	      String sql = "INSERT INTO Results (ID, Platform, Geoprocess, DataType, InputBytes, InputNodes, ServerDataMS," +
 	      		"InputParseMS, GeoprocessMS, OutputParseMS, TotalTimeMS, OutputBytes, OutputNodes)" +
 	    		  		"VALUES " + data + ";";
 	      stmt.executeUpdate(sql);
@@ -141,7 +141,7 @@ public class Storage {
 			      String sql ="SELECT *"+
 			      " FROM Results" +
 			      " INNER JOIN Metadata" +
-			      " On Results.RID = Metadata.MID";
+			      " On Results.ID = Metadata.MID";
 			      
 			     // String sql ="SELECT * FROM Results";
 

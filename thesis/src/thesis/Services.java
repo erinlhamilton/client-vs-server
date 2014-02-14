@@ -34,9 +34,9 @@ public class Services {
 	@Produces("text/plain")
 	public String returnPoint(@PathParam("id") int id){
 		Storage storagePoints = new Storage();
-		long startTime = System.nanoTime();
+		double startTime = System.nanoTime();
 		String wktResults = storagePoints.fetchWKT("Points", id);
-		long totalTime = (System.nanoTime()-startTime)/1000000;
+		double totalTime = (System.nanoTime()-startTime)/1000000;
 		String resultJSON = "{ \"wkt\": \"" + wktResults + "\", \"time\": \"" + totalTime + "\"}";
 		return resultJSON;
 	}
@@ -93,10 +93,10 @@ public class Services {
 		String tableAName = "PolygonsA";
 		String tableBName = "PolygonsB";
 		Storage storagePoints = new Storage(); 
-		long startTime = System.nanoTime();
+		double startTime = System.nanoTime();
 		String wktAResults = storagePoints.fetchWKT(tableAName, id);  
 		String wktBResults = storagePoints.fetchWKT(tableBName, id);
-		long totalTime = (System.nanoTime()-startTime)/1000000;
+		double totalTime = (System.nanoTime()-startTime)/1000000;
 		String resultJSON = "{ \"wktA\": \"" + wktAResults + "\", \"wktB\": \"" + wktBResults + "\", \"time\": \"" + totalTime + "\"}";
 		return resultJSON;
 	} 
@@ -136,11 +136,11 @@ public class Services {
 			@FormParam("dataType") String dataType,
 			@FormParam("input(bytes)") int inputBytes,
 			@FormParam("input(nodes)") int inputNodes,
-			@FormParam("serverData(ms)") int dataTime,
-			@FormParam("inputParse(ms)") int inputParseTime,
-			@FormParam("geoprocess(ms)") int processTime,
-			@FormParam("parse(ms)") int parseTime,
-			@FormParam("total(ms)") int totalTime,
+			@FormParam("serverData(ms)") double dataTime,
+			@FormParam("inputParse(ms)") double inputParseTime,
+			@FormParam("geoprocess(ms)") double processTime,
+			@FormParam("parse(ms)") double parseTime,
+			@FormParam("total(ms)") double totalTime,
 			@FormParam("output(bytes)") int outputBytes,
 			@FormParam("output(nodes)") int outputNodes){
 	
