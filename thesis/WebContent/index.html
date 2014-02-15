@@ -39,21 +39,19 @@ Operating System: <select id="OS" onchange="operatingSystem()">
 </select>
 
 <br>
-1. <input class="network" type="button" value="Initial Network Test" onclick="initialize();" /> 
+1. <input class="network" type="button" value="Test Parameters" onclick="testParams();" /> 
 <br>
-2. <input class="buffer" type="button" value="Run Point Buffer" onclick="callBuf('points');" />
+2. <input class="network" type="button" value="Network Test" onclick="networkTest();" /> 
 <br>
-3. <input  class="buffer" type="button" value="Run Line Buffer" onclick="callBuf('lines');" />
+3. <input class="buffer" type="button" value="Run Point Buffer" onclick="callBuf('points');" />
 <br>
-4. <input  class="buffer" type="button" value="Run Polygon Buffer" onclick="callBuf('polygons');" />
+4. <input  class="buffer" type="button" value="Run Line Buffer" onclick="callBuf('lines');" />
 <br>
-5. <input class="network" type="button" value="Second Network Test" onclick="secondTest();" /> 
+5. <input  class="buffer" type="button" value="Run Polygon Buffer" onclick="callBuf('polygons');" />
 <br>
 6. <input  class="voronoi" type="button" value="Run Voronoi" onclick="callTriangulation();" />
 <br>
-7. <input  class="union" type="button" value="Run Union" onclick="callUnion();" />
-<br>
-8. <input class="network" type="button" value="Third Network Test" onclick="thirdTest();" /> 
+7. <input  class="union" type="button" value="Run Union" onclick="callUnion();" /> 
 <br>
 9. <input id="startServer" type="button" value="Run Server" onclick="runServer();" />
 <br>

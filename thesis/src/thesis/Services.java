@@ -181,25 +181,46 @@ public class Services {
 			@FormParam("date") String dateToday,
 			@FormParam("browser") String browser,
 			@FormParam("os") String operatingSystem,
-			@FormParam("hardware") String hardware,
-			@FormParam("firstLatency") int firstLatency,
-			@FormParam("firstBandwidth") int firstBandwidth,
-			@FormParam("secondLatency") int secondLatency,
-			@FormParam("secondBandwidth") int secondBandwidth){
+			@FormParam("hardware") String hardware){
 	
 		String result = 
 				"('" + ID + "','"
 		 		+dateToday + "','"
 				+browser + "','"
 				+ operatingSystem + "','"
-				+hardware+ "','"
-				+firstLatency+ "','"
-				+firstBandwidth+ "','"
-				+secondLatency+ "','"
-				+secondBandwidth+ "')";
+				+hardware+ "')";
 		
 		Storage storeResults = new Storage();
 		storeResults.insertMetadata(result);
+	}
+	
+	/**
+	 * Post web services that takes results from clients and sends them
+	 * to Storage.java to be stored in db
+	 *
+	 * @param (parameter name) (Describe the first parameter here)
+	 * @param (parameter name) (Do the same for each additional parameter)
+	 * @return (description of the return value)
+	 */
+	@Path("/storeNetwork")
+	@POST
+	@Consumes("application/x-www-form-urlencoded")
+	@Produces("text/plain")
+	public void storeNetwork(@FormParam("id") int ID,
+			@FormParam("latency") int latency,
+			@FormParam("latError") double latError,
+			@FormParam("bandwidth") int bandwidth,
+			@FormParam("bwError") double bwError){
+	
+		String result = 
+				"('" + ID + "','"
+		 		+latency + "','"
+				+latError + "','"
+				+ bandwidth + "','"
+				+bwError+ "')";
+		
+		Storage storeResults = new Storage();
+		storeResults.insertNetwork(result);
 	}
 	
 	/**

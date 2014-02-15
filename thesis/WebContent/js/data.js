@@ -83,3 +83,19 @@ function storeMetadata() {
 			metadata);
 }
 
+/**
+ * Store the latency and bandwidth test results
+ *
+ * @param {data} string of data to put into database
+ *
+ */
+function storeNetworkTest(networkResult) {
+
+	
+	microAjax(serverlocation + "/thesis/rest/services/storeNetwork", 
+			function (err) {
+				console.log(err); 
+			}, 
+			networkResult);
+}
+

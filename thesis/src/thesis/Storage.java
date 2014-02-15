@@ -88,14 +88,12 @@ public class Storage {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-	  // return"Records stored successfully";
 	}
 	 
 		/**
 		 * Accepts a string of the metadata results and notifies client of success
 		 *
 		 * @param (data) string of results
-		 * @return String of status
 		 */
 		 public void insertMetadata(String data)
 		  {
@@ -106,8 +104,7 @@ public class Storage {
 		      c = DriverManager.getConnection(DB_URL);
 		      c.setAutoCommit(false);
 		      stmt = c.createStatement();
-		      String sql = "INSERT INTO Metadata (MID , Date, Browser, OperatingSystem, Hardware, FirstLatency, FirstBandwidth, " +
-		    		  		"SecondLatency, SecondBandwidth) " +
+		      String sql = "INSERT INTO Metadata (MID , Date, Browser, OperatingSystem, Hardware) " +
 		    		  		"VALUES " + data + ";";
 		      stmt.executeUpdate(sql);
 
@@ -119,9 +116,37 @@ public class Storage {
 		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		      System.exit(0);
 		    }
-		    //return "Records stored successfully";
 		}
 	 
+			/**
+			 * Accepts a string of the network test results and stores in db
+			 *
+			 * @param (data) string of network results
+			 */
+			 public void insertNetwork(String data)
+			  {
+			    Connection c = null;
+			    Statement stmt = null;
+			    try {
+			      Class.forName(JDBC_DRIVER);
+			      c = DriverManager.getConnection(DB_URL);
+			      c.setAutoCommit(false);
+			      stmt = c.createStatement();
+			      String sql = "INSERT INTO Metadata (ID, Latency, LatError, Bandwidth(kbps), BwError) " +
+			    		  		"VALUES " + data + ";";
+			      stmt.executeUpdate(sql);
+
+			      stmt.close();
+			      c.commit();
+			      c.close();
+
+			    } catch ( Exception e ) {
+			      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			      System.exit(0);
+			    }
+			}
+		 
+		 
 	 /**
 		 * Accepts a string of the results and notifies client of success
 		 *

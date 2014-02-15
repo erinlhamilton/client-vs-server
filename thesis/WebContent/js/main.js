@@ -10,7 +10,6 @@
 /*
  * Global Variables
  */
-
 var mdJSON = {};
 var resultArray = new Array();
 var bwResult; //bandwidth result
@@ -69,46 +68,31 @@ performance.now = (function() {
 
 
 /**
- *  Record results of the bandwidth test
- */
-function showResults() {
-    var duration = (endTime - startTime) / 1000; //Math.round()
-    var bitsLoaded = downloadSize * 8;
-    var speedBps = (bitsLoaded / duration).toFixed(2);
-    var speedKbps = (speedBps / 1024).toFixed(2);
-    var speedMbps = (speedKbps / 1024).toFixed(2);
-    return speedMbps;
-}
-
-
-/**
  * Record metadata of test and store in a JSON
  * object
  *
 */
-function initialize(){
+function testParams(){
 	
 	mdJSON.ID = testID();
 	mdJSON.Date = createDate();
 	mdJSON.Browser = whichBrowser();
 	mdJSON.OS = operatingSystem();
 	mdJSON.Hardware = whatHardware();
-	mdJSON.FirstLatency = "";//testBaseLatency();
-	mdJSON.FirstBandwidth = "";//testBaseBandwidth();
+	storeMetadata();
 
 }
 
 /**
- * Run second set of latency and bandwidth tests,
- * store in json object
+ * Store the bandwidth and latency
  *
 */
-function secondTest(){
+function networkTest(){
 	
-	mdJSON.SecondLatency = "";//testBaseLatency();
-	mdJSON.SecondBandwidth = "";//testBaseBandwidth();
-	storeMetadata();
-	
+	var idTest = testID();
+	var networkResult = formatNetworkTest(idTest);
+	storeNetworkTest(networkResult);
+
 }
 
 
@@ -136,9 +120,8 @@ function createDate(){
 */
 
 function testID(){
-	//var d = new Date();
+
 	return document.getElementById("testID").value;
-	//return  d.getTime();
 
 }
 

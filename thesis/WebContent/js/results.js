@@ -138,11 +138,20 @@ function formatMetadata(){
 		"&date=" + mdJSON.Date +
 		"&browser=" + mdJSON.Browser +
 		"&os=" + mdJSON.OS +
-		"&hardware=" + mdJSON.Hardware +
-		"&firstLatency=" + mdJSON.FirstLatency +
-		"&firstBandwidth=" + mdJSON.FirstBandwidth +
-		"&secondLatency="+ mdJSON.SecondLatency +
-		"&secondBandwidth=" + mdJSON.SecondBandwidth;
+		"&hardware=" + mdJSON.Hardware;
 }
 
+/**
+ * Returns a string of the test metadata based on the mdJSON JSON object
+ *
+ * @returns a string of data to be sent to server
+ */
 
+function formatNetworkTest(idTest){
+
+	return "id=" + idTest +
+		"&latency=" + latResult +
+		"&latError=" + latError +
+		"&bandwidth=" + bwResult +
+		"&bwError=" + bwError;
+}
