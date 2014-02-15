@@ -17,7 +17,6 @@
 function getResults(geoprocess, inputNodes, dataType, dataTime, wkt, wktTwo){
 
 	var inputBytes = 0;
-	//var inputNodes = 0;
 	var inputParseTime = 0;
 	var output = "";
 	var geoprocessTime = 0;
@@ -27,7 +26,6 @@ function getResults(geoprocess, inputNodes, dataType, dataTime, wkt, wktTwo){
 	case "Buffer":
 		//Input wkt length in bytes and # nodes
 		inputBytes = wkt.length;
-		//inputNodes = getNodeSize(wkt);//-->data.js
 		
 		//parse the input WKT to geometry
 		var inputParseStart = performance.now();
@@ -45,7 +43,6 @@ function getResults(geoprocess, inputNodes, dataType, dataTime, wkt, wktTwo){
 	case "Union":
 		//Input wkt length in bytes and # nodes
 		inputBytes = wkt.length + wktTwo.length;
-		//inputNodes = (getNodeSize(wkt)) + (getNodeSize(wktTwo));//-->data.js
 		
 		//parse the input WKT to geometry
 		var inputParseStart = performance.now();
@@ -63,7 +60,6 @@ function getResults(geoprocess, inputNodes, dataType, dataTime, wkt, wktTwo){
 	case "Voronoi":
 		//Input wkt length in bytes and # nodes
 		inputBytes = wkt.length;
-		//inputNodes = getNodeSize(wkt);//-->data.js
 		
 		//parse the input WKT to geometry
 		var inputParseStart = performance.now();
@@ -142,7 +138,7 @@ function formatMetadata(){
 }
 
 /**
- * Returns a string of the test metadata based on the mdJSON JSON object
+ * Returns a string of the network tests on latency and bandwidth
  *
  * @returns a string of data to be sent to server
  */

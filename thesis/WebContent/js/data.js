@@ -54,8 +54,6 @@ function parseOutput(result){
  *
  */
 function storeResults(data, returnToProcess) {
-		//For database key use, add another ticker to the array
-		resultArray.push(1);
 	
 		microAjax(serverlocation + "/thesis/rest/services/store", 
 			function (err) {

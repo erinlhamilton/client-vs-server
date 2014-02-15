@@ -15,7 +15,6 @@ var sizeArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 /**
  * Controls the flow the buffer testing.
  * @param (dataType) Point, Line, or Polygon
- * @param (callback) When function finishes, return to main.js
  *
 */
 function callBuf(dataType) {
@@ -39,14 +38,12 @@ function callBuf(dataType) {
 	}, function(err){
 		console.log(err);
 		alert("Buffer "+ dataType + " Complete!");
-		//callback();//-> return to main.js
 	});
 
 }
 
 /**
  * Controls the flow of the voronoi triangulation tests on points
- * @param (callback) When function finishes, return to main.js
  *
 */
 function callTriangulation(){
@@ -76,7 +73,6 @@ function callTriangulation(){
 
 /**
  * Controls the flow of the union testing
- * @param (callback) When function finishes, return to main.js
  *
 */
 function callUnion(){

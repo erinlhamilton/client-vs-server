@@ -11,7 +11,6 @@
  * Global Variables
  */
 var mdJSON = {};
-var resultArray = new Array();
 var bwResult; //bandwidth result
 var bwError; //bandwidth error
 var latResult; //latency result
@@ -64,9 +63,6 @@ performance.now = (function() {
          function() { return new Date().getTime(); };
 })();
 
-
-
-
 /**
  * Record metadata of test and store in a JSON
  * object
@@ -84,7 +80,7 @@ function testParams(){
 }
 
 /**
- * Store the bandwidth and latency
+ * Store the bandwidth and latency results to server
  *
 */
 function networkTest(){
@@ -162,34 +158,6 @@ function whatHardware(){
 	var value=document.getElementById("hardware");
 	return value.options[value.selectedIndex].text;
 
-}
-
-/**
- * Click function for HTML button that starts client tests
- * usign async.js to run tests in series
- *
-*/
-function testOne(){
-	
-	callBuf("points");
-	
-//	async.series([
-//		function(callback){
-//			callBuf("points", callback);
-//		},
-//		 function(callback){
-//			callBuf("lines", callback);
-//		},
-//		function(callback){
-//			callBuf("polygons", callback);
-//		},
-//		function(callback){
-//			callTriangulation(callback);
-//		},
-//		function(callback){
-//			callUnion(callback);
-//		}	
-//		]);
 }
 
 /**

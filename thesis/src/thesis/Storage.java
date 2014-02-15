@@ -132,7 +132,7 @@ public class Storage {
 			      c = DriverManager.getConnection(DB_URL);
 			      c.setAutoCommit(false);
 			      stmt = c.createStatement();
-			      String sql = "INSERT INTO Metadata (ID, Latency, LatError, Bandwidth(kbps), BwError) " +
+			      String sql = "INSERT INTO Network (ID, Latency, LatError, Bandwidth, BwError) " +
 			    		  		"VALUES " + data + ";";
 			      stmt.executeUpdate(sql);
 

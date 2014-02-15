@@ -216,8 +216,8 @@ public class Services {
 				"('" + ID + "','"
 		 		+latency + "','"
 				+latError + "','"
-				+ bandwidth + "','"
-				+bwError+ "')";
+				+bandwidth + "','"
+				+bwError + "')";
 		
 		Storage storeResults = new Storage();
 		storeResults.insertNetwork(result);
