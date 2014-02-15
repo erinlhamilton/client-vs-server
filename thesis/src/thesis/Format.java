@@ -93,7 +93,7 @@ public class Format {
 	 * @param {}
 	 * @returns string of results to insert into database
 	 */
-	public String resultString(int testID, String geoprocess, String dataType, int inputBytes, int inputNodes, long dataTime, long inParseTime, long geoprocessTime, long outParseTime, long totalTime, int outputBytes, int outputNodes){
+	public String resultString(int testID, String geoprocess, String dataType, int inputBytes, int inputNodes, double dataTime, double inParseTime, double geoprocessTime, double outParseTime, double totalTime, int outputBytes, int outputNodes){
 
 		return "id=" + testID +
 				"&platform=Server" +

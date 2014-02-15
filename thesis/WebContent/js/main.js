@@ -1,5 +1,6 @@
 /**
  * @fileoverview Main JavaScript file for application. Tests for
+
  * bandwidth and latency on load and initializes server/client
  * tests on button click.
  * @author <a href="mailto:erin@erinhamilton.me">Erin Hamilton</a>
@@ -9,14 +10,51 @@
 /*
  * Global Variables
  */
-//var imageAddr = "../img/2012_7.png"; //TODO: + "?n=" + Math.random();
-var startTime, endTime;
-var downloadSize = 1531904;
-var download = new Image();
+
 var mdJSON = {};
 var resultArray = new Array();
+var bwResult; //bandwidth result
+var bwError; //bandwidth error
+var latResult; //latency result
+var latError; //latency error
 var serverlocation = "http://localhost:8080";
 
+
+/**
+ *  Bandwidth and latency test from Yahoo! Boomerang library
+ *  Puts result in variable to be sent in string to server
+ */
+BOOMR.subscribe('before_beacon', function(o) {
+
+	//determine bandwidth
+	if(o.bw) { 
+		bwResult = parseInt(o.bw/1024); 
+		bwError = parseInt(o.bw_err*100/o.bw);
+	}
+	//determine latency
+	if(o.lat) {
+		latResult = parseInt(o.lat); 
+		latError = o.lat_err; 
+	}
+
+});
+
+/**
+ *  On window load, start Boomerang
+ */
+BOOMR.init({
+	site_domain: serverlocation+'/thesis/', 
+	BW: {
+		base_url: serverlocation+'/thesis/images/'
+	}
+	
+});
+
+
+/**
+ *  If browser does not support W3C High Resolution Time,
+ *  Use date().getTime instead.
+ */
 window.performance = window.performance || {};
 performance.now = (function() {
   return performance.now       ||
@@ -28,35 +66,7 @@ performance.now = (function() {
 })();
 
 
-/**
- *  Determine the current network latency
- */
-function testBaseLatency(){
-	
-	window.startTime = new Date();
-	var totalTime = 0;
-	microAjax("/", function () {
-		window.endTime = new Date();
-		totalTime = window.endTime - window.startTime;
-		return totalTime;
-		});
-	
-}
 
-/**
- *  Determine the current network bandwidth based on downloading
- *  an image from the server of a known size
- */
-function testBaseBandwidth(){
-
-	download.onload = function () {
-		endTime = (new Date()).getTime();
-		var bandwidth = showResults();
-		return bandwidth;
-	};
-	startTime = (new Date()).getTime();
-	download.src = imageAddr;
-}
 
 /**
  *  Record results of the bandwidth test

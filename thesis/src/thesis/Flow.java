@@ -87,9 +87,9 @@ public class Flow {
 
 		//Retrieve data from db
 		Storage storageData = new Storage();
-		long startData = System.nanoTime();
+		double startData = System.nanoTime();
 		String data = storageData.fetchWKT(dataType, wktID);
-		long dataTime = (System.nanoTime()-startData)/1000000;
+		double dataTime = (System.nanoTime()-startData)/1000000;
 		
 		//Length of input wkt (bytes and # nodes)
 		Format dataFormat = new Format();
@@ -97,26 +97,26 @@ public class Flow {
 		int inputNodes = wktID;
 		
 		//Parse wkt to geometry
-		long startInParse = System.nanoTime();
+		double startInParse = System.nanoTime();
 		Geometry geom = dataFormat.parseWKT(data);//--> Format.java
-		long inParseTime = (System.nanoTime()-startInParse)/1000000;
+		double inParseTime = (System.nanoTime()-startInParse)/1000000;
 		
 		//Run Buffer on geometry
 		Algorithms buffer = new Algorithms();
-		long startGeoprocess = System.nanoTime();
+		double startGeoprocess = System.nanoTime();
 		Geometry buff = buffer.bufferGeom(geom);//-->Algorithms.java
-		long geoprocessTime = (System.nanoTime()-startGeoprocess)/1000000;
+		double geoprocessTime = (System.nanoTime()-startGeoprocess)/1000000;
 		
 		//Parse geometry back to wkt
-		long startOutParse = System.nanoTime();
+		double startOutParse = System.nanoTime();
 		String output = dataFormat.parseGeom(buff);//--> Format.java
-		long outParseTime = (System.nanoTime()-startOutParse)/1000000;
+		double outParseTime = (System.nanoTime()-startOutParse)/1000000;
 		
 		//Length of output wkt (bytes and #nodes)
 		int outputBytes = output.length();
 		int outputNodes = dataFormat.countNodes(output);//-->Format.java
 		
-		long totalTime = dataTime+ inParseTime + geoprocessTime + outParseTime;
+		double totalTime = dataTime+ inParseTime + geoprocessTime + outParseTime;
 		
 		return dataFormat.resultString(testID, geoprocess, dataType, inputBytes, inputNodes, dataTime, inParseTime, geoprocessTime, outParseTime, totalTime, outputBytes, outputNodes);
 	}
@@ -135,9 +135,9 @@ public class Flow {
 
 		//Retrieve data from db
 		Storage storageData = new Storage();
-		long startData = System.nanoTime();
+		double startData = System.nanoTime();
 		String data = storageData.fetchWKT(dataType, wktID);
-		long dataTime = (System.nanoTime()-startData)/1000000;
+		double dataTime = (System.nanoTime()-startData)/1000000;
 		
 		//Length of input wkt (bytes and # nodes)
 		Format dataFormat = new Format();
@@ -145,26 +145,26 @@ public class Flow {
 		int inputNodes = wktID;
 		
 		//Parse wkt to geometry
-		long startInParse = System.nanoTime();
+		double startInParse = System.nanoTime();
 		Geometry geom = dataFormat.parseWKT(data);//--> Format.java
-		long inParseTime = (System.nanoTime()-startInParse)/1000000;
+		double inParseTime = (System.nanoTime()-startInParse)/1000000;
 		
 		//Run Buffer on geometry
 		Algorithms triangulate = new Algorithms();
-		long startGeoprocess = System.nanoTime();
+		double startGeoprocess = System.nanoTime();
 		Geometry voronoi = triangulate.voronoiGeom(geom);//-->Algorithms.java
-		long geoprocessTime = (System.nanoTime()-startGeoprocess)/1000000;
+		double geoprocessTime = (System.nanoTime()-startGeoprocess)/1000000;
 		
 		//Parse geometry back to wkt
-		long startOutParse = System.nanoTime();
+		double startOutParse = System.nanoTime();
 		String output = dataFormat.parseGeom(voronoi);//--> Format.java
-		long outParseTime = (System.nanoTime()-startOutParse)/1000000;
+		double outParseTime = (System.nanoTime()-startOutParse)/1000000;
 		
 		//Length of output wkt (bytes and #nodes)
 		int outputBytes = output.length();
 		int outputNodes = dataFormat.countNodes(output);//-->Format.java
 		
-		long totalTime = dataTime+ inParseTime + geoprocessTime + outParseTime;
+		double totalTime = dataTime+ inParseTime + geoprocessTime + outParseTime;
 		
 		return dataFormat.resultString(testID, geoprocess, dataType, inputBytes, inputNodes, dataTime, inParseTime, geoprocessTime, outParseTime, totalTime, outputBytes, outputNodes);
 
@@ -185,10 +185,10 @@ public class Flow {
 
 		//Retrieve data from db
 		Storage storageData = new Storage();
-		long startData = System.nanoTime();
+		double startData = System.nanoTime();
 		String dataOne = storageData.fetchWKT("PolygonsA", wktID);
 		String dataTwo = storageData.fetchWKT("PolygonsB", wktID);
-		long dataTime = (System.nanoTime()-startData)/1000000;
+		double dataTime = (System.nanoTime()-startData)/1000000;
 		
 		//Length of input wkt (bytes and # nodes)
 		Format dataFormat = new Format();
@@ -196,27 +196,27 @@ public class Flow {
 		int inputNodes = wktID;
 		
 		//Parse wkt to geometry
-		long startInParse = System.nanoTime();
+		double startInParse = System.nanoTime();
 		Geometry geomOne = dataFormat.parseWKT(dataOne);//--> Format.java
 		Geometry geomTwo = dataFormat.parseWKT(dataTwo);//--> Format.java
-		long inParseTime = (System.nanoTime()-startInParse)/1000000;
+		double inParseTime = (System.nanoTime()-startInParse)/1000000;
 		
 		//Run union on geometry
 		Algorithms union = new Algorithms();
-		long startGeoprocess = System.nanoTime();
+		double startGeoprocess = System.nanoTime();
 		Geometry unionResult = union.unionGeom(geomOne, geomTwo);//-->Algorithms.java
-		long geoprocessTime = (System.nanoTime()-startGeoprocess)/1000000;
+		double geoprocessTime = (System.nanoTime()-startGeoprocess)/1000000;
 		
 		//Parse geometry back to wkt
-		long startOutParse = System.nanoTime();
+		double startOutParse = System.nanoTime();
 		String output = dataFormat.parseGeom(unionResult);//--> Format.java
-		long outParseTime = (System.nanoTime()-startOutParse)/1000000;
+		double outParseTime = (System.nanoTime()-startOutParse)/1000000;
 		
 		//Length of output wkt (bytes and #nodes)
 		int outputBytes = output.length();
 		int outputNodes = dataFormat.countNodes(output);//-->Format.java
 		
-		long totalTime = dataTime+ inParseTime + geoprocessTime + outParseTime;
+		double totalTime = dataTime+ inParseTime + geoprocessTime + outParseTime;
 		
 		return dataFormat.resultString(testID, geoprocess, dataType, inputBytes, inputNodes, dataTime, inParseTime, geoprocessTime, outParseTime, totalTime, outputBytes, outputNodes);
 		
