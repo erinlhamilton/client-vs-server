@@ -15,65 +15,62 @@ import thesis.Format;
 import com.vividsolutions.jts.geom.*;
 
 public class Flow {
+	static final int wktIDs[] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
 	
+//	int wktIDs[] = {10, 20, 30,	40,	50,	60,	70,	80,	90,	100, 200, 300, 400, 500, 600,
+//	700, 800, 900, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000,
+//	20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000, 150000, 
+//	200000, 250000, 300000, 350000, 400000, 450000, 500000};
 	
 	/**
 	 * Main function of server-side code. Called from web service
 	 * from the client. Begins the server processing.
 	 *
 	 */
-	public String runServer(int testID){
-	//public static void main(String[] args){
-		//int testID = 0;
-		
-		int wktIDs[] = {10, 20, 30, 40, 50, 60, 70,	80,	90,	100, 200, 300, 400, 500, 600,
-			700, 800, 900, 1000};
-		
-//		int wktIDs[] = {10, 20, 30,	40,	50,	60,	70,	80,	90,	100, 200, 300, 400, 500, 600,
-//				700, 800, 900, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000,
-//				20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000, 150000, 
-//				200000, 250000, 300000, 350000, 400000, 450000, 500000};
+	public String runBuffer(int testID, String dataType){
 
-		//int unionIDs[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 		String results = "";
-		//Storage storeResults = new Storage();
-		
+		Storage storeResults = new Storage();
 		//Buffer points
 		for (int i = 0; i < wktIDs.length; i++){
-			results = callBuff(testID, "Points", wktIDs[i]);
-			System.out.println(results);
-			//storeResults.insertResults(results);
+			results = callBuff(testID, dataType, wktIDs[i]);
+			storeResults.insertResults(results);
 		}
 		
-//		//Buffer lines
-//		for (int i = 0; i < wktIDs.length; i++){
-//			results = callBuff(testID, "Lines", wktIDs[i]);
-//			storeResults.insertResults(results);
-//		}
-//		
-//		//Buffer polygons
-//		for (int i = 0; i < wktIDs.length; i++){
-//			results = callBuff(testID, "Polygons", wktIDs[i]);
-//			storeResults.insertResults(results);
-//		}
-//		
-		//Triangulate points
-//		for (int i = 0; i < wktIDs.length; i++){
-//			results = callTriangulation(testID, wktIDs[i]);
-//			System.out.println(results);
-//			//storeResults.insertResults(results);
-//		}
-//		
-//		//Union two polygons
-//		for (int i = 0; i < unionIDs.length; i++){
-//			results = callUnion(testID, unionIDs[i]);
-//			storeResults.insertResults(results);
-//		}
+		return "Buffer " + dataType + " complete.";
 		
-		return "Test Complete.";
 	}
 	
-	
+	/**
+	 * Main function of server-side code. Called from web service
+	 * from the client. Begins the server processing.
+	 *
+	 */
+	public String runTriangulation(int testID){
+
+		String results = "";
+		Storage storeResults = new Storage();
+		for (int i = 0; i < wktIDs.length; i++){
+		results = callTriangulation(testID, wktIDs[i]);
+		storeResults.insertResults(results);
+	}
+		
+		return "Triangulation complete.";
+		
+	}
+		
+	public String runUnion(int testID){
+
+		String results = "";
+		Storage storeResults = new Storage();
+		for (int i = 0; i < wktIDs.length; i++){
+			results = callUnion(testID, wktIDs[i]);
+		storeResults.insertResults(results);
+		}
+		return "Union complete.";
+	}	
+
+
 	/**
 	 * Controls the flow of buffer processing, records and returns results 
 	 *

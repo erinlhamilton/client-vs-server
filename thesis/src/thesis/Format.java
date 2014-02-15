@@ -95,19 +95,21 @@ public class Format {
 	 */
 	public String resultString(int testID, String geoprocess, String dataType, int inputBytes, int inputNodes, double dataTime, double inParseTime, double geoprocessTime, double outParseTime, double totalTime, int outputBytes, int outputNodes){
 
-		return "id=" + testID +
-				"&platform=Server" +
-				"&algorithm=" +geoprocess+
-				"&dataType=" + dataType+
-				"&input(bytes)=" +inputBytes+
-				"&input(nodes)=" +inputNodes+
-				"&serverData(ms)=" +dataTime+
-				"&inputParse(ms)="+inParseTime+
-				"&geoprocess(ms)=" +geoprocessTime+
-				"&outputParse(ms)=" +outParseTime+
-				"&total(ms)=" +totalTime+
-				"&output(bytes)=" +outputBytes+
-				"&output(nodes)=" +outputNodes;
+		String platform = "Server";
+		
+		return "('" + testID + "','"
+				+ platform + "','"
+				+geoprocess+ "','"
+				+ dataType+ "','"
+				+inputBytes+ "','"
+				+inputNodes+ "','"
+				+dataTime+ "','"
+				+inParseTime+ "','"
+				+geoprocessTime+ "','"
+				+outParseTime+ "','"
+				+totalTime+ "','"
+				+outputBytes+ "','"
+				+outputNodes+"')";
 		
 		
 

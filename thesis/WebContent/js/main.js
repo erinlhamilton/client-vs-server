@@ -10,6 +10,7 @@
 /*
  * Global Variables
  */
+//var time = performanceTiming.navigationStart;
 var mdJSON = {};
 var bwResult; //bandwidth result
 var bwError; //bandwidth error
@@ -27,7 +28,7 @@ BOOMR.subscribe('before_beacon', function(o) {
 	//determine bandwidth
 	if(o.bw) { 
 		bwResult = parseInt(o.bw/1024); 
-		bwError = parseInt(o.bw_err*100/o.bw);
+		bwError = parseInt(o.bw_err/o.bw);
 	}
 	//determine latency
 	if(o.lat) {
@@ -164,9 +165,38 @@ function whatHardware(){
  * Click function for html button that starts server tests.
  *
 */
-function runServer(){
+function runServerBuffer(dataType){
+	var idTest = testID();
 	
-	microAjax(serverlocation + "/thesis/rest/services/server/" + mdJSON.ID, 
+	microAjax(serverlocation + "/thesis/rest/services/server/" + dataType +"/" + idTest, 
+			function (err) {
+				console.log(err); 
+			});
+}
+
+
+/**
+ * Click function for html button that starts server tests.
+ *
+*/
+function runServerTriangulation(){
+	var idTest = testID();
+	
+	microAjax(serverlocation + "/thesis/rest/services/server/triangulation/" + idTest, 
+			function (err) {
+				console.log(err); 
+			});
+}
+
+
+/**
+ * Click function for html button that starts server tests.
+ *
+*/
+function runServerUnion(){
+	var idTest = testID();
+	
+	microAjax(serverlocation + "/thesis/rest/services/server/union/" + idTest, 
 			function (err) {
 				console.log(err); 
 			});

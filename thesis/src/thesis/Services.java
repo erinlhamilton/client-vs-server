@@ -109,11 +109,71 @@ public class Services {
 	 * @return String to let say test complete
 	 */
 	@GET
-	@Path("/server/{id}")
+	@Path("/server/points/{id}")
 	@Produces("text/plain")
-	public String serverGeoProcess(@PathParam("id") int testID){
+	public String serverBuffPoints(@PathParam("id") int testID){
 		Flow startServer = new Flow();
-		String done = startServer.runServer(testID);
+		String done = startServer.runBuffer(testID, "Points");
+		return done;
+	}
+	
+	/**
+	 * When called, runs all the processes on the server side.
+	 *
+	 * @param {testID} the ID of the current test
+	 * @return String to let say test complete
+	 */
+	@GET
+	@Path("/server/lines/{id}")
+	@Produces("text/plain")
+	public String serverBuffLines(@PathParam("id") int testID){
+		Flow startServer = new Flow();
+		String done = startServer.runBuffer(testID, "Lines");
+		return done;
+	}
+	
+	/**
+	 * When called, runs all the processes on the server side.
+	 *
+	 * @param {testID} the ID of the current test
+	 * @return String to let say test complete
+	 */
+	@GET
+	@Path("/server/polygons/{id}")
+	@Produces("text/plain")
+	public String serverBuffPoly(@PathParam("id") int testID){
+		Flow startServer = new Flow();
+		String done = startServer.runBuffer(testID, "Polygons");
+		return done;
+	}
+	
+	/**
+	 * When called, runs all the processes on the server side.
+	 *
+	 * @param {testID} the ID of the current test
+	 * @return String to let say test complete
+	 */
+	@GET
+	@Path("/server/union")
+	@Produces("text/plain")
+	public String serverUnion(@PathParam("id") int testID){
+		Flow startServer = new Flow();
+		String done = startServer.runUnion(testID);
+		return done;
+	}
+	
+	/**
+	 * When called, runs all the processes on the server side.
+	 *
+	 * @param {testID} the ID of the current test
+	 * @return String to let say test complete
+	 */
+	@GET
+	@Path("/server/triangulation")
+	@Produces("text/plain")
+	public String serverTriangulation(@PathParam("id") int testID){
+		Flow startServer = new Flow();
+		String done = startServer.runTriangulation(testID);
 		return done;
 	}
 	

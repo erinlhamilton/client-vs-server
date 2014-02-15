@@ -53,9 +53,17 @@ Operating System: <select id="OS" onchange="operatingSystem()">
 <br>
 7. <input  class="union" type="button" value="Run Union" onclick="callUnion();" /> 
 <br>
-9. <input id="startServer" type="button" value="Run Server" onclick="runServer();" />
+8. <input id="startServer" type="button" value="Run Server Points Buffer" onclick="runServerBuffer('points');" />
 <br>
-10. <a href="http://localhost:8080/thesis/rest/services/results">Download Results</a>
+9. <input id="startServer" type="button" value="Run Server Lines Buffer" onclick="runServerBuffer('lines');" />
+<br>
+10. <input id="startServer" type="button" value="Run Server Polygon Buffer" onclick="runServerBuffer('polygons');" />
+<br>
+11. <input id="startServer" type="button" value="Run Server Triangulation" onclick="runServerTriangulation();" />
+<br>
+12. <input id="startServer" type="button" value="Run Server Union" onclick="runServerUnion();" />
+<br>
+13. <a href="http://localhost:8080/thesis/rest/services/results">Download Results</a>
 
 <!-- JavaScript Libraries -->
 <script type="text/javascript" src="lib/boomerang.js"></script>

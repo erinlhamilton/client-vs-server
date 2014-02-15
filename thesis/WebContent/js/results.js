@@ -17,7 +17,6 @@
 function getResults(geoprocess, inputNodes, dataType, dataTime, wkt, wktTwo){
 
 	var inputBytes = 0;
-	var inputParseTime = 0;
 	var output = "";
 	var geoprocessTime = 0;
 	
@@ -31,7 +30,7 @@ function getResults(geoprocess, inputNodes, dataType, dataTime, wkt, wktTwo){
 		var inputParseStart = performance.now();
 		var input = parseInput(wkt); //-->data.js
 		var inputParseEnd = performance.now();
-		inputParseTime = inputParseEnd - inputParseStart;
+		var inputParseTime = inputParseEnd - inputParseStart;
 		
 		//Buffer the geometry
 	   var geoprocessStart = performance.now();
@@ -49,7 +48,7 @@ function getResults(geoprocess, inputNodes, dataType, dataTime, wkt, wktTwo){
 		var a = parseInput(wkt); //-->data.js
 		var b = parseInput(wktTwo); //-->data.js
 		var inputParseEnd = performance.now();
-		inputParseTime = inputParseEnd - inputParseStart;
+		var inputParseTime = inputParseEnd - inputParseStart;
 		
 		//Union Geoprocess
 	    var geoprocessStart = performance.now();
@@ -65,7 +64,7 @@ function getResults(geoprocess, inputNodes, dataType, dataTime, wkt, wktTwo){
 		var inputParseStart = performance.now();
 		var input = parseInput(wkt); //-->data.js
 		var inputParseEnd = performance.now();
-		inputParseTime = inputParseEnd - inputParseStart;
+		var inputParseTime = inputParseEnd - inputParseStart;
 		
 		//Voronoi Triangulation Geoprocess
 	    var geoprocessStart = performance.now();
@@ -104,7 +103,9 @@ function getResults(geoprocess, inputNodes, dataType, dataTime, wkt, wktTwo){
 
 function formatResults(algorithm, dataType, inputBytes, inputNodes, dataTime, inputParseTime, processTime, parseTime, totalTime, outputBytes, outputNodes){
 
-	return "id=" + mdJSON.ID +
+	var idTest = testID();
+	
+	return "id=" + idTest +
 		"&platform=Client" +
 		"&algorithm=" +algorithm+
 		"&dataType=" + dataType +
@@ -144,6 +145,11 @@ function formatMetadata(){
  */
 
 function formatNetworkTest(idTest){
+	
+	latResult = 50;
+	latError = 1.1;
+	bwResult = 500;
+	bwError = .33;
 
 	return "id=" + idTest +
 		"&latency=" + latResult +
