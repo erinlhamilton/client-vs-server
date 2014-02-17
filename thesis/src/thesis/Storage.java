@@ -15,11 +15,8 @@ import au.com.bytecode.opencsv.*;
 public class Storage {
 	 // JDBC driver name and database URL
 	   static final String JDBC_DRIVER = "org.sqlite.JDBC";  
-	   static final String DB_URL = "jdbc:sqlite:C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/wktData.db";
-	   
-//	   public static void main (String[] args){
-//		   retrieveResults();
-//	   }
+	   static final String DB_URL = "C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/";
+	   static final String resultCSVLocation = "C:/Users/Erin/Documents/Thesis/results/";
 	   
 	/**
 	 * Accepts parameters from web services and returns well-known
@@ -36,7 +33,7 @@ public class Storage {
 	    String result ="";
 	    try {
 	      Class.forName(JDBC_DRIVER);
-	      c = DriverManager.getConnection(DB_URL);
+	      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL +" wktData.db");
 	      c.setAutoCommit(false);    
 	      
 	      ResultSet rs = null;
@@ -61,10 +58,10 @@ public class Storage {
 	};
 	 
 	/**
-	 * Accepts a string of the results and notifies client of success
+	 * Accepts a string of the results and stores
+	 * in the database
 	 *
 	 * @param (data) string of results
-	 * @return String of status
 	 */
 	 public void insertResults(String data)
 	  {
@@ -72,7 +69,7 @@ public class Storage {
 	    Statement stmt = null;
 	    try {
 	      Class.forName(JDBC_DRIVER);
-	      c = DriverManager.getConnection(DB_URL);
+	      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL +" wktData.db");
 	      c.setAutoCommit(false);
 	      stmt = c.createStatement();
 	      String sql = "INSERT INTO Results (ID, Platform, Geoprocess, DataType, InputBytes, InputNodes, ServerDataMS," +
@@ -91,7 +88,7 @@ public class Storage {
 	}
 	 
 		/**
-		 * Accepts a string of the metadata results and notifies client of success
+		 * Accepts a string of the metadata results and stores in database
 		 *
 		 * @param (data) string of results
 		 */
@@ -101,7 +98,7 @@ public class Storage {
 		    Statement stmt = null;
 		    try {
 		      Class.forName(JDBC_DRIVER);
-		      c = DriverManager.getConnection(DB_URL);
+		      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL +" wktData.db");
 		      c.setAutoCommit(false);
 		      stmt = c.createStatement();
 		      String sql = "INSERT INTO Metadata (MID , Date, Browser, OperatingSystem, Hardware) " +
@@ -129,7 +126,7 @@ public class Storage {
 			    Statement stmt = null;
 			    try {
 			      Class.forName(JDBC_DRIVER);
-			      c = DriverManager.getConnection(DB_URL);
+			      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL +" wktData.db");
 			      c.setAutoCommit(false);
 			      stmt = c.createStatement();
 			      String sql = "INSERT INTO Network (ID, Latency, LatError, Bandwidth, BwError) " +
@@ -148,18 +145,17 @@ public class Storage {
 		 
 		 
 	 /**
-		 * Accepts a string of the results and notifies client of success
+		 * Returns a csv of the test results when called.
 		 *
-		 * @param (data) string of results
-		 * @return String of status
+		 * @return File of the results
 		 */
 		 public File retrieveResults() 
 		  {
 			    Connection c = null;
-			    File fw = new File("C:/Users/Erin/Documents/Thesis/results/results.csv");
+			    File fw = new File(resultCSVLocation + "results.csv");
 			    try {
 			      Class.forName(JDBC_DRIVER);
-			      c = DriverManager.getConnection(DB_URL);
+			      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL +" wktData.db");
 			      c.setAutoCommit(false);
 			      ResultSet rs = null;
 			      
@@ -167,8 +163,7 @@ public class Storage {
 			      " FROM Results" +
 			      " INNER JOIN Metadata" +
 			      " On Results.ID = Metadata.MID";
-			      
-			     // String sql ="SELECT * FROM Results";
+			 
 
 					PreparedStatement pstmt = c.prepareStatement(sql);
 					try {
@@ -187,5 +182,41 @@ public class Storage {
 		    }
 		    return fw;
 		}
+		 
+		 /**
+			 * Returns a csv of the network test results
+			 *
+			 * @return File of the results
+			 */
+			 public File retrieveNetworkResults() 
+			  {
+				    Connection c = null;
+				    File fw = new File(resultCSVLocation + "networkResults.csv");
+				    try {
+				      Class.forName(JDBC_DRIVER);
+				      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL +" wktData.db");
+				      c.setAutoCommit(false);
+				      ResultSet rs = null;
+				      
+				      String sql ="SELECT * FROM Network";
+				 
+
+						PreparedStatement pstmt = c.prepareStatement(sql);
+						try {
+						  rs = pstmt.executeQuery();
+						  CSVWriter writer = new CSVWriter(new FileWriter(fw), ',');
+						  writer.writeAll(rs, true);
+						  writer.close();
+						} finally {  
+						  rs.close();  
+						  pstmt.close();
+						  c.close(); 
+						}
+			    } catch ( Exception e ) {
+			      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			      System.exit(0);
+			    }
+			    return fw;
+			}
 	 
 }

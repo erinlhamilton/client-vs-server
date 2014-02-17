@@ -17,6 +17,7 @@
 function getResults(geoprocess, inputNodes, dataType, dataTime, wkt, wktTwo){
 
 	var inputBytes = 0;
+	var inputParseTime = 0;
 	var output = "";
 	var geoprocessTime = 0;
 	
@@ -30,7 +31,7 @@ function getResults(geoprocess, inputNodes, dataType, dataTime, wkt, wktTwo){
 		var inputParseStart = performance.now();
 		var input = parseInput(wkt); //-->data.js
 		var inputParseEnd = performance.now();
-		var inputParseTime = inputParseEnd - inputParseStart;
+		inputParseTime = inputParseEnd - inputParseStart;
 		
 		//Buffer the geometry
 	   var geoprocessStart = performance.now();
@@ -48,7 +49,7 @@ function getResults(geoprocess, inputNodes, dataType, dataTime, wkt, wktTwo){
 		var a = parseInput(wkt); //-->data.js
 		var b = parseInput(wktTwo); //-->data.js
 		var inputParseEnd = performance.now();
-		var inputParseTime = inputParseEnd - inputParseStart;
+		inputParseTime = inputParseEnd - inputParseStart;
 		
 		//Union Geoprocess
 	    var geoprocessStart = performance.now();
@@ -64,7 +65,7 @@ function getResults(geoprocess, inputNodes, dataType, dataTime, wkt, wktTwo){
 		var inputParseStart = performance.now();
 		var input = parseInput(wkt); //-->data.js
 		var inputParseEnd = performance.now();
-		var inputParseTime = inputParseEnd - inputParseStart;
+		inputParseTime = inputParseEnd - inputParseStart;
 		
 		//Voronoi Triangulation Geoprocess
 	    var geoprocessStart = performance.now();

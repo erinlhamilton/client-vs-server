@@ -103,7 +103,7 @@ public class Services {
 
 		
 	/**
-	 * When called, runs all the processes on the server side.
+	 * Runs buffer on points on the server.
 	 *
 	 * @param {testID} the ID of the current test
 	 * @return String to let say test complete
@@ -118,7 +118,7 @@ public class Services {
 	}
 	
 	/**
-	 * When called, runs all the processes on the server side.
+	 * Runs buffer on lines on the server
 	 *
 	 * @param {testID} the ID of the current test
 	 * @return String to let say test complete
@@ -133,7 +133,7 @@ public class Services {
 	}
 	
 	/**
-	 * When called, runs all the processes on the server side.
+	 * Runs buffer on polygons on the server
 	 *
 	 * @param {testID} the ID of the current test
 	 * @return String to let say test complete
@@ -148,7 +148,7 @@ public class Services {
 	}
 	
 	/**
-	 * When called, runs all the processes on the server side.
+	 * Runs union test on the server
 	 *
 	 * @param {testID} the ID of the current test
 	 * @return String to let say test complete
@@ -163,7 +163,7 @@ public class Services {
 	}
 	
 	/**
-	 * When called, runs all the processes on the server side.
+	 * Runs voronoi triangulation on the server
 	 *
 	 * @param {testID} the ID of the current test
 	 * @return String to let say test complete
@@ -298,6 +298,24 @@ public class Services {
 		ResponseBuilder response = Response.ok(file);
 		response.header("Content-Disposition",
 			"attachment; filename=\"results.csv\"");
+		return response.build();
+	}
+	
+	/**
+	 * Retrieves the network results table from the database
+	 * and returns a csv
+	 *
+	 * @return a csv of results
+	 */
+	@Path("/networkResults")
+	@GET
+	@Produces("application/vnd.ms-excel")
+	public Response returnNetworkResults(){
+		Storage retrieveResults = new Storage();
+		File file = retrieveResults.retrieveResults();
+		ResponseBuilder response = Response.ok(file);
+		response.header("Content-Disposition",
+			"attachment; filename=\"networkResults.csv\"");
 		return response.build();
 	}
 }

@@ -23,8 +23,11 @@ public class Flow {
 //	200000, 250000, 300000, 350000, 400000, 450000, 500000};
 	
 	/**
-	 * Main function of server-side code. Called from web service
-	 * from the client. Begins the server processing.
+	 * Function that runs buffer on the server.
+	 * 
+	 * @param: {testID} the node size of the test being ran
+	 * @param: {dataType} points, lines, or polygons
+	 * @returns: string letting know it's complete
 	 *
 	 */
 	public String runBuffer(int testID, String dataType){
@@ -42,8 +45,10 @@ public class Flow {
 	}
 	
 	/**
-	 * Main function of server-side code. Called from web service
-	 * from the client. Begins the server processing.
+	 * Function that runs triangulation on the server
+	 * 
+	 * @param: {testID} the node size of the test being ran
+	 * @returns: string letting know it's complete
 	 *
 	 */
 	public String runTriangulation(int testID){
@@ -59,6 +64,14 @@ public class Flow {
 		
 	}
 		
+	
+	/**
+	 * Function that runs union on the server
+	 * 
+	 * @param: {testID} the node size of the test being ran
+	 * @returns: string letting know it's complete
+	 *
+	 */
 	public String runUnion(int testID){
 
 		String results = "";

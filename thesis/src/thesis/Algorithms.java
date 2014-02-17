@@ -15,14 +15,14 @@ public class Algorithms {
 	
 	/**
 	 * Runs a JTS buffer on geometry at a distance of
-	 * 100 Arc Seconds
+	 * 0.00001 Arc Seconds
 	 *
 	 * @param {data} point, line, or polygon Geometry
 	 * @return the buffered geometry polygon
 	 */
 	public Geometry bufferGeom(Geometry data){
 			Geometry buff = null;
-			int buffDistance = 100;
+			double buffDistance = 0.00001;
 		try {
 			
 			buff = data.buffer(buffDistance);
