@@ -154,7 +154,7 @@ public class Services {
 	 * @return String to let say test complete
 	 */
 	@GET
-	@Path("/server/union")
+	@Path("/server/union/{id}")
 	@Produces("text/plain")
 	public String serverUnion(@PathParam("id") int testID){
 		Flow startServer = new Flow();
@@ -169,7 +169,7 @@ public class Services {
 	 * @return String to let say test complete
 	 */
 	@GET
-	@Path("/server/triangulation")
+	@Path("/server/triangulation/{id}")
 	@Produces("text/plain")
 	public String serverTriangulation(@PathParam("id") int testID){
 		Flow startServer = new Flow();
@@ -312,7 +312,7 @@ public class Services {
 	@Produces("application/vnd.ms-excel")
 	public Response returnNetworkResults(){
 		Storage retrieveResults = new Storage();
-		File file = retrieveResults.retrieveResults();
+		File file = retrieveResults.retrieveNetworkResults();
 		ResponseBuilder response = Response.ok(file);
 		response.header("Content-Disposition",
 			"attachment; filename=\"networkResults.csv\"");

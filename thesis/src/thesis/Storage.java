@@ -33,7 +33,7 @@ public class Storage {
 	    String result ="";
 	    try {
 	      Class.forName(JDBC_DRIVER);
-	      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL +" wktData.db");
+	      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL + "wktData.db");
 	      c.setAutoCommit(false);    
 	      
 	      ResultSet rs = null;
@@ -69,7 +69,7 @@ public class Storage {
 	    Statement stmt = null;
 	    try {
 	      Class.forName(JDBC_DRIVER);
-	      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL +" wktData.db");
+	      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL + "wktData.db");
 	      c.setAutoCommit(false);
 	      stmt = c.createStatement();
 	      String sql = "INSERT INTO Results (ID, Platform, Geoprocess, DataType, InputBytes, InputNodes, ServerDataMS," +
@@ -98,7 +98,7 @@ public class Storage {
 		    Statement stmt = null;
 		    try {
 		      Class.forName(JDBC_DRIVER);
-		      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL +" wktData.db");
+		      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL + "wktData.db");
 		      c.setAutoCommit(false);
 		      stmt = c.createStatement();
 		      String sql = "INSERT INTO Metadata (MID , Date, Browser, OperatingSystem, Hardware) " +
@@ -126,7 +126,7 @@ public class Storage {
 			    Statement stmt = null;
 			    try {
 			      Class.forName(JDBC_DRIVER);
-			      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL +" wktData.db");
+			      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL + "wktData.db");
 			      c.setAutoCommit(false);
 			      stmt = c.createStatement();
 			      String sql = "INSERT INTO Network (ID, Latency, LatError, Bandwidth, BwError) " +
@@ -155,7 +155,7 @@ public class Storage {
 			    File fw = new File(resultCSVLocation + "results.csv");
 			    try {
 			      Class.forName(JDBC_DRIVER);
-			      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL +" wktData.db");
+			      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL + "wktData.db");
 			      c.setAutoCommit(false);
 			      ResultSet rs = null;
 			      
@@ -194,7 +194,7 @@ public class Storage {
 				    File fw = new File(resultCSVLocation + "networkResults.csv");
 				    try {
 				      Class.forName(JDBC_DRIVER);
-				      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL +" wktData.db");
+				      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL + "wktData.db");
 				      c.setAutoCommit(false);
 				      ResultSet rs = null;
 				      

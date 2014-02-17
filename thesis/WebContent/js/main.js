@@ -89,9 +89,7 @@ function networkTest(){
 	var idTest = testID();
 	var networkResult = formatNetworkTest(idTest);
 	storeNetworkTest(networkResult);
-
 }
-
 
 /**
  * Gets current date and returns readable string format

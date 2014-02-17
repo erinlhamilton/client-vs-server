@@ -119,8 +119,6 @@ function formatResults(algorithm, dataType, inputBytes, inputNodes, dataTime, in
 		"&total(ms)=" +totalTime+
 		"&output(bytes)=" +outputBytes+
 		"&output(nodes)=" +outputNodes;
-	
-
 }
 
 
