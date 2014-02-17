@@ -53,9 +53,9 @@ public class Services {
 	@Produces("text/plain")
 	public String returnLine(@PathParam("id") int id){
 		Storage storagePoints = new Storage();
-		long startTime = System.nanoTime();
+		double startTime = System.nanoTime();
 		String wktResults = storagePoints.fetchWKT("Lines", id);
-		long totalTime = (System.nanoTime()-startTime)/1000000;
+		double totalTime = (System.nanoTime()-startTime)/1000000;
 		String resultJSON = "{ \"wkt\": \"" + wktResults + "\", \"time\": \"" + totalTime + "\"}";
 		return resultJSON;
 	}
@@ -72,9 +72,9 @@ public class Services {
 	@Produces("text/plain")
 	public String returnPolygon(@PathParam("id") int id){
 		Storage storagePoints = new Storage();
-		long startTime = System.nanoTime();
+		double startTime = System.nanoTime();
 		String wktResults = storagePoints.fetchWKT("Polygons", id);
-		long totalTime = (System.nanoTime()-startTime)/1000000;
+		double totalTime = (System.nanoTime()-startTime)/1000000;
 		String resultJSON = "{ \"wkt\": \"" + wktResults + "\", \"time\": \"" + totalTime + "\"}";
 		return resultJSON;
 	}

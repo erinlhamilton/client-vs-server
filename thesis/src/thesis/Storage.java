@@ -15,7 +15,7 @@ import au.com.bytecode.opencsv.*;
 public class Storage {
 	 // JDBC driver name and database URL
 	   static final String JDBC_DRIVER = "org.sqlite.JDBC";  
-	   static final String DB_URL = "C:/Users/Erin/Documents/GitHub/erinlhamilton/client-vs-server/thesis/WebContent/db/";
+	   static final String DB_URL = "C:/Users/Erin/Documents/GitHub/client-vs-server/thesis/WebContent/db/";
 	   static final String resultCSVLocation = "C:/Users/Erin/Documents/Thesis/results/";
 	   
 	/**
@@ -101,7 +101,7 @@ public class Storage {
 		      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL + "wktData.db");
 		      c.setAutoCommit(false);
 		      stmt = c.createStatement();
-		      String sql = "INSERT INTO Metadata (MID , Date, Browser, OperatingSystem, Hardware) " +
+		      String sql = "INSERT INTO Metadata (MID, Date, Browser, OperatingSystem, Hardware) " +
 		    		  		"VALUES " + data + ";";
 		      stmt.executeUpdate(sql);
 
