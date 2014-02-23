@@ -11,6 +11,7 @@ package thesis;
 import com.vividsolutions.jts.geom.*;
 import com.vividsolutions.jts.triangulate.*;
 
+
 public class Algorithms {	
 	
 	/**
@@ -45,10 +46,13 @@ public class Algorithms {
 	public Geometry unionGeom(Geometry geomOne, Geometry geomTwo){
 		
 		Geometry output = null;
+		Geometry buffOne = null;
+		Geometry buffTwo = null;
 		try {
-
-			output = geomOne.union(geomTwo);
-
+			
+			buffOne = geomOne.buffer(0);
+			buffTwo = geomTwo.buffer(0);
+			output = buffOne.union(buffTwo);
 			
 		} catch ( Exception e ) {
 		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );

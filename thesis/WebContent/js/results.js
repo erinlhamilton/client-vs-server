@@ -144,11 +144,6 @@ function formatMetadata(){
  */
 
 function formatNetworkTest(idTest){
-	
-	latResult = 50;
-	latError = 1.1;
-	bwResult = 500;
-	bwError = .33;
 
 	return "id=" + idTest +
 		"&latency=" + latResult +

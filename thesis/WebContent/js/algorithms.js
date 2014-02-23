@@ -32,9 +32,10 @@ function bufferGeom(input){
  * 
  */
 function unionGeom(polyOne, polyTwo){
-	//CascadedPolygonUnion instead?
-
-    return polyOne.union(polyTwo);
+	
+	var buffOne = polyOne.buffer(0);
+	var buffTwo = polyTwo.buffer(0);
+    return buffOne.union(buffTwo);
 
 }
 

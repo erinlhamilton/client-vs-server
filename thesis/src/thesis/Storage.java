@@ -10,13 +10,16 @@ package thesis;
 
 import java.sql.*;
 import java.io.*;
+
 import au.com.bytecode.opencsv.*;
 
 public class Storage {
 	 // JDBC driver name and database URL
 	   static final String JDBC_DRIVER = "org.sqlite.JDBC";  
 	   static final String DB_URL = "C:/Users/Erin/Documents/GitHub/client-vs-server/thesis/WebContent/db/";
-	   static final String resultCSVLocation = "C:/Users/Erin/Documents/Thesis/results/";
+	   static final String resultCSVLocation = "C:/Users/Erin/Documents/GitHub/client-vs-server/thesis/WebContent/results/";
+	   //static final String DB_URL = "webapps/thesis/db/";
+	   //static final String resultCSVLocation = "webapps/thesis/results/";
 	   
 	/**
 	 * Accepts parameters from web services and returns well-known
@@ -29,6 +32,7 @@ public class Storage {
 	 
 	 public String fetchWKT(String wktTable, int id)
 	  {
+
 	    Connection c = null;
 	    String result ="";
 	    try {

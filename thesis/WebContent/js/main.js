@@ -27,8 +27,8 @@ BOOMR.subscribe('before_beacon', function(o) {
 
 	//determine bandwidth
 	if(o.bw) { 
-		bwResult = parseInt(o.bw/1024); 
-		bwError = parseInt(o.bw_err/o.bw);
+		bwResult = parseInt(o.bw*8/1024); 
+		bwError = parseFloat(o.bw_err/o.bw);
 	}
 	//determine latency
 	if(o.lat) {
