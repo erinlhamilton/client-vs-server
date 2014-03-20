@@ -100,6 +100,21 @@ public class Services {
 		String resultJSON = "{ \"wktA\": \"" + wktAResults + "\", \"wktB\": \"" + wktBResults + "\", \"time\": \"" + totalTime + "\"}";
 		return resultJSON;
 	} 
+	
+	/**
+	 * Returns the current testID
+	 *
+	 * @return JSON containing the ID of current Test
+	 */
+	@Path("/testID")
+	@GET
+	@Produces("text/plain")
+	public static String returnTestID(){
+		Storage storageID = new Storage(); 
+		String TID = storageID.fetchTestID();  
+		String resultJSON = "{\"TID\":\"" + TID + "\"}";
+		return resultJSON;
+	} 
 
 		
 	/**

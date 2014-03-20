@@ -16,38 +16,10 @@ var bwResult; //bandwidth result
 var bwError; //bandwidth error
 var latResult; //latency result
 var latError; //latency error
-var serverlocation = "http://localhost:8080";
+var testSite = "thesis";
+var runToTestNo = 10; //the test number you want the program to run to.
 
-
-/**
- *  Bandwidth and latency test from Yahoo! Boomerang library
- *  Puts result in variable to be sent in string to server
- */
-BOOMR.subscribe('before_beacon', function(o) {
-
-	//determine bandwidth
-	if(o.bw) { 
-		bwResult = parseInt(o.bw*8/1024); 
-		bwError = parseFloat(o.bw_err/o.bw);
-	}
-	//determine latency
-	if(o.lat) {
-		latResult = parseInt(o.lat); 
-		latError = o.lat_err; 
-	}
-
-});
-
-/**
- *  On window load, start Boomerang
- */
-BOOMR.init({
-	site_domain: serverlocation+'/thesis/', 
-	BW: {
-		base_url: serverlocation+'/thesis/images/'
-	}
-	
-});
+var serverlocation = "http://localhost:8080/"+testSite;
 
 
 /**
@@ -65,137 +37,81 @@ performance.now = (function() {
 })();
 
 /**
+ * Gets current date and returns readable string format
+ * @returns formatted date of year-month-day hour:minute
+ *
+*/
+function createDate(){
+	Date.prototype.timeNow = function(){ return ((this.getHours() < 10)?"0":"") + ((this.getHours()>12)?(this.getHours()-12):this.getHours()) +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes() +":"+ ((this.getSeconds() < 10)?"0":"") + this.getSeconds() + ((this.getHours()>12)?("PM"):"AM"); };
+    var d = new Date();
+    var curr_date = d.getDate();
+    var curr_month = d.getMonth() + 1; //Months are zero based
+    var curr_year = d.getFullYear();
+   	return curr_year + "-" + curr_month + "-" + curr_date + " " + new Date().timeNow();
+}
+
+
+/**
  * Record metadata of test and store in a JSON
  * object
  *
 */
 function testParams(){
 	
-	mdJSON.ID = testID();
-	mdJSON.Date = createDate();
-	mdJSON.Browser = whichBrowser();
-	mdJSON.OS = operatingSystem();
-	mdJSON.Hardware = whatHardware();
-	storeMetadata();
+	async.series([
+  		function(callback){
+  			getTestID(callback); //--> data.js
+  		},
+  		function(){
+			mdJSON.Date = createDate();
+			mdJSON.Browser = "Chrome";
+			mdJSON.OS = "Windows";
+			mdJSON.Hardware = "Laptop";
+			if(mdJSON.ID <=runToTestNo){
+				storeMetadata();
+				setTimeout(function(){
+					runClient();
+				},5000);
+			}else{
+				alert("Testing Complete!");
+			}
+	     }
+	]);
 
-}
-
-/**
- * Store the bandwidth and latency results to server
- *
-*/
-function networkTest(){
-	
-	var idTest = testID();
-	var networkResult = formatNetworkTest(idTest);
-	storeNetworkTest(networkResult);
-}
-
-/**
- * Gets current date and returns readable string format
- * @returns formatted date of year-month-day hour:minute
- *
-*/
-function createDate(){
-    var d = new Date();
-    var curr_date = d.getDate();
-    var curr_month = d.getMonth() + 1; //Months are zero based
-    var curr_year = d.getFullYear();
-    var curr_hour = d.getHours();
-    var ampm = curr_hour >= 12 ? 'PM' : 'AM';
-    var curr_min = d.getMinutes();
-    return curr_year + "-" + curr_month + "-" + curr_date + " " + curr_hour + ":" + curr_min + ampm;
-}
-
-/**
- * Returns the value in the text input form for the ID
- * of the test
- * @returns ID of the test 
- *
-*/
-
-function testID(){
-
-	return document.getElementById("testID").value;
-
-}
-
-/**
- * Returns result of browser dropdown
- * @returns returns the browser selected
- *
-*/
-
-function whichBrowser(){
-	
-	var value=document.getElementById("browser");
-	return value.options[value.selectedIndex].text;
-
-}
-
-/**
- * Returns result of operating system dropdown
- * @returns returns the OS selected
- *
-*/
-
-function operatingSystem(){
-	
-	var value=document.getElementById("OS");
-	return value.options[value.selectedIndex].text;
-
-}
-
-/**
- * Returns result of hardware dropdown
- * @returns returns the hardware selected
- *
-*/
-
-function whatHardware(){
-	
-	var value=document.getElementById("hardware");
-	return value.options[value.selectedIndex].text;
-
-}
-
-/**
- * Click function for html button that starts server tests.
- *
-*/
-function runServerBuffer(dataType){
-	var idTest = testID();
-	
-	microAjax(serverlocation + "/thesis/rest/services/server/" + dataType +"/" + idTest, 
-			function (err) {
-				console.log(err); 
-			});
 }
 
 
 /**
- * Click function for html button that starts server tests.
+ * Click function for HTML button that starts client tests
+ * usign async.js to run tests in series
  *
 */
-function runServerTriangulation(){
-	var idTest = testID();
-	
-	microAjax(serverlocation + "/thesis/rest/services/server/triangulation/" + idTest, 
-			function (err) {
-				console.log(err); 
-			});
-}
+function runClient(){
 
+	async.series([
+		function(callback){
+			callBuf("points", callback);
+		},
+		 function(callback){
+			callBuf("lines", callback);
+		},
+		function(callback){
+			callBuf("polygons", callback);
+		},
+		function(callback){
+			callTriangulation(callback);
+		},
+		function(callback){
+			callUnion(callback);
+		}	
+		]);
+}
 
 /**
- * Click function for html button that starts server tests.
+ * On window load begin tests.
  *
 */
-function runServerUnion(){
-	var idTest = testID();
-	
-	microAjax(serverlocation + "/thesis/rest/services/server/union/" + idTest, 
-			function (err) {
-				console.log(err); 
-			});
-}
+
+window.onload = function(){
+	testParams();
+};

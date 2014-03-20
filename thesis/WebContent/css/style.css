@@ -1,1 +1,21 @@
 @CHARSET "ISO-8859-1";
+
+body, html{
+	width: 100%;
+	height: 100%;	
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+#leftDiv{
+	width: 49%;
+	height: 100%;
+	float: left;
+}
+#rightDiv{
+	width: 49%;
+	height: 100%;
+	float: right;
+}
+

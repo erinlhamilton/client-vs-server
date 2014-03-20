@@ -48,6 +48,27 @@ function parseOutput(result){
 }
 
 /**
+ * Get the last Test ID and add one to create the latest test ID
+ *
+ * @return current test ID
+ *
+ */
+function getTestID(callback) {
+	
+		microAjax(serverlocation + "/rest/services/testID", 
+				function (data) {
+					var dataJSON = JSON.parse(data);
+					var TID = parseInt(dataJSON.TID);
+					var div = document.getElementById('currTest');
+					var thisTest = TID + 1;
+					div.innerHTML = thisTest;
+					mdJSON.ID = thisTest;
+					callback();
+			});
+		
+}
+
+/**
  * Stores string of results from geoprocessing to DB using POST
  *
  * @param {data} string of data to put into database
@@ -55,7 +76,7 @@ function parseOutput(result){
  */
 function storeResults(data, returnToProcess) {
 	
-		microAjax(serverlocation + "/thesis/rest/services/store", 
+		microAjax(serverlocation + "/rest/services/store", 
 			function (err) {
 				console.log(err); 
 				returnToProcess(); //--> flow.js
@@ -74,7 +95,7 @@ function storeMetadata() {
 	
 	var metadata = formatMetadata();
 	
-	microAjax(serverlocation + "/thesis/rest/services/storeMetadata", 
+	microAjax(serverlocation + "/rest/services/storeMetadata", 
 			function (err) {
 				console.log(err); 
 			}, 
@@ -90,7 +111,7 @@ function storeMetadata() {
 function storeNetworkTest(networkResult) {
 
 	
-	microAjax(serverlocation + "/thesis/rest/services/storeNetwork", 
+	microAjax(serverlocation +"/rest/services/storeNetwork", 
 			function (err) {
 				console.log(err); 
 			}, 

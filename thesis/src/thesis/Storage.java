@@ -16,11 +16,46 @@ import au.com.bytecode.opencsv.*;
 public class Storage {
 	 // JDBC driver name and database URL
 	   static final String JDBC_DRIVER = "org.sqlite.JDBC";  
-	   static final String DB_URL = "C:/Users/Erin/Documents/GitHub/client-vs-server/thesis/WebContent/db/";
+	   //static final String DB_URL = "C:/Users/Erin/Documents/GitHub/client-vs-server/thesis/WebContent/db/";
+	   static final String DB_URL = "C:/Users/Erin/Documents/Thesis/database/";
 	   static final String resultCSVLocation = "C:/Users/Erin/Documents/GitHub/client-vs-server/thesis/WebContent/results/";
-	   //static final String DB_URL = "webapps/thesis/db/";
-	   //static final String resultCSVLocation = "webapps/thesis/results/";
+//	   static final String DB_URL = "webapps/thesis/db/";
+//	   static final String resultCSVLocation = "webapps/thesis/results/";
 	   
+	   
+	   /**
+		 * Determines the most recent test ran and returns the ID
+		 *
+		 * @return JSON containing the ID of the most recent test
+		 */
+	   public String fetchTestID()
+	   {
+		    Connection c = null;
+		    String result ="";
+		    try {
+		      Class.forName(JDBC_DRIVER);
+		      c = DriverManager.getConnection("jdbc:sqlite:" + DB_URL + "wktData.db");
+		      c.setAutoCommit(false);    
+		      
+		      ResultSet rs = null;
+		      String sql = "SELECT MID FROM Metadata ORDER BY MID DESC LIMIT 1";
+				PreparedStatement pstmt = c.prepareStatement(sql);
+				try {
+				  rs = pstmt.executeQuery();
+				  result = rs.getString("MID");
+				} finally {  
+				  rs.close();  
+				  pstmt.close();
+				  c.close(); 
+				}
+
+		    } catch ( Exception e ) {
+		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		      System.exit(0);
+		    }
+		    
+		    return result;
+		}
 	/**
 	 * Accepts parameters from web services and returns well-known
 	 * text file from given database table.
@@ -59,7 +94,7 @@ public class Storage {
 	    }
 	    
 	    return result;
-	};
+	}
 	 
 	/**
 	 * Accepts a string of the results and stores

@@ -7,69 +7,45 @@
 </head>
 <body>
 <h1>Client-side versus Server-side Geoprocessing Test Suite</h1>
-<br>
-<form>Test ID: <input type="text" id = "testID" name="ID" required></form>
-Browser: <select id="browser" onchange="whichBrowser()">
-  <option></option>
-  <option>Chrome</option>
-  <option>Firefox</option>  
-  <option>IE</option>
-  <option>Safari</option>
-  <option>Opera</option>
-  <option>Server</option>
-  <option>Other</option>
-</select>
-<br>
-Hardware: <select id="hardware" onchange="whatHardware()">
-  <option></option>
-  <option>Laptop</option>
-  <option>Desktop</option>  
-  <option>Tablet</option>
-  <option>Phone</option>
-   <option>Server</option>
-</select>
-<br>
-Operating System: <select id="OS" onchange="operatingSystem()">
-  <option></option>
-  <option>Windows</option>
-  <option>Apple</option>  
-  <option>Linux</option>
-  <option>Android</option>
-  <option>Other</option>
-</select>
+<div id ="leftDiv">
+<h4>Current Test Number:</h4><div id="currTest"></div>
 
+
+<h4>1. Buffer Points Test Status:</h4>
+<div id="points">Waiting...</div>
 <br>
-1. <input class="network" type="button" value="Test Parameters" onclick="testParams();" /> 
+Buffer Points Test Number: 
+<div id="pointsID">...</div>
+
+<h4>2. Buffer Lines Test Status:</h4>
+<div id="lines">Waiting...</div>
 <br>
-2. <input class="network" type="button" value="Network Test" onclick="networkTest();" /> 
+Buffer Lines Test Number: 
+<div id="linesID">...</div>
+</div>
+<div id = "rightDiv">
+<h4>3. Buffer Polygons Test Status:</h4>
+<div id="polygons">Waiting...</div>
 <br>
-3. <input class="buffer" type="button" value="Run Point Buffer" onclick="callBuf('points');" />
+Buffer Polygons Test Number: 
+<div id="polygonsID">...</div>
+
+<h4>4. Voronoi Triangulation Test Status:</h4>
+<div id="voronoiTri">Waiting...</div>
 <br>
-4. <input  class="buffer" type="button" value="Run Line Buffer" onclick="callBuf('lines');" />
+Voronoi Triangulation Test Number: 
+<div id="voronoiID">...</div>
+
+
+<h4>5. Union Polygons Test Status:</h4>
+<div id="polyUnion">Waiting...</div>
 <br>
-5. <input  class="buffer" type="button" value="Run Polygon Buffer" onclick="callBuf('polygons');" />
+Union Test Number: 
+<div id="unionID">...</div>
 <br>
-6. <input  class="voronoi" type="button" value="Run Voronoi" onclick="callTriangulation();" />
-<br>
-7. <input  class="union" type="button" value="Run Union" onclick="callUnion();" /> 
-<br>
-8. <input id="startServer" type="button" value="Run Server Points Buffer" onclick="runServerBuffer('points');" />
-<br>
-9. <input id="startServer" type="button" value="Run Server Lines Buffer" onclick="runServerBuffer('lines');" />
-<br>
-10. <input id="startServer" type="button" value="Run Server Polygon Buffer" onclick="runServerBuffer('polygons');" />
-<br>
-11. <input id="startServer" type="button" value="Run Server Triangulation" onclick="runServerTriangulation();" />
-<br>
-12. <input id="startServer" type="button" value="Run Server Union" onclick="runServerUnion();" />
-<br>
-13. <a href="http://localhost:8080/thesis/rest/services/results">Download Results</a>
-<br>
-14. <a href="http://localhost:8080/thesis/rest/services/networkResults">Download Network Results</a>
+</div>
 
 <!-- JavaScript Libraries -->
-<script type="text/javascript" src="lib/boomerang.js"></script>
-<script type="text/javascript" src="lib/bw.js"></script>
 <script type="text/javascript" src="lib/microajax.min.js"></script>
 <script type="text/javascript" src="lib/async.js"></script>
 <script type="text/javascript" src="lib/javascript.util.js"></script>
